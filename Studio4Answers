@@ -1,0 +1,13 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} [trenduchintala@shell userspace]$ ./lib_call
+The current uid is: 1966052
+Trying to change the uid: -1
+Error: setuid failed! Reason: Operation not permitted
+
+3} 
+The current uid is: 10000
+Trying to change the uid: -1
+Error: setuid failed! Reason: Operation not permitted
+
+The difference was only prevalentin the uid as they were different from the linuxlab computer to the pi.
