@@ -75,3 +75,41 @@ The reason that the user time is greater is because the parallel program
 is running mulitple threads at the same time and the user time
 is the addition of all of the time spent in User space by those 
 multiple threads.
+
+6}
+./sing 1000:
+real 0m0.144s
+user 0m0.005s
+sys  0m0.031s
+
+The user timing was significantly smaller than the sys timing.
+This means that the process spent a lot more time in the kernel 
+space than in user space. However, real time was a lot larger than
+both user and sys time. 
+
+In ./dense_mm the sys time was significantly lower than the user space
+and that is most likely because there is no real computation 
+done in user space in ./sing while there is a significant amount
+done in ./dense_mm.
+
+7}
+Not a good clock: Clock_Realtime
+
+Clock Realtime would not be a good clock as it measures real 
+(wall-clock) time. This won't give a proper understanding of
+user space time.
+
+Good clock: Clock_Process_CPUtime_ID
+This clock measures the CPU time on all threads in the process.
+This will give an accurate measurement on how long the process
+spent computing different things. 
+
+8}
+[trenduchintala@linuxlab003 test_programs]$ ./getres 1
+resolution for realtime clock :          0.000000001
+
+resolution for coarse realtime clock:          0.001000000
+
+The resolution for my coarse realtime clock was far larger than the resolution for
+the normal realtime clock. This means that the realtime clock is way more precise than
+the coarse realtime clock.
