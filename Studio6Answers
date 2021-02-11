@@ -1,0 +1,77 @@
+1} Tara Renduchintala
+
+2}
+sing: sings the song Bilbo sings when setting off on his adventure
+    in The Fellowship of the Ring for the inputted number of verses
+dense_mm: creates and multiplies 2 NxN matrices where N is the inputted
+    number      
+parallel_dense_mm: creates and multiplies 2 NxN matrices where N is the inputted
+    number   
+sort: generates an array and sorts it
+
+3}
+time ./sing 1:
+real 0m0.008s
+user 0m0.000s
+sys  0m0.002s
+
+time ./sing 4:
+real 0m0.049s
+user 0m0.000s
+sys  0m0.003s
+
+time ./sort 4:
+real 0m0.005s
+user 0m0.001s
+sys  0m0.000s
+
+time ./sort 8:
+real 0m0.010s
+user 0m0.001s
+sys  0m0.001s
+
+time ./dense_mm 1:
+real 0m0.005s
+user 0m0.001s
+sys  0m0.001s
+
+time ./dense_mm 4:
+real 0m0.006s
+user 0m0.000s
+sys  0m0.002s
+
+time ./parallel_dense_mm 1:
+real 0m0.024s
+user 0m0.194s
+sys  0m0.002s
+
+time ./parallel_dense_mm 4:
+real 0m0.032s
+user 0m0.205s
+sys  0m0.001s
+
+4} 
+Real: the amount of actual time (according to the wall clock) 
+    spent on the process
+User: the amount of time the process spent in User space
+Sys: the amount of time the process spend in Kernel space
+
+5}
+time ./dense_mm 1000:
+real 0m4.970s
+user 0m4.954s
+sys  0m0.014s
+
+time ./parallel_dense_mm 1000:
+real 0m0.447s
+user 0m12.052s
+sys  0m0.016s
+
+From using the time command, it is evident that the real time
+spent doing the non-parallel computaion is greater than when
+parallel computation is being used. However, the time in userspace
+is greater for parallel computing than it is for non-parallel computation.
+The reason that the user time is greater is because the parallel program
+is running mulitple threads at the same time and the user time
+is the addition of all of the time spent in User space by those 
+multiple threads.
