@@ -113,3 +113,13 @@ resolution for coarse realtime clock:          0.001000000
 The resolution for my coarse realtime clock was far larger than the resolution for
 the normal realtime clock. This means that the realtime clock is way more precise than
 the coarse realtime clock.
+
+9} ANSWER THIS
+
+10} The time it took to run get_time(REALTIMECLOCK, ...) was .000000318 seconds. I
+was able to obtain this by getting the REALTIME CLOCK value at the start. Then, I ran a 
+get_time(CLOCK) dummy function. And at the end, I captured the clock time again and
+compared the two times. 
+
+11} 
+
