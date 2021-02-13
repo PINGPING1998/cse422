@@ -121,6 +121,7 @@ was able to obtain this by getting the REALTIME CLOCK value at the start. Then, 
 get_time(CLOCK) dummy function. And at the end, I captured the clock time again and
 compared the two times. 
 
+
 11} 
 [trenduchintala@linuxlab004 test_programs]$ ./timed_parallel_dense_mm 100 100
 Generating matrices...
@@ -137,5 +138,11 @@ in which case, I would err on the lowerbound of the timing we have recieved here
 I think the lowest bound would be 10,000. Therefore, the timing woud be about 20x that in 
 most cases.
 
-13}
+12}
+11}
+[25656.087028] ktime module initialized
+[25670.304839] ktime  module is being unloaded
+[25670.304864] Number of seconds: 1  and Number of Nanoseconds: 1332842078
+
+
 
