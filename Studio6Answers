@@ -122,4 +122,20 @@ get_time(CLOCK) dummy function. And at the end, I captured the clock time again 
 compared the two times. 
 
 11} 
+[trenduchintala@linuxlab004 test_programs]$ ./timed_parallel_dense_mm 100 100
+Generating matrices...
+Multiplying matrices...
+Multiplication done!
+Average Time for Parallel Process: 6071917
+Minimum Time: 10000
+Maximum Time: 11568770
+
+I think a common case running time would be somewhere in between 200,000 to 300,000 nanoseconds.
+I think it would be lower than what is shown above because we are running multiplication
+in parallel on 100x100 matrices. In most cases, I believe the dimensions should be lower
+in which case, I would err on the lowerbound of the timing we have recieved here. However,
+I think the lowest bound would be 10,000. Therefore, the timing woud be about 20x that in 
+most cases.
+
+13}
 
