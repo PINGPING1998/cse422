@@ -139,10 +139,16 @@ I think the lowest bound would be 10,000. Therefore, the timing woud be about 20
 most cases.
 
 12}
-11}
-[25656.087028] ktime module initialized
-[25670.304839] ktime  module is being unloaded
-[25670.304864] Number of seconds: 1  and Number of Nanoseconds: 1332842078
+
+[27073.359668] ktime module initialized
+[27087.702794] ktime  module is being unloaded
+[27087.702815] Number of seconds: 1  and Number of Nanoseconds: 1458067196
+
+I used the ktime_get_real() function because I wanted to see based on 
+clock time how long it was between initialization and unloading. I
+was curious to see how it would be in terms of nanoseconds. Also among
+the options given, it seemed the most intutitive as get_raw is not 
+really used in the kernel. 
 
 
 
