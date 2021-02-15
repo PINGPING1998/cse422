@@ -1,0 +1,18 @@
+1} Tara Renduchintala
+
+2} zero.c
+#include <stdio.h>
+int main(void){
+  return 0;
+ }
+ 
+ 3} 
+ 
+ mprotect -- it protects the memory pages containing any part of the address range in the interval. If
+ the protections are violated, then the kernel generates a signal.
+
+mprotect(0x76f9c000, 61440, PROT_NONE)  = 0
+
+The address that is being protected is 0x76f9c000 and it is being protected for 61440 bytes. 
+It also protects the memeory in such a way that it cannot be accessed at all.
+
