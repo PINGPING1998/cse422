@@ -16,3 +16,9 @@ mprotect(0x76f9c000, 61440, PROT_NONE)  = 0
 The address that is being protected is 0x76f9c000 and it is being protected for 61440 bytes. 
 It also protects the memeory in such a way that it cannot be accessed at all.
 
+read -- it reads a file from its descriptor that is passed as an argument. It readus up to "count"
+bytes which are also passed into the function into the buffer. The address of the buffer is passed
+in as a parameter as well.
+
+
+
