@@ -55,3 +55,19 @@ CPU 0 - 8
 CPU 1 - 24
 CPU 2 - 2
 CPU 3 - 45
+
+9} swapper and trace-cmd were both processes than ran on CPU 1.
+
+10} swapper and trace-cmd both preceded the beginning of dense_mm 
+
+11} CPU 3 spent most of its time doing dense_mm. The other CPUs spen their time doing swapper or the 
+trace-cmd. I noted that CPU 1 did swapper a majority of the time. CPU1 had a lot more schedule switches
+than the other two. CPU2 had the least, while CPU 0 was in the middle. The frequency varied a lot 
+between the 3 CPUs, with CPU 1 having more frequent switches.
+
+12} The spot in the timeline where I feel like resources aren't being used properly is in the beggining
+before the first parallel_dense runs. The CPU that is not doing any of the parralel_dense processes
+should be the on carrying out the trace-cmd and all the processes that are not parallel_dense while
+the other CPUs can begin running their processes as fast as possible. CPU0 and CPU1 start
+running their parallel_dense processes way later. I think it is because they haven't been scheduled
+to run yet by the schedule switcher.
