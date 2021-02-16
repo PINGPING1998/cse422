@@ -114,7 +114,13 @@ The resolution for my coarse realtime clock was far larger than the resolution f
 the normal realtime clock. This means that the realtime clock is way more precise than
 the coarse realtime clock.
 
-9} ANSWER THIS
+9} Clock Monotic represents an absolute time elapsed based on a starting time in the past. It 
+does not incorporate system reboots. The difference between CLOCK_MONOTONIC and CLOCK_MONOTNIC_COARSE
+is that the COARSE option updates only once per tick. This creates a lack of precision which
+means that the timing of the COARSE clock will not be as accurate as the normal MONOTNOIC clock. 
+However, it is a faster clock because the time is only checked at the end of the tick. Therefore,
+if a function is getting the time frequently and fine-grained precision isn't as important
+it makes sense to use the COARSE clock. 
 
 10} The time it took to run get_time(REALTIMECLOCK, ...) was .000000318 seconds. I
 was able to obtain this by getting the REALTIME CLOCK value at the start. Then, I ran a 
