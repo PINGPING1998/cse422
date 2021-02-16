@@ -6,7 +6,7 @@ int main(void){
   return 0;
  }
  
- 3} 
+3} 
  
  mprotect -- it protects the memory pages containing any part of the address range in the interval. If
  the protections are violated, then the kernel generates a signal.
@@ -20,5 +20,32 @@ read -- it reads a file from its descriptor that is passed as an argument. It re
 bytes which are also passed into the function into the buffer. The address of the buffer is passed
 in as a parameter as well.
 
+4}
+write(...) is invoked by printf
 
+5} Instead of using three brk system calls, the last brk in ./dense_mm 300 is replaced with
+three calls to mmap2.
 
+USED BY ./dense_mm 100
+< mprotect(0x76ffe000, 4096, PROT_READ)   = 0
+< munmap(0x76fa2000, 92887)               = 0
+< fstat64(1, {st_mode=S_IFREG|0644, st_size=5539, ...}) = 0
+< brk(NULL)                               = 0x478000
+< brk(0x499000)                           = 0x499000
+< brk(0x4c1000)                           = 0x4c1000
+---
+
+USED BY ./dense_mm 300
+> mprotect(0x76f45000, 4096, PROT_READ)   = 0
+> munmap(0x76ee9000, 92887)               = 0
+> fstat64(1, {st_mode=S_IFREG|0644, st_size=5540, ...}) = 0
+> brk(NULL)                               = 0x1f8d000
+> brk(0x1fae000)                          = 0x1fae000
+> mmap2(NULL, 720896, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76ceb000
+> mmap2(NULL, 720896, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76c3b000
+> mmap2(NULL, 720896, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76b8b000
+
+6} There are a lot more mmap2 system calls at the end of the 1,000,000 byte trace than there was for
+the 100 byte trace. 
+
+7} It took about 30 seconds to download and unpack kerenelshark.
