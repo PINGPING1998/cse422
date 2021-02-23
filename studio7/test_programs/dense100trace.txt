@@ -1,0 +1,94 @@
+execve("./dense_mm", ["./dense_mm", "100"], 0x7ec463b4 /* 44 vars */) = 0
+brk(NULL)                               = 0x478000
+uname({sysname="Linux", nodename="taraspberrypi", ...}) = 0
+mmap2(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x76ffc000
+access("/etc/ld.so.preload", R_OK)      = 0
+openat(AT_FDCWD, "/etc/ld.so.preload", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=54, ...}) = 0
+mmap2(NULL, 54, PROT_READ|PROT_WRITE, MAP_PRIVATE, 3, 0) = 0x76ffb000
+close(3)                                = 0
+readlink("/proc/self/exe", "/home/pi/studio7/test_programs/d"..., 4096) = 39
+openat(AT_FDCWD, "/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\254\3\0\0004\0\0\0"..., 512) = 512
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+_llseek(3, 16748, [16748], SEEK_SET)    = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 960) = 960
+_llseek(3, 16424, [16424], SEEK_SET)    = 0
+read(3, "A,\0\0\0aeabi\0\1\"\0\0\0\0056\0\6\6\10\1\t\2\n\3\f\1\22\4\24"..., 45) = 45
+fstat64(3, {st_mode=S_IFREG|0644, st_size=17708, ...}) = 0
+mmap2(NULL, 81964, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76fb9000
+mprotect(0x76fbd000, 61440, PROT_NONE)  = 0
+mmap2(0x76fcc000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x3000) = 0x76fcc000
+close(3)                                = 0
+munmap(0x76ffb000, 54)                  = 0
+openat(AT_FDCWD, "/etc/ld.so.cache", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 3
+fstat64(3, {st_mode=S_IFREG|0644, st_size=92887, ...}) = 0
+mmap2(NULL, 92887, PROT_READ, MAP_PRIVATE, 3, 0) = 0x76fa2000
+close(3)                                = 0
+openat(AT_FDCWD, "/lib/arm-linux-gnueabihf/libc.so.6", O_RDONLY|O_LARGEFILE|O_CLOEXEC) = 3
+read(3, "\177ELF\1\1\1\0\0\0\0\0\0\0\0\0\3\0(\0\1\0\0\0\300x\1\0004\0\0\0"..., 512) = 512
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+_llseek(3, 1293204, [1293204], SEEK_SET) = 0
+read(3, "\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"..., 2800) = 2800
+_llseek(3, 1289788, [1289788], SEEK_SET) = 0
+read(3, "A.\0\0\0aeabi\0\1$\0\0\0\0056\0\6\6\10\1\t\1\n\2\22\4\23\1\24"..., 47) = 47
+fstat64(3, {st_mode=S_IFREG|0755, st_size=1296004, ...}) = 0
+mmap2(NULL, 1364764, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x76e54000
+mprotect(0x76f8c000, 65536, PROT_NONE)  = 0
+mmap2(0x76f9c000, 12288, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x138000) = 0x76f9c000
+mmap2(0x76f9f000, 8988, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x76f9f000
+close(3)                                = 0
+set_tls(0x76ffd150)                     = 0
+mprotect(0x76f9c000, 8192, PROT_READ)   = 0
+mprotect(0x76fcc000, 4096, PROT_READ)   = 0
+mprotect(0x20000, 4096, PROT_READ)      = 0
+mprotect(0x76ffe000, 4096, PROT_READ)   = 0
+munmap(0x76fa2000, 92887)               = 0
+fstat64(1, {st_mode=S_IFREG|0644, st_size=5539, ...}) = 0
+brk(NULL)                               = 0x478000
+brk(0x499000)                           = 0x499000
+brk(0x4c1000)                           = 0x4c1000
+write(1, "Generating matrices...\nMultiplyi"..., 68Generating matrices...
+Multiplying matrices...
+Multiplication done!
+) = 68
+exit_group(0)                           = ?
++++ exited with 0 +++
