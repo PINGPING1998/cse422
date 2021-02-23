@@ -1,0 +1,7 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} pi@taraspberrypi:~/studio8 $ ./simple_fork 
+Before forking! I am the parent and my pid is: 1775
+After forking, the child's PID is: 1776
+I am a child and my PID is: 1776 and my parent's PID is: 1775.
+
