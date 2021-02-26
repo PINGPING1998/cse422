@@ -5,3 +5,38 @@ Before forking! I am the parent and my pid is: 1775
 After forking, the child's PID is: 1776
 I am a child and my PID is: 1776 and my parent's PID is: 1775.
 
+3} The program correctly spawns 15 proccesses.
+
+pi@taraspberrypi:~/studio8 $ ./tree_fork 4
+Parent's PID is: 1473
+Process belongs to generation: 0
+ and the pid is: 1474
+Process belongs to generation: 1
+ and the pid is: 1475
+Process belongs to generation: 2
+ and the pid is: 1476
+Process belongs to generation: 3
+ and the pid is: 1477
+Process belongs to generation: 3
+ and the pid is: 1478
+Process belongs to generation: 2
+ and the pid is: 1479
+Process belongs to generation: 3
+ and the pid is: 1480
+Process belongs to generation: 3
+ and the pid is: 1481
+Process belongs to generation: 1
+ and the pid is: 1482
+Process belongs to generation: 2
+ and the pid is: 1483
+Process belongs to generation: 3
+ and the pid is: 1484
+Process belongs to generation: 3
+ and the pid is: 1485
+Process belongs to generation: 2
+ and the pid is: 1486
+Process belongs to generation: 3
+ and the pid is: 1487
+Process belongs to generation: 3
+ and the pid is: 1488
+
