@@ -40,3 +40,8 @@ Process belongs to generation: 3
 Process belongs to generation: 3
  and the pid is: 1488
 
+4}
+pi@taraspberrypi:~/studio8 $ sudo dmesg
+[ 1910.455404] Foo is updated! It was 0 and is now 42
+[ 1932.761503] Bar is updated! It was 0 and is now 43
+[ 1942.608272] Baz is updated! It was 0 and is now 44
