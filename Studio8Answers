@@ -45,3 +45,22 @@ pi@taraspberrypi:~/studio8 $ sudo dmesg
 [ 1910.455404] Foo is updated! It was 0 and is now 42
 [ 1932.761503] Bar is updated! It was 0 and is now 43
 [ 1942.608272] Baz is updated! It was 0 and is now 44
+
+5}
+pi@taraspberrypi:~/studio8 $ sudo dmesg
+[26191.223571] Initial Command: systemd and Initial ID: 1
+[26387.912398] Parent Command: bash and  Parent ID: 5275
+[26387.912417] Task Command: sudo and Task PID: 7898
+[26387.912428] Parent Command: lxterminal and  Parent ID: 5266
+[26387.912434] Task Command: bash and Task PID: 5275
+[26387.912444] Parent Command: lxpanel and  Parent ID: 656
+[26387.912450] Task Command: lxterminal and Task PID: 5266
+[26387.912460] Parent Command: lxsession and  Parent ID: 575
+[26387.912466] Task Command: lxpanel and Task PID: 656
+[26387.912476] Parent Command: lightdm and  Parent ID: 553
+[26387.912482] Task Command: lxsession and Task PID: 575
+[26387.912492] Parent Command: lightdm and  Parent ID: 492
+[26387.912498] Task Command: lightdm and Task PID: 553
+[26387.912509] Parent Command: systemd and  Parent ID: 1
+[26387.912515] Task Command: lightdm and Task PID: 492
+
