@@ -63,3 +63,163 @@ NO PARAMS:
 ****discuss variation in timing
 
 4}
+PARAMS: log_sec = 2
+[  298.323087] Timer started!
+[  298.324210] Loop iteration has started: 0 
+[  298.324223] Voluntary Context Switches: 0 
+[  298.324231] Involuntary Context Swithced: 1 
+[  300.323274] Timer restarting!
+[  300.323314] Loop iteration has started: 1 
+[  300.323326] Voluntary Context Switches: 1 
+[  300.323336] Involuntary Context Swithced: 1 
+[  302.323450] Timer restarting!
+[  302.323516] Loop iteration has started: 2 
+[  302.323529] Voluntary Context Switches: 2 
+[  302.323539] Involuntary Context Swithced: 1 
+[  304.323628] Timer restarting!
+[  304.323695] Loop iteration has started: 3 
+[  304.323708] Voluntary Context Switches: 3 
+[  304.323719] Involuntary Context Swithced: 1 
+[  306.323793] Timer restarting!
+[  306.323863] Loop iteration has started: 4 
+[  306.323890] Voluntary Context Switches: 4 
+[  306.323902] Involuntary Context Swithced: 1 
+[  308.323956] Timer restarting!
+[  308.324026] Loop iteration has started: 5 
+[  308.324055] Voluntary Context Switches: 5 
+[  308.324065] Involuntary Context Swithced: 1 
+[  310.324114] Timer restarting!
+[  310.324154] Loop iteration has started: 6 
+[  310.324165] Voluntary Context Switches: 6 
+[  310.324179] Involuntary Context Swithced: 1 
+[  312.324271] Timer restarting!
+[  312.324335] Loop iteration has started: 7 
+[  312.324356] Voluntary Context Switches: 7 
+[  312.324366] Involuntary Context Swithced: 1 
+[  314.324426] Timer restarting!
+[  314.324497] Loop iteration has started: 8 
+[  314.324520] Voluntary Context Switches: 8 
+[  314.324530] Involuntary Context Swithced: 1 
+[  316.324575] Timer restarting!
+[  316.324642] Loop iteration has started: 9 
+[  316.324662] Voluntary Context Switches: 9 
+[  316.324673] Involuntary Context Swithced: 1 
+[  318.324719] Timer restarting!
+[  318.324788] Loop iteration has started: 10 
+[  318.324807] Voluntary Context Switches: 10 
+[  318.324817] Involuntary Context Swithced: 1 
+[  320.324858] Timer restarting!
+[  320.324915] Loop iteration has started: 11 
+[  320.324932] Voluntary Context Switches: 11 
+[  320.324940] Involuntary Context Swithced: 1 
+[  322.324999] Timer restarting!
+[  322.325074] Loop iteration has started: 12 
+[  322.325087] Voluntary Context Switches: 12 
+[  322.325098] Involuntary Context Swithced: 1 
+[  323.390090] Timer canceling!
+
+PARAMS: DEFAULT
+[  462.483667] Timer started!
+[  462.484274] Loop iteration has started: 0 
+[  462.484285] Voluntary Context Switches: 0 
+[  462.484290] Involuntary Context Swithced: 1 
+[  463.483692] Timer restarting!
+[  463.483738] Loop iteration has started: 1 
+[  463.483748] Voluntary Context Switches: 1 
+[  463.483756] Involuntary Context Swithced: 1 
+[  464.483717] Timer restarting!
+[  464.483780] Loop iteration has started: 2 
+[  464.483789] Voluntary Context Switches: 2 
+[  464.483797] Involuntary Context Swithced: 1 
+[  465.483734] Timer restarting!
+[  465.483778] Loop iteration has started: 3 
+[  465.483788] Voluntary Context Switches: 3 
+[  465.483796] Involuntary Context Swithced: 1 
+[  466.483762] Timer restarting!
+[  466.483814] Loop iteration has started: 4 
+[  466.483824] Voluntary Context Switches: 4 
+[  466.483832] Involuntary Context Swithced: 1 
+[  467.483783] Timer restarting!
+[  467.483832] Loop iteration has started: 5 
+[  467.483841] Voluntary Context Switches: 5 
+[  467.483849] Involuntary Context Swithced: 1 
+[  468.483807] Timer restarting!
+[  468.483857] Loop iteration has started: 6 
+[  468.483867] Voluntary Context Switches: 6 
+[  468.483875] Involuntary Context Swithced: 1 
+[  469.483828] Timer restarting!
+[  469.483876] Loop iteration has started: 7 
+[  469.483886] Voluntary Context Switches: 7 
+[  469.483894] Involuntary Context Swithced: 1 
+[  470.483847] Timer restarting!
+[  470.483898] Loop iteration has started: 8 
+[  470.483907] Voluntary Context Switches: 8 
+[  470.483925] Involuntary Context Swithced: 1 
+[  471.483872] Timer restarting!
+[  471.483909] Loop iteration has started: 9 
+[  471.483931] Voluntary Context Switches: 9 
+[  471.483939] Involuntary Context Swithced: 1 
+[  472.483893] Timer restarting!
+[  472.483935] Loop iteration has started: 10 
+[  472.483954] Voluntary Context Switches: 10 
+[  472.483970] Involuntary Context Swithced: 1 
+[  473.483913] Timer restarting!
+
+PARAMS: log_nsec=1000000
+[  593.967484] Timer started!
+[  593.968645] Loop iteration has started: 0 
+[  593.968661] Voluntary Context Switches: 1 
+[  593.968669] Involuntary Context Swithced: 1 
+[  594.968494] Timer restarting!
+[  594.969356] Loop iteration has started: 1 
+[  594.969370] Voluntary Context Switches: 2 
+[  594.969378] Involuntary Context Swithced: 1 
+[  595.969504] Timer restarting!
+[  595.970487] Loop iteration has started: 2 
+[  595.970500] Voluntary Context Switches: 3 
+[  595.970508] Involuntary Context Swithced: 1 
+[  596.970515] Timer restarting!
+[  596.970559] Loop iteration has started: 3 
+[  596.970570] Voluntary Context Switches: 4 
+[  596.970578] Involuntary Context Swithced: 1 
+[  597.971524] Timer restarting!
+[  597.971568] Loop iteration has started: 4 
+[  597.971577] Voluntary Context Switches: 5 
+[  597.971585] Involuntary Context Swithced: 1 
+[  598.972533] Timer restarting!
+[  598.972589] Loop iteration has started: 5 
+[  598.972598] Voluntary Context Switches: 6 
+[  598.972606] Involuntary Context Swithced: 1 
+[  599.973543] Timer restarting!
+[  599.973584] Loop iteration has started: 6 
+[  599.973592] Voluntary Context Switches: 7 
+[  599.973597] Involuntary Context Swithced: 1 
+[  600.974557] Timer restarting!
+[  600.974607] Loop iteration has started: 7 
+[  600.974618] Voluntary Context Switches: 8 
+[  600.974626] Involuntary Context Swithced: 1 
+[  601.975563] Timer restarting!
+[  601.975602] Loop iteration has started: 8 
+[  601.975612] Voluntary Context Switches: 9 
+[  601.975620] Involuntary Context Swithced: 1 
+[  602.976573] Timer restarting!
+[  602.976616] Loop iteration has started: 9 
+[  602.976627] Voluntary Context Switches: 10 
+[  602.976641] Involuntary Context Swithced: 1 
+[  603.977583] Timer restarting!
+[  603.977626] Loop iteration has started: 10 
+[  603.977635] Voluntary Context Switches: 11 
+[  603.977643] Involuntary Context Swithced: 1 
+[  604.978595] Timer restarting!
+[  604.978632] Loop iteration has started: 11 
+[  604.978642] Voluntary Context Switches: 12 
+[  604.978650] Involuntary Context Swithced: 1 
+[  605.979604] Timer restarting!
+[  605.979652] Loop iteration has started: 12 
+[  605.979663] Voluntary Context Switches: 13 
+[  605.979672] Involuntary Context Swithced: 1 
+[  606.980616] Timer restarting!
+[  606.980663] Loop iteration has started: 13 
+[  606.980673] Voluntary Context Switches: 14 
+[  606.980681] Involuntary Context Swithced: 1 
+[  607.604026] Timer canceling!
