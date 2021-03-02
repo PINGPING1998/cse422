@@ -1,0 +1,30 @@
+1} Tara Renduchintala: trenduchintala@wustl.edu
+   Anderson Gonzalez:
+   
+2} MODULE DESIGN
+We instantiated two static unsigned long variables. One for seconds and one for 
+Nanoseconds. We initialized the seconds to 1, as when the timer would be
+run wit default parameters, the timer would expire after 1 second. 
+
+We loaded the module parameters with the permission parameter set to 0. This 
+ensures that there is no readable or writable attribute. 
+
+3} TIMER DESIGN AND EVALUATION
+
+PARAMS: log_sec = 2 log_nsec = 0
+[ +11.868693] Timer started!
+[  +2.000015] Timer restarting!
+[  +2.000020] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000010] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000013] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000014] Timer restarting!
+[  +2.000016] Timer restarting!
+
+
+
