@@ -26,5 +26,37 @@ PARAMS: log_sec = 2 log_nsec = 0
 [  +2.000014] Timer restarting!
 [  +2.000016] Timer restarting!
 
+PARAMS: log_sec = 0 log_nsec=1,000,000
+[ 1773.595320] Timer restarting!
+[ 1773.596320] Timer restarting!
+[ 1773.597331] Timer restarting!
+[ 1773.598327] Timer restarting!
+[ 1773.599325] Timer restarting!
+[ 1773.600329] Timer restarting!
+[ 1773.601325] Timer restarting!
+[ 1773.602323] Timer restarting!
+[ 1773.603322] Timer restarting!
+[ 1773.604323] Timer restarting!
+[ 1773.605324] Timer restarting!
+[ 1773.606343] Timer restarting!
+[ 1773.607330] Timer restarting!
+[ 1773.608330] Timer restarting!
+[ 1773.609328] Timer restarting!
+[ 1773.610322] Timer restarting!
+[ 1773.611327] Timer restarting!
+[ 1773.612327] Timer restarting!
+
+NO PARAMS:
+[ +21.981041] Timer started!
+[  +1.000013] Timer restarting!
+[  +1.000009] Timer restarting!
+[  +1.000007] Timer restarting!
+[  +1.000011] Timer restarting!
+[  +1.000008] Timer restarting!
+[  +1.000006] Timer restarting!
+[  +1.000007] Timer restarting!
+[  +1.000006] Timer restarting!
+[  +1.000010] Timer restarting!
+
 
 
