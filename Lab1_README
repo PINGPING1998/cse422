@@ -141,3 +141,190 @@ PARAMS: log_nsec=1000000
 [  685.154578] Timer canceling!
 
 
+5}
+
+PARAMS: log_nsec = 2
+[Mar 2 16:28] Timer started!
+[  +0.000577] Loop iteration has started: 0 on Processor: 2 
+[  +0.000004] Loop iteration has started: 0 on Processor: 3 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000003] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000585] Loop iteration has started: 0 on Processor: 1 
+[  +0.000016] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000539] Loop iteration has started: 0 on Processor: 0 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +1.998317] Timer restarting!
+[  +0.000042] Loop iteration has started: 1 on Processor: 0 
+[  +0.000003] Loop iteration has started: 1 on Processor: 1 
+[  +0.000004] Loop iteration has started: 1 on Processor: 2 
+[  +0.000004] Loop iteration has started: 1 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000005] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +1.999994] Timer restarting!
+[  +0.000048] Loop iteration has started: 2 on Processor: 0 
+[  +0.000005] Loop iteration has started: 2 on Processor: 2 
+[  +0.000004] Loop iteration has started: 2 on Processor: 1 
+[  +0.000006] Loop iteration has started: 2 on Processor: 3 
+[  +0.000006] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000006] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000005] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000014] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +1.999963] Timer restarting!
+[  +0.000060] Loop iteration has started: 3 on Processor: 2 
+[  +0.000007] Loop iteration has started: 3 on Processor: 3 
+[  +0.000006] Loop iteration has started: 3 on Processor: 1 
+[  +0.000005] Loop iteration has started: 3 on Processor: 0 
+[  +0.000007] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000005] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000014] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +1.999951] Timer restarting!
+[  +0.000053] Loop iteration has started: 4 on Processor: 2 
+[  +0.000006] Loop iteration has started: 4 on Processor: 3 
+[  +0.000011] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000006] Loop iteration has started: 4 on Processor: 1 
+[  +0.000006] Loop iteration has started: 4 on Processor: 0 
+[  +0.000010] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 1
+
+PARAMS: DEFAULT
+[Mar 2 16:32] Timer started!
+[  +0.000737] Loop iteration has started: 0 on Processor: 0 
+[  +0.000003] Loop iteration has started: 0 on Processor: 1 
+[  +0.000012] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000037] Loop iteration has started: 0 on Processor: 3 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.002723] Loop iteration has started: 0 on Processor: 2 
+[  +0.000018] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.996473] Timer restarting!
+[  +0.000035] Loop iteration has started: 1 on Processor: 0 
+[  +0.000012] Loop iteration has started: 1 on Processor: 2 
+[  +0.000009] Loop iteration has started: 1 on Processor: 1 
+[  +0.000004] Loop iteration has started: 1 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000010] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.999932] Timer restarting!
+[  +0.000040] Loop iteration has started: 2 on Processor: 0 
+[  +0.000004] Loop iteration has started: 2 on Processor: 2 
+[  +0.000009] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Loop iteration has started: 2 on Processor: 1 
+[  +0.000004] Loop iteration has started: 2 on Processor: 3 
+[  +0.000007] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000008] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.999936] Timer restarting!
+[  +0.000039] Loop iteration has started: 3 on Processor: 0 
+[  +0.000004] Loop iteration has started: 3 on Processor: 1 
+[  +0.000003] Loop iteration has started: 3 on Processor: 2 
+[  +0.000004] Loop iteration has started: 3 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000006] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.999952] Timer restarting!
+[  +0.000047] Loop iteration has started: 4 on Processor: 2 
+[  +0.000004] Loop iteration has started: 4 on Processor: 0 
+[  +0.000004] Loop iteration has started: 4 on Processor: 3 
+[  +0.000004] Loop iteration has started: 4 on Processor: 1 
+[  +0.000008] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000003] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000004] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.999952] Timer restarting!
+[  +0.000048] Loop iteration has started: 5 on Processor: 0 
+[  +0.000004] Loop iteration has started: 5 on Processor: 2 
+[  +0.000009] Loop iteration has started: 5 on Processor: 3 
+[  +0.000006] Loop iteration has started: 5 on Processor: 1 
+[  +0.000005] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 3
+
+PARAMS: log_nsec=1000000
+[ 1793.417683] Timer restarting!
+[ 1793.417728] Loop iteration has started: 6 on Processor: 1 
+[ 1793.417731] Loop iteration has started: 6 on Processor: 2 
+[ 1793.417735] Loop iteration has started: 6 on Processor: 3 
+[ 1793.417739] Loop iteration has started: 6 on Processor: 0 
+[ 1793.417743] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1793.417746] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1793.417751] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1793.417755] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1794.418696] Timer restarting!
+[ 1794.418739] Loop iteration has started: 7 on Processor: 0 
+[ 1794.418742] Loop iteration has started: 7 on Processor: 3 
+[ 1794.418746] Loop iteration has started: 7 on Processor: 1 
+[ 1794.418750] Loop iteration has started: 7 on Processor: 2 
+[ 1794.418754] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1794.418757] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1794.418763] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1794.418767] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1795.419702] Timer restarting!
+[ 1795.419742] Loop iteration has started: 8 on Processor: 3 
+[ 1795.419745] Loop iteration has started: 8 on Processor: 1 
+[ 1795.419747] Loop iteration has started: 8 on Processor: 0 
+[ 1795.419750] Loop iteration has started: 8 on Processor: 2 
+[ 1795.419753] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1795.419756] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1795.419759] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1795.419761] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1796.420715] Timer restarting!
+[ 1796.420769] Loop iteration has started: 9 on Processor: 0 
+[ 1796.420773] Loop iteration has started: 9 on Processor: 1 
+[ 1796.420776] Loop iteration has started: 9 on Processor: 2 
+[ 1796.420786] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1796.420789] Loop iteration has started: 9 on Processor: 3 
+[ 1796.420793] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1796.420799] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1796.420803] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1797.421720] Timer restarting!
+[ 1797.421757] Loop iteration has started: 10 on Processor: 1 
+[ 1797.421760] Loop iteration has started: 10 on Processor: 2 
+[ 1797.421762] Loop iteration has started: 10 on Processor: 0 
+[ 1797.421766] Loop iteration has started: 10 on Processor: 3 
+[ 1797.421770] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1797.421773] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1797.421776] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1797.421783] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1798.422739] Timer restarting!
+[ 1798.422783] Loop iteration has started: 11 on Processor: 1 
+[ 1798.422787] Loop iteration has started: 11 on Processor: 2 
+[ 1798.422791] Loop iteration has started: 11 on Processor: 0 
+[ 1798.422798] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1798.422802] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1798.422807] Loop iteration has started: 11 on Processor: 3 
+[ 1798.422817] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1798.422820] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1799.423751] Timer restarting!
+[ 1799.423796] Loop iteration has started: 12 on Processor: 1 
+[ 1799.423802] Loop iteration has started: 12 on Processor: 0 
+[ 1799.423805] Loop iteration has started: 12 on Processor: 2 
+[ 1799.423815] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1799.423819] Loop iteration has started: 12 on Processor: 3 
+[ 1799.423823] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1799.423831] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1799.423835] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1800.424756] Timer restarting!
+[ 1800.424798] Loop iteration has started: 13 on Processor: 0 
+[ 1800.424802] Loop iteration has started: 13 on Processor: 1 
+[ 1800.424806] Loop iteration has started: 13 on Processor: 2 
+[ 1800.424815] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1800.424819] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1800.424822] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1800.424826] Loop iteration has started: 13 on Processor: 3 
+[ 1800.424837] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1801.425773] Timer restarting!
+[ 1801.425834] Loop iteration has started: 14 on Processor: 1 
+[ 1801.425838] Loop iteration has started: 14 on Processor: 3 
+[ 1801.425842] Loop iteration has started: 14 on Processor: 2 
+[ 1801.425848] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1801.425852] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1801.425863] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1801.425870] Loop iteration has started: 14 on Processor: 0 
+[ 1801.425881] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1801.493793] Timer canceling!
+
