@@ -81,7 +81,22 @@ it seems as though this variation is constant throughout the timer (ie. the inte
 all the runs but is not exactly the interval specified). Additionally, the actual interval is always either the same or longer 
 than the specified interval. 
 
-4}
+-----------------------------4} THREAD DESIGN AND EVALUATION-----------------------------------------------
+
+We added another variable which held a pointer to the kernel thread of the module. We then created another function
+that would run when a kernel thread was spawned by the module. The purpose of this function was to show that the 
+module ran, thus at the start we just had a simple print statement saying "thread_start started" (thread_start being the
+name of our function that was called when a thread was spawned). Then, in the init funciton, a kernel thread was spawed such that
+when the module loaded, kthread_run() would create the thread and store teh result of the call (which was a thread) in the 
+pointer variable that we specified at the start. We called our pointer variable "task1". 
+
+
+We then modified the "thread_star" function to show how many voluntary and involuntary context switches occured in the 
+thread. We marked the task as "INTERRUPTIBLE" and then used schedule to ensure that the thread would suspend it's execution until
+woken up again. All of this was done inside a loop that was regulated by the function kthread_shou.d_stop(). If the thread did indeed 
+need to stop, the loop would be exited and the function would return a 0. We then modified the expiration function to wake up the thread so that
+if it expires, the thread continues to iterate through the loop. 
+
 PARAMS: log_sec = 2
 [  488.839960] Timer started!
 [  488.840161] Loop iteration has started: 0 ; Volutary Context Switches: 1 ; Involuntary Context Switches: 0
@@ -158,6 +173,12 @@ PARAMS: log_nsec=1000000
 [  685.154511] Timer restarting!
 [  685.154537] Loop iteration has started: 7567 ; Volutary Context Switches: 7567 ; Involuntary Context Switches: 1
 [  685.154578] Timer canceling!
+
+
+The variation seen in the timing is similar to that of the earlier runs. It is only off by a couple of micro-seconds. 
+The kernel thread was voluntarily prempted when it was expired, and the involutary context switch only occured once, so
+perhaps there was something else running when the module was loaded or unloaded that took over the processor at the beginning
+of the run. The involuntary context switches remained around 0 or 1. 
 
 
 5}
