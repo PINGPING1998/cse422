@@ -181,7 +181,9 @@ perhaps there was something else running when the module was loaded or unloaded 
 of the run. The involuntary context switches remained around 0 or 1. 
 
 
-5}
+--------------------------5} MULTI-THREADING DESIGN AND EVALUATION----------------------------------
+
+//WRITEUP HERE
 
 PARAMS: log_nsec = 2
 [Mar 2 16:28] Timer started!
@@ -368,4 +370,19 @@ PARAMS: log_nsec=1000000
 [ 1801.425881] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 0
 [ 1801.493793] Timer canceling!
 
-6} Picture is in Lab1 folder
+//EVALUATION HERE
+
+----------------------------------------6} TRACE.PNG ---------------------------------------
+Submitted with Lab
+
+----------------------------------------7} SYSTEM PERFORMANCE-------------------------------
+Most of the time, the threads ran to completion as there were very few Involuntary context
+switches and mostly voluntary context switches. The only thing that was able to prement them was the
+schedule switcher, which is shown in one of the screenshots that was submitted along with the lab. 
+
+The total execution time of the thread wake ups was 77 microseconds.
+
+In regards to jitter:
+Maximum Time:
+Minimum Time:
+Mean Time: 
