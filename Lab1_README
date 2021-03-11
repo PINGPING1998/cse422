@@ -1,17 +1,34 @@
 1} Tara Renduchintala: trenduchintala@wustl.edu
    Anderson Gonzalez:
    
-2} MODULE DESIGN
-We instantiated two static unsigned long variables. One for seconds and one for 
-Nanoseconds. We initialized the seconds to 1, as when the timer would be
-run wit default parameters, the timer would expire after 1 second. 
+-----------------------2} MODULE DESIGN--------------------------------------
 
-We loaded the module parameters with the permission parameter set to 0. This 
-ensures that there is no readable or writable attribute. 
+Using the "Hello World" module from the book as our base, we created the timer module with similar header
+files. We instantiated two static unsigned long variables. One for seconds and one for 
+Nanoseconds. We initialized the seconds to 1, as when the timer would be run with default parameters, the timer 
+would expire after 1 second. We loaded the module parameters with the permission parameter set to 0. This 
+ensures that there is no readable or writable attribute. In order to see what parameters were being
+used when nothing was passed in to the module, we were required to use printk as that was the only way to 
+definitively see what interval was being used (aside from actually paying attention to the time each 
+timer restarts).
 
-3} TIMER DESIGN AND EVALUATION
 
-PARAMS: log_sec = 2 log_nsec = 0
+-----------------------3} TIMER DESIGN AND EVALUATION-----------------------------------
+
+We added static variables to our program to keep track of the timer and the timer interval. We then wrote the 
+hrtimer expiration function which returns an enumeraiton of hrtimer_restart (indicating whether or not the 
+timer has been restarted) and took an input of the timer. In the body of the function, we used hrtimer_forward_now() to 
+reschedule the timer's next eperiation as it took in more simple parameters (just the timer and the interval) than 
+hrtimer_forward() seemed to. hrtimer_forward_now schedules the timer to expire one interval in the future. 
+
+Then, in the init we initialized the timers, set the interval and started teh timers. The interval was set using ktime_set() which was passed
+the parameters of log_sec and log_nsec. The module's timer was set to use a Monotonic Clock. Additionally, we pointed
+the function field of the timer ot point to the expiration function we created above. The init function then started the timer and schedule the first 
+expiration. After the first expiration, the expiration funciton would contiue to reschedule the timer. The exit function simply undid what the
+init function did, which is to say it canceled the timer. 
+
+-------SAMEPLE RUNS-------------
+***PARAMS: log_sec = 2 log_nsec = 0***
 [ +11.868693] Timer started!
 [  +2.000015] Timer restarting!
 [  +2.000020] Timer restarting!
@@ -26,7 +43,7 @@ PARAMS: log_sec = 2 log_nsec = 0
 [  +2.000014] Timer restarting!
 [  +2.000016] Timer restarting!
 
-PARAMS: log_sec = 0 log_nsec=1,000,000
+****PARAMS: log_sec = 0 log_nsec=1,000,000*****
 [ 1773.595320] Timer restarting!
 [ 1773.596320] Timer restarting!
 [ 1773.597331] Timer restarting!
@@ -46,7 +63,7 @@ PARAMS: log_sec = 0 log_nsec=1,000,000
 [ 1773.611327] Timer restarting!
 [ 1773.612327] Timer restarting!
 
-NO PARAMS:
+*****NO PARAMS (DEFAULT):******
 [ +21.981041] Timer started!
 [  +1.000013] Timer restarting!
 [  +1.000009] Timer restarting!
@@ -59,8 +76,7 @@ NO PARAMS:
 [  +1.000010] Timer restarting!
 
 
-****discuss implementation
-****discuss variation in timing
+The timing for each interval is quite accurate. 
 
 4}
 PARAMS: log_sec = 2
