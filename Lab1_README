@@ -76,7 +76,10 @@ init function did, which is to say it canceled the timer.
 [  +1.000010] Timer restarting!
 
 
-The timing for each interval is quite accurate. 
+The timing for each interval is quite accurate. They tend to vary by a measure of a few microseconds. However,
+it seems as though this variation is constant throughout the timer (ie. the interval is relatively the same throughout
+all the runs but is not exactly the interval specified). Additionally, the actual interval is always either the same or longer 
+than the specified interval. 
 
 4}
 PARAMS: log_sec = 2
