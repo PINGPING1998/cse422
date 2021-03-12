@@ -383,11 +383,11 @@ schedule switcher, which is shown in one of the screenshots that was submitted a
 The total execution time of the thread wake ups was 77 microseconds.
 
 ***JITTER******
-Maximum Time:21 μs
+Maximum Time:17 μs
 Minimum Time:8μs
-Mean Time: 11 μs
+Mean Time: 22 μs
 
-1) 8μs
+1) 28μs
 2) 21 μs
 3) 17 μs
 
