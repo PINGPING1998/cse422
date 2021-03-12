@@ -1,0 +1,430 @@
+LAB 1 WRITEUP
+
+
+1} Tara Renduchintala: trenduchintala@wustl.edu
+   Anderson Gonzalez: anderson.g@wustl.edu
+   
+-----------------------2} MODULE DESIGN--------------------------------------
+
+Using the "Hello World" module from the book as our base, we created the timer module with similar header
+files. We instantiated two static unsigned long variables. One for seconds and one for 
+Nanoseconds. We initialized the seconds to 1, as when the timer would be run with default parameters, the timer 
+would expire after 1 second. We loaded the module parameters with the permission parameter set to 0. This 
+ensures that there is no readable or writable attribute. In order to see what parameters were being
+used when nothing was passed in to the module, we were required to use printk as that was the only way to 
+definitively see what interval was being used (aside from actually paying attention to the time each 
+timer restarts).
+
+
+-----------------------3} TIMER DESIGN AND EVALUATION-----------------------------------
+
+We added static variables to our program to keep track of the timer and the timer interval. We then wrote the 
+hrtimer expiration function which returns an enumeraiton of hrtimer_restart (indicating whether or not the 
+timer has been restarted) and took an input of the timer. In the body of the function, we used hrtimer_forward_now() to 
+reschedule the timer's next eperiation as it took in more simple parameters (just the timer and the interval) than 
+hrtimer_forward() seemed to. hrtimer_forward_now schedules the timer to expire one interval in the future. 
+
+Then, in the init we initialized the timers, set the interval and started teh timers. The interval was set using ktime_set() which was passed
+the parameters of log_sec and log_nsec. The module's timer was set to use a Monotonic Clock. Additionally, we pointed
+the function field of the timer ot point to the expiration function we created above. The init function then started the timer and schedule the first 
+expiration. After the first expiration, the expiration funciton would contiue to reschedule the timer. The exit function simply undid what the
+init function did, which is to say it canceled the timer. 
+
+-------SAMEPLE RUNS-------------
+***PARAMS: log_sec = 2 log_nsec = 0***
+[ +11.868693] Timer started!
+[  +2.000015] Timer restarting!
+[  +2.000020] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000010] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000013] Timer restarting!
+[  +2.000017] Timer restarting!
+[  +2.000016] Timer restarting!
+[  +2.000014] Timer restarting!
+[  +2.000016] Timer restarting!
+
+****PARAMS: log_sec = 0 log_nsec=1,000,000*****
+[ 1773.595320] Timer restarting!
+[ 1773.596320] Timer restarting!
+[ 1773.597331] Timer restarting!
+[ 1773.598327] Timer restarting!
+[ 1773.599325] Timer restarting!
+[ 1773.600329] Timer restarting!
+[ 1773.601325] Timer restarting!
+[ 1773.602323] Timer restarting!
+[ 1773.603322] Timer restarting!
+[ 1773.604323] Timer restarting!
+[ 1773.605324] Timer restarting!
+[ 1773.606343] Timer restarting!
+[ 1773.607330] Timer restarting!
+[ 1773.608330] Timer restarting!
+[ 1773.609328] Timer restarting!
+[ 1773.610322] Timer restarting!
+[ 1773.611327] Timer restarting!
+[ 1773.612327] Timer restarting!
+
+*****NO PARAMS (DEFAULT):******
+[ +21.981041] Timer started!
+[  +1.000013] Timer restarting!
+[  +1.000009] Timer restarting!
+[  +1.000007] Timer restarting!
+[  +1.000011] Timer restarting!
+[  +1.000008] Timer restarting!
+[  +1.000006] Timer restarting!
+[  +1.000007] Timer restarting!
+[  +1.000006] Timer restarting!
+[  +1.000010] Timer restarting!
+
+
+The timing for each interval is quite accurate. They tend to vary by a measure of a few microseconds. However,
+it seems as though this variation is constant throughout the timer (ie. the interval is relatively the same throughout
+all the runs but is not exactly the interval specified). Additionally, the actual interval is always either the same or longer 
+than the specified interval. 
+
+-----------------------------4} THREAD DESIGN AND EVALUATION-----------------------------------------------
+
+We added another variable which held a pointer to the kernel thread of the module. We then created another function
+that would run when a kernel thread was spawned by the module. The purpose of this function was to show that the 
+module ran, thus at the start we just had a simple print statement saying "thread_start started" (thread_start being the
+name of our function that was called when a thread was spawned). Then, in the init funciton, a kernel thread was spawed such that
+when the module loaded, kthread_run() would create the thread and store teh result of the call (which was a thread) in the 
+pointer variable that we specified at the start. We called our pointer variable "task1". 
+
+
+We then modified the "thread_star" function to show how many voluntary and involuntary context switches occured in the 
+thread. We marked the task as "INTERRUPTIBLE" and then used schedule to ensure that the thread would suspend it's execution until
+woken up again. All of this was done inside a loop that was regulated by the function kthread_shou.d_stop(). If the thread did indeed 
+need to stop, the loop would be exited and the function would return a 0. We then modified the expiration function to wake up the thread so that
+if it expires, the thread continues to iterate through the loop. 
+
+PARAMS: log_sec = 2
+[  488.839960] Timer started!
+[  488.840161] Loop iteration has started: 0 ; Volutary Context Switches: 1 ; Involuntary Context Switches: 0
+[  490.839961] Timer restarting!
+[  490.840015] Loop iteration has started: 1 ; Volutary Context Switches: 2 ; Involuntary Context Switches: 0
+[  492.839955] Timer restarting!
+[  492.840014] Loop iteration has started: 2 ; Volutary Context Switches: 3 ; Involuntary Context Switches: 0
+[  494.839947] Timer restarting!
+[  494.839991] Loop iteration has started: 3 ; Volutary Context Switches: 4 ; Involuntary Context Switches: 0
+[  496.839942] Timer restarting!
+[  496.839990] Loop iteration has started: 4 ; Volutary Context Switches: 5 ; Involuntary Context Switches: 0
+[  498.839940] Timer restarting!
+[  498.840000] Loop iteration has started: 5 ; Volutary Context Switches: 6 ; Involuntary Context Switches: 0
+[  500.839937] Timer restarting!
+[  500.840005] Loop iteration has started: 6 ; Volutary Context Switches: 7 ; Involuntary Context Switches: 0
+[  502.839931] Timer restarting!
+[  502.839978] Loop iteration has started: 7 ; Volutary Context Switches: 8 ; Involuntary Context Switches: 0
+[  504.839923] Timer restarting!
+[  504.839973] Loop iteration has started: 8 ; Volutary Context Switches: 9 ; Involuntary Context Switches: 0
+[  506.839917] Timer restarting!
+[  506.839964] Loop iteration has started: 9 ; Volutary Context Switches: 10 ; Involuntary Context Switches: 0
+[  508.839914] Timer restarting!
+[  508.839960] Loop iteration has started: 10 ; Volutary Context Switches: 11 ; Involuntary Context Switches: 0
+[  510.839909] Timer restarting!
+[  510.839970] Loop iteration has started: 11 ; Volutary Context Switches: 12 ; Involuntary Context Switches: 0
+[  512.839902] Timer restarting!
+[  512.839956] Loop iteration has started: 12 ; Volutary Context Switches: 13 ; Involuntary Context Switches: 0
+[  513.909963] Timer canceling!
+
+
+PARAMS: DEFAULT
+[  614.035536] Timer started!
+[  614.035747] Loop iteration has started: 0 ; Volutary Context Switches: 1 ; Involuntary Context Switches: 0
+[  615.035545] Timer restarting!
+[  615.035612] Loop iteration has started: 1 ; Volutary Context Switches: 2 ; Involuntary Context Switches: 0
+[  616.035539] Timer restarting!
+[  616.035588] Loop iteration has started: 2 ; Volutary Context Switches: 3 ; Involuntary Context Switches: 0
+[  617.035535] Timer restarting!
+[  617.035579] Loop iteration has started: 3 ; Volutary Context Switches: 4 ; Involuntary Context Switches: 0
+[  618.035530] Timer restarting!
+[  618.035565] Loop iteration has started: 4 ; Volutary Context Switches: 5 ; Involuntary Context Switches: 0
+[  619.035531] Timer restarting!
+[  619.035577] Loop iteration has started: 5 ; Volutary Context Switches: 6 ; Involuntary Context Switches: 0
+[  620.035533] Timer restarting!
+[  620.035586] Loop iteration has started: 6 ; Volutary Context Switches: 7 ; Involuntary Context Switches: 0
+[  621.035524] Timer restarting!
+[  621.035581] Loop iteration has started: 7 ; Volutary Context Switches: 8 ; Involuntary Context Switches: 0
+[  622.035525] Timer restarting!
+[  622.035577] Loop iteration has started: 8 ; Volutary Context Switches: 9 ; Involuntary Context Switches: 0
+[  623.035524] Timer restarting!
+[  623.035577] Loop iteration has started: 9 ; Volutary Context Switches: 10 ; Involuntary Context Switches: 0
+[  624.035519] Timer restarting!
+[  624.035561] Loop iteration has started: 10 ; Volutary Context Switches: 11 ; Involuntary Context Switches: 0
+[  625.035514] Timer restarting!
+[  625.035547] Loop iteration has started: 11 ; Volutary Context Switches: 12 ; Involuntary Context Switches: 0
+[  626.035512] Timer restarting!
+[  626.035565] Loop iteration has started: 12 ; Volutary Context Switches: 13 ; Involuntary Context Switches: 0
+[  626.795040] Timer canceling!
+
+
+PARAMS: log_nsec=1000000
+[  685.148512] Timer restarting!
+[  685.148531] Loop iteration has started: 7561 ; Volutary Context Switches: 7561 ; Involuntary Context Switches: 1
+[  685.149510] Timer restarting!
+[  685.149531] Loop iteration has started: 7562 ; Volutary Context Switches: 7562 ; Involuntary Context Switches: 1
+[  685.150517] Timer restarting!
+[  685.150555] Loop iteration has started: 7563 ; Volutary Context Switches: 7563 ; Involuntary Context Switches: 1
+[  685.151509] Timer restarting!
+[  685.151528] Loop iteration has started: 7564 ; Volutary Context Switches: 7564 ; Involuntary Context Switches: 1
+[  685.152505] Timer restarting!
+[  685.152520] Loop iteration has started: 7565 ; Volutary Context Switches: 7565 ; Involuntary Context Switches: 1
+[  685.153505] Timer restarting!
+[  685.153519] Loop iteration has started: 7566 ; Volutary Context Switches: 7566 ; Involuntary Context Switches: 1
+[  685.154511] Timer restarting!
+[  685.154537] Loop iteration has started: 7567 ; Volutary Context Switches: 7567 ; Involuntary Context Switches: 1
+[  685.154578] Timer canceling!
+
+
+The variation seen in the timing is similar to that of the earlier runs. It is only off by a couple of micro-seconds. 
+The kernel thread was voluntarily prempted when it was expired, and the involutary context switch only occured once, so
+perhaps there was something else running when the module was loaded or unloaded that took over the processor at the beginning
+of the run. The involuntary context switches remained around 0 or 1. 
+
+
+--------------------------5} MULTI-THREADING DESIGN AND EVALUATION----------------------------------
+
+We changed our task1 task_struct pointer to be cpu1, and then created three more variables such that each CPU had it's own task
+struct variable to store the process running on that CPU. In the initialization function, we needed to change kthread_run to a sequence
+of {kthread_create(), kthread_bind, and wake_up_process} for EACH of the threads. kthread_create created the thread, kthread_bind bound it
+to one core (CPU), and then wake_up_process began the first timer. The exit function then had to undo all of that, meaning it stopped the 
+all of the processes. In the expiration function, wake_up_process had to be called four times making sure that on expiration, each one wakes up another
+iteration for the timers. Other than making four of each thread, or relative structure of the module remained relatively unchanged.
+
+We then inserted print statements to ensure that not only each thread was running on a different processors, but also
+that it was appropriately waking up all the timers. We also wanted to see the amount of voluntary and involuntary context switches that occured. 
+
+
+PARAMS: log_nsec = 2
+[Mar 2 16:28] Timer started!
+[  +0.000577] Loop iteration has started: 0 on Processor: 2 
+[  +0.000004] Loop iteration has started: 0 on Processor: 3 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000003] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000585] Loop iteration has started: 0 on Processor: 1 
+[  +0.000016] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000539] Loop iteration has started: 0 on Processor: 0 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +1.998317] Timer restarting!
+[  +0.000042] Loop iteration has started: 1 on Processor: 0 
+[  +0.000003] Loop iteration has started: 1 on Processor: 1 
+[  +0.000004] Loop iteration has started: 1 on Processor: 2 
+[  +0.000004] Loop iteration has started: 1 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000005] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +1.999994] Timer restarting!
+[  +0.000048] Loop iteration has started: 2 on Processor: 0 
+[  +0.000005] Loop iteration has started: 2 on Processor: 2 
+[  +0.000004] Loop iteration has started: 2 on Processor: 1 
+[  +0.000006] Loop iteration has started: 2 on Processor: 3 
+[  +0.000006] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000006] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000005] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000014] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +1.999963] Timer restarting!
+[  +0.000060] Loop iteration has started: 3 on Processor: 2 
+[  +0.000007] Loop iteration has started: 3 on Processor: 3 
+[  +0.000006] Loop iteration has started: 3 on Processor: 1 
+[  +0.000005] Loop iteration has started: 3 on Processor: 0 
+[  +0.000007] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000005] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000014] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +1.999951] Timer restarting!
+[  +0.000053] Loop iteration has started: 4 on Processor: 2 
+[  +0.000006] Loop iteration has started: 4 on Processor: 3 
+[  +0.000011] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000006] Loop iteration has started: 4 on Processor: 1 
+[  +0.000006] Loop iteration has started: 4 on Processor: 0 
+[  +0.000010] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 1
+
+PARAMS: DEFAULT
+[Mar 2 16:32] Timer started!
+[  +0.000737] Loop iteration has started: 0 on Processor: 0 
+[  +0.000003] Loop iteration has started: 0 on Processor: 1 
+[  +0.000012] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000037] Loop iteration has started: 0 on Processor: 3 
+[  +0.000010] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.002723] Loop iteration has started: 0 on Processor: 2 
+[  +0.000018] Voluntary Context Switches: 1 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.996473] Timer restarting!
+[  +0.000035] Loop iteration has started: 1 on Processor: 0 
+[  +0.000012] Loop iteration has started: 1 on Processor: 2 
+[  +0.000009] Loop iteration has started: 1 on Processor: 1 
+[  +0.000004] Loop iteration has started: 1 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000010] Voluntary Context Switches: 2 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.999932] Timer restarting!
+[  +0.000040] Loop iteration has started: 2 on Processor: 0 
+[  +0.000004] Loop iteration has started: 2 on Processor: 2 
+[  +0.000009] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Loop iteration has started: 2 on Processor: 1 
+[  +0.000004] Loop iteration has started: 2 on Processor: 3 
+[  +0.000007] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000008] Voluntary Context Switches: 3 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.999936] Timer restarting!
+[  +0.000039] Loop iteration has started: 3 on Processor: 0 
+[  +0.000004] Loop iteration has started: 3 on Processor: 1 
+[  +0.000003] Loop iteration has started: 3 on Processor: 2 
+[  +0.000004] Loop iteration has started: 3 on Processor: 3 
+[  +0.000004] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000003] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000006] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 4 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.999952] Timer restarting!
+[  +0.000047] Loop iteration has started: 4 on Processor: 2 
+[  +0.000004] Loop iteration has started: 4 on Processor: 0 
+[  +0.000004] Loop iteration has started: 4 on Processor: 3 
+[  +0.000004] Loop iteration has started: 4 on Processor: 1 
+[  +0.000008] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 3
+[  +0.000003] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000003] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 1
+[  +0.000004] Voluntary Context Switches: 5 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.999952] Timer restarting!
+[  +0.000048] Loop iteration has started: 5 on Processor: 0 
+[  +0.000004] Loop iteration has started: 5 on Processor: 2 
+[  +0.000009] Loop iteration has started: 5 on Processor: 3 
+[  +0.000006] Loop iteration has started: 5 on Processor: 1 
+[  +0.000005] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 0
+[  +0.000004] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 2
+[  +0.000004] Voluntary Context Switches: 6 ; Involuntary Context Switches: 0 ; on Processor: 3
+
+PARAMS: log_nsec=1000000
+[ 1793.417683] Timer restarting!
+[ 1793.417728] Loop iteration has started: 6 on Processor: 1 
+[ 1793.417731] Loop iteration has started: 6 on Processor: 2 
+[ 1793.417735] Loop iteration has started: 6 on Processor: 3 
+[ 1793.417739] Loop iteration has started: 6 on Processor: 0 
+[ 1793.417743] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1793.417746] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1793.417751] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1793.417755] Voluntary Context Switches: 7 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1794.418696] Timer restarting!
+[ 1794.418739] Loop iteration has started: 7 on Processor: 0 
+[ 1794.418742] Loop iteration has started: 7 on Processor: 3 
+[ 1794.418746] Loop iteration has started: 7 on Processor: 1 
+[ 1794.418750] Loop iteration has started: 7 on Processor: 2 
+[ 1794.418754] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1794.418757] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1794.418763] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1794.418767] Voluntary Context Switches: 8 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1795.419702] Timer restarting!
+[ 1795.419742] Loop iteration has started: 8 on Processor: 3 
+[ 1795.419745] Loop iteration has started: 8 on Processor: 1 
+[ 1795.419747] Loop iteration has started: 8 on Processor: 0 
+[ 1795.419750] Loop iteration has started: 8 on Processor: 2 
+[ 1795.419753] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1795.419756] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1795.419759] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1795.419761] Voluntary Context Switches: 9 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1796.420715] Timer restarting!
+[ 1796.420769] Loop iteration has started: 9 on Processor: 0 
+[ 1796.420773] Loop iteration has started: 9 on Processor: 1 
+[ 1796.420776] Loop iteration has started: 9 on Processor: 2 
+[ 1796.420786] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1796.420789] Loop iteration has started: 9 on Processor: 3 
+[ 1796.420793] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1796.420799] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1796.420803] Voluntary Context Switches: 10 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1797.421720] Timer restarting!
+[ 1797.421757] Loop iteration has started: 10 on Processor: 1 
+[ 1797.421760] Loop iteration has started: 10 on Processor: 2 
+[ 1797.421762] Loop iteration has started: 10 on Processor: 0 
+[ 1797.421766] Loop iteration has started: 10 on Processor: 3 
+[ 1797.421770] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1797.421773] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1797.421776] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1797.421783] Voluntary Context Switches: 11 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1798.422739] Timer restarting!
+[ 1798.422783] Loop iteration has started: 11 on Processor: 1 
+[ 1798.422787] Loop iteration has started: 11 on Processor: 2 
+[ 1798.422791] Loop iteration has started: 11 on Processor: 0 
+[ 1798.422798] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1798.422802] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1798.422807] Loop iteration has started: 11 on Processor: 3 
+[ 1798.422817] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1798.422820] Voluntary Context Switches: 12 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1799.423751] Timer restarting!
+[ 1799.423796] Loop iteration has started: 12 on Processor: 1 
+[ 1799.423802] Loop iteration has started: 12 on Processor: 0 
+[ 1799.423805] Loop iteration has started: 12 on Processor: 2 
+[ 1799.423815] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1799.423819] Loop iteration has started: 12 on Processor: 3 
+[ 1799.423823] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1799.423831] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1799.423835] Voluntary Context Switches: 13 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1800.424756] Timer restarting!
+[ 1800.424798] Loop iteration has started: 13 on Processor: 0 
+[ 1800.424802] Loop iteration has started: 13 on Processor: 1 
+[ 1800.424806] Loop iteration has started: 13 on Processor: 2 
+[ 1800.424815] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1800.424819] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1800.424822] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1800.424826] Loop iteration has started: 13 on Processor: 3 
+[ 1800.424837] Voluntary Context Switches: 14 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1801.425773] Timer restarting!
+[ 1801.425834] Loop iteration has started: 14 on Processor: 1 
+[ 1801.425838] Loop iteration has started: 14 on Processor: 3 
+[ 1801.425842] Loop iteration has started: 14 on Processor: 2 
+[ 1801.425848] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 3
+[ 1801.425852] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 1
+[ 1801.425863] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 2
+[ 1801.425870] Loop iteration has started: 14 on Processor: 0 
+[ 1801.425881] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 0
+[ 1801.493793] Timer canceling!
+
+Based of of the default parameters (1 sec), the timing of each loop was slightly off from the 1 second interval by 
+a few microseconds, similar to that of the single threaded execution. However, it is interesting because the variations
+seen often resulted in a timer restarting a bit earlier than the specified interval. I think this is due to one CPU thread
+waking up earlier than another and then expiring earlier, resulting in a time that is slighlty off by a few microseconds. Similar
+to our one threaded module, there were no involuntary context switches occuring in our multi-threaded module. However, all of 
+the context switches and timer restarting were voluntary context switches -- despite whatever parameters we were using. This is
+different to the single-thread module, however, not too different as the range for that was only about 0-1 involutary context switches.
+
+----------------------------------------6} TRACE.PNG ---------------------------------------
+Submitted with Lab
+
+----------------------------------------7} SYSTEM PERFORMANCE-------------------------------
+Most of the time, the threads ran to completion as there were very few Involuntary context
+switches and mostly voluntary context switches. The only thing that was able to prement them was the
+schedule switcher, which is shown in one of the screenshots that was submitted along with the lab. 
+
+The total execution time of the thread wake ups was 77 microseconds.
+
+***JITTER******
+Maximum Time:17 μs
+Minimum Time:8μs
+Mean Time: 22 μs
+
+1) 28μs
+2) 21 μs
+3) 17 μs
+
+*****THREAD RUN TIME*******
+       | cpu1_thread-1071  [000]   160.934956: sched_switch:         cpu1_thread:1071 [120] S ==> swapper/0:0 [120]
+ 38μs  |      <idle>-0     [000]   161.934994: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   161.935024: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 50μs  |      <idle>-0     [000]   162.935074: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   162.935104: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 33μs  |      <idle>-0     [000]   163.935137: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   163.935190: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 1s    |      <idle>-0     [000]   164.935185: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   164.935238: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 31μs  |      <idle>-0     [000]   165.935207: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+
+
+Maximum: 1s
+Minimum: 31 μs
+Mean: .20 s (The 1 seccond really skewed the mean. With that removed it was 38 μs average).
+
+------------------------------8} DEVELOPMENT EFFORT-----------------------------------------------
+This lab took us about 10-12 hours of work combined. It was very reasonable given the time frame we had to complete it.
