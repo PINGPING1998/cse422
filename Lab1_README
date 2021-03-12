@@ -183,7 +183,16 @@ of the run. The involuntary context switches remained around 0 or 1.
 
 --------------------------5} MULTI-THREADING DESIGN AND EVALUATION----------------------------------
 
-//WRITEUP HERE
+We changed our task1 task_struct pointer to be cpu1, and then created three more variables such that each CPU had it's own task
+struct variable to store the process running on that CPU. In the initialization function, we needed to change kthread_run to a sequence
+of {kthread_create(), kthread_bind, and wake_up_process} for EACH of the threads. kthread_create created the thread, kthread_bind bound it
+to one core (CPU), and then wake_up_process began the first timer. The exit function then had to undo all of that, meaning it stopped the 
+all of the processes. In the expiration function, wake_up_process had to be called four times making sure that on expiration, each one wakes up another
+iteration for the timers. 
+
+We then inserted print statemetns to ensure that not only each thread was running on a different processors, but that it was appropriately waking
+up all the timers. We also wanted to see the amount of voluntary and involuntary context witches that occured. 
+
 
 PARAMS: log_nsec = 2
 [Mar 2 16:28] Timer started!
