@@ -382,12 +382,16 @@ schedule switcher, which is shown in one of the screenshots that was submitted a
 
 The total execution time of the thread wake ups was 77 microseconds.
 
-In regards to jitter:
-Maximum Time:
-Minimum Time:
-Mean Time: 
+***JITTER******
+Maximum Time:21 μs
+Minimum Time:8μs
+Mean Time: 11 μs
 
+1) 8μs
+2) 21 μs
+3) 17 μs
 
+*****THREAD RUN TIME*******
        | cpu1_thread-1071  [000]   160.934956: sched_switch:         cpu1_thread:1071 [120] S ==> swapper/0:0 [120]
  38μs  |      <idle>-0     [000]   161.934994: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
        | cpu1_thread-1071  [000]   161.935024: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
