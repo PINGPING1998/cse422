@@ -188,10 +188,10 @@ struct variable to store the process running on that CPU. In the initialization 
 of {kthread_create(), kthread_bind, and wake_up_process} for EACH of the threads. kthread_create created the thread, kthread_bind bound it
 to one core (CPU), and then wake_up_process began the first timer. The exit function then had to undo all of that, meaning it stopped the 
 all of the processes. In the expiration function, wake_up_process had to be called four times making sure that on expiration, each one wakes up another
-iteration for the timers. 
+iteration for the timers. Other than making four of each thread, or relative structure of the module remained relatively unchanged.
 
-We then inserted print statemetns to ensure that not only each thread was running on a different processors, but that it was appropriately waking
-up all the timers. We also wanted to see the amount of voluntary and involuntary context witches that occured. 
+We then inserted print statements to ensure that not only each thread was running on a different processors, but also
+that it was appropriately waking up all the timers. We also wanted to see the amount of voluntary and involuntary context switches that occured. 
 
 
 PARAMS: log_nsec = 2
@@ -379,7 +379,13 @@ PARAMS: log_nsec=1000000
 [ 1801.425881] Voluntary Context Switches: 15 ; Involuntary Context Switches: 0 ; on Processor: 0
 [ 1801.493793] Timer canceling!
 
-//EVALUATION HERE
+Based of of the default parameters (1 sec), the timing of each loop was slightly off from the 1 second interval by 
+a few microseconds, similar to that of the single threaded execution. However, it is interesting because the variations
+seen often resulted in a timer restarting a bit earlier than the specified interval. I think this is due to one CPU thread
+waking up earlier than another and then expiring earlier, resulting in a time that is slighlty off by a few microseconds. Similar
+to our one threaded module, there were no involuntary context switches occuring in our multi-threaded module. However, all of 
+the context switches and timer restarting were voluntary context switches -- despite whatever parameters we were using. This is
+different to the single-thread module, however, not too different as the range for that was only about 0-1 involutary context switches.
 
 ----------------------------------------6} TRACE.PNG ---------------------------------------
 Submitted with Lab
