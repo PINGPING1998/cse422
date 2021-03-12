@@ -386,3 +386,20 @@ In regards to jitter:
 Maximum Time:
 Minimum Time:
 Mean Time: 
+
+
+       | cpu1_thread-1071  [000]   160.934956: sched_switch:         cpu1_thread:1071 [120] S ==> swapper/0:0 [120]
+ 38μs  |      <idle>-0     [000]   161.934994: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   161.935024: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 50μs  |      <idle>-0     [000]   162.935074: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   162.935104: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 33μs  |      <idle>-0     [000]   163.935137: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   163.935190: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 1s    |      <idle>-0     [000]   164.935185: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+       | cpu1_thread-1071  [000]   164.935238: sched_switch:         cpu1_thread:1071 [120] S ==> in:imklog:457 [120]
+ 31μs  |      <idle>-0     [000]   165.935207: sched_switch:         swapper/0:0 [120] R ==> cpu1_thread:1071 [120]
+
+
+Maximum: 1s
+Minimum: 31 μs
+Mean: .20 s (The 1 seccond really skewed the mean. With that removed it was 38 μs average).
