@@ -1,3 +1,26 @@
 1} Tara Renduchintala and Anderson Gonzalez
 
-2}
+2} In Kernelshark, when we filtered the trace.dat file by "workload" we saw
+that processes were running on all four of the cores. Therefore, this task
+was being used on all of the cores for certain.
+
+3} 
+#define UNLOCKED 0
+#define LOCKED 1
+
+int lock_state=UNLOCKED;
+
+4}
+//Lock function
+void lock(volatile int * x){
+	int expected = UNLOCKED;
+	int desired = LOCKED;
+	__atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+}
+
+//Unlock function
+void unlock(volatile int * y){
+	int expected = LOCKED;
+	int desired = UNLOCKED;
+	__atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);
+}
