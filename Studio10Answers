@@ -15,12 +15,31 @@ int lock_state=UNLOCKED;
 void lock(volatile int * x){
 	int expected = UNLOCKED;
 	int desired = LOCKED;
-	__atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	bool status = false;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	if(!status){
+		printf("Error occured in Lock\n");
+	}
+	while(!status){
+		expected = UNLOCKED;
+		status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	}
 }
 
 //Unlock function
 void unlock(volatile int * y){
 	int expected = LOCKED;
 	int desired = UNLOCKED;
-	__atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);
+	bool status = true;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);
+	if(!status){
+		printf("Error occured in Unlock");
+	}
 }
+
+5} The "CPU Finished!" print statement in the original version all appeared
+at the same time as they were all sharing the critical section. When the locking
+mechanism was in place, each print statement printed out one after the other, indicating
+only one CPU was running the critical_section() function at a time.
+
+
