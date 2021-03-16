@@ -1,0 +1,15 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+[ 2144.525700] Hello from thread k_memory. nr_structs=2000
+[ 2144.525710] Kernel Page Size:  4096
+[ 2144.525715] Datatype struct size: 32
+[ 2144.525723] Number of datatypes that fit in one page: 128
+[ 2194.538509] Unloaded kernel_memory module
+[ 2529.424923] Loaded kernel_memory module
+[ 2529.426078] Hello from thread k_memory. nr_structs=100
+[ 2529.426094] Kernel Page Size:  4096
+[ 2529.426098] Datatype struct size: 32
+[ 2529.426112] Number of datatypes that fit in one page: 128
+[ 2555.103902] Unloaded kernel_memory module
+
