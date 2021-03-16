@@ -83,4 +83,4 @@ int unlock(volatile int * y){
 the print statements printing out one by one. Therefore it is evident taht only
 one process was accessing the critical_section() at a time.
 
-
+9} ANSWER QUESTION
