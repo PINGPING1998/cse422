@@ -13,3 +13,31 @@
 [ 2529.426112] Number of datatypes that fit in one page: 128
 [ 2555.103902] Unloaded kernel_memory module
 
+3} EXPLAIN WHAT ORDER DOES!!!!!
+
+[ 3830.664734] Loaded kernel_memory module
+[ 3830.665556] Hello from thread k_memory. nr_structs=1000
+[ 3830.665569] Kernel Page Size:  4096
+[ 3830.665573] Datatype struct size: 32
+[ 3830.665581] Number of structs that fit in one page: 128
+[ 3830.665589] Number of pages: 8
+[ 3830.665596] The order: 3
+[ 3834.967215] Unloaded kernel_memory module
+[ 3848.494982] Loaded kernel_memory module
+[ 3848.495220] Hello from thread k_memory. nr_structs=2000
+[ 3848.495231] Kernel Page Size:  4096
+[ 3848.495235] Datatype struct size: 32
+[ 3848.495242] Number of structs that fit in one page: 128
+[ 3848.495250] Number of pages: 16
+[ 3848.495258] The order: 4
+[ 3852.740394] Unloaded kernel_memory module
+[ 3871.619538] Loaded kernel_memory module
+[ 3871.619778] Hello from thread k_memory. nr_structs=4000
+[ 3871.619788] Kernel Page Size:  4096
+[ 3871.619792] Datatype struct size: 32
+[ 3871.619800] Number of structs that fit in one page: 128
+[ 3871.619807] Number of pages: 32
+[ 3871.619814] The order: 5
+[ 3873.917090] Unloaded kernel_memory module
+
+4}
