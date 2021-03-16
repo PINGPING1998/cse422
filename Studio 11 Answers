@@ -41,3 +41,15 @@
 [ 3873.917090] Unloaded kernel_memory module
 
 4}
+[ 8018.000984] Loaded kernel_memory module
+[ 8018.002068] value: 0
+[ 8018.002086] value: 1024
+[ 8018.002114] Hello from thread k_memory. nr_structs=200
+[ 8018.002122] Kernel Page Size:  4096
+[ 8018.002125] Datatype struct size: 32
+[ 8018.002134] Number of structs that fit in one page: 128
+[ 8018.002141] Number of pages: 2
+[ 8018.002149] The order: 1
+[ 8033.562973] Unloaded kernel_memory module
+
+5}
