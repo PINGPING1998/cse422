@@ -16,13 +16,11 @@ Follower temp_arr:  1804289383  846930886  1681692777  1714636915
 
 6} 
 On Pi: 
-Follower is created
-Data is being read
-
-Follower is unlinking 
-
 real	0m0.004s
 user	0m0.004s
 sys	0m0.000s
 
-
+Linux Lab:
+real	0m0.007s
+user	0m0.001s
+sys	0m0.002s
