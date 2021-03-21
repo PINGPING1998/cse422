@@ -83,4 +83,6 @@ int unlock(volatile int * y){
 the print statements printing out one by one. Therefore it is evident taht only
 one process was accessing the critical_section() at a time.
 
-9} ANSWER QUESTION
+9} It is not possible to do the sleep lock entirely in userspace as there will be a point at which the kernel
+will need to wake up a process (make a system call) as if the process never wakes up, there will be a deadlock
+risk.
