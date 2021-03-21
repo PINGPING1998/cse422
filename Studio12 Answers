@@ -23,7 +23,7 @@ Follower temp_arr:  1804289383  846930886  1681692777  1714636915
 through. Additionally, the write_guard is up as well as the read_guard -- so the values are only unlocked to interact
 with when they are safe to be interacted with. There are no deadlocks because the process runs to completion. If there was a deadlock, 
 the process would hang as the leader and the follower would be waiting for a guard to be released. Additionally, the programs
-can be run multiple times, indicating that the memory region has been captured and released properly. 
+can be run multiple times, indicating that the memory region has been captured and released properly.
 
 6} 
 On Pi: 
