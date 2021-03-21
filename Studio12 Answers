@@ -1,8 +1,12 @@
 1} Tara Renduchintala and Anderson Gonzalez
 
-2} ANSWER HERE
+2} It is important for both processes to see the same layout for the structure so that they can access the 
+elements needed within that memory region. If they were to see different values, that means they are not
+sharing the exact same memory region (ie. One process has offset addresses). 
 
-3} ANSWER HERE
+3} I believe memcpy will be more efficient as it is a in built function that likely uses architecture
+specific techniques that will allow for elements to be copied without needed a for loop which will inevitabely
+result in O(n) execution time, in a best case scenario. 
 
 4} 
 [trenduchintala@shell studio12]$ ./leader
@@ -11,8 +15,15 @@ Leader data array:  1804289383  846930886  1681692777  1714636915
 1189641421 
 [trenduchintala@shell studio12]$ ./follower
 Follower temp_arr:  1804289383  846930886  1681692777  1714636915 
-1957747793  424238335  719885386  1649760492  596516649  
+1957747793  424238335  719885386  1649760492  596516649 
 1189641421 
+
+
+5} I believe that it avoids data races because it appears as though the values in the array are NOT manipulated halfway 
+through. Additionally, the write_guard is up as well as the read_guard -- so the values are only unlocked to interact
+with when they are safe to be interacted with. There are no deadlocks because the process runs to completion. If there was a deadlock, 
+the process would hang as the leader and the follower would be waiting for a guard to be released. Additionally, the programs
+can be run multiple times, indicating that the memory region has been captured and released properly. 
 
 6} 
 On Pi: 
