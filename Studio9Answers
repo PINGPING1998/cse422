@@ -1,4 +1,5 @@
-3} [ 4579.869889] Thraed canceling! Shared data: 2131299 
+4} 
+[ 4579.869889] Thraed canceling! Shared data: 2131299 
 [ 4602.875483] Thread started!
 [ 4617.952162] Thraed canceling! Shared data: 1624008 
 [ 4628.651701] Thread started!
@@ -7,3 +8,12 @@
 [ 4659.604840] Thraed canceling! Shared data: 1481326 
 
 
+
+
+6}
+[112592.058611] Thread unloading
+[130009.125009] Shared data atomic 4000000
+[130037.386431] Shared data atomic 4000000
+[130052.199688] Shared data atomic 4000000
+
+7}
