@@ -1,3 +1,59 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2}
+/* Module Parameters */
+#define CPUS 4
+
+/*static thread variables*/
+struct task_struct * cpus[4];
+
+/*variables*/
+int j;
+
+
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+                                                                 
+
+    for(j=0; j<CPUS; j++){
+	    cpus[j] = kthread_create(thread_start, NULL, "cpu_thread);
+	    kthread_bind(cpus[j], j);
+	    wake_up_process(cpus[j]);
+    }
+
+    return 0;
+}
+
+/*
+* thread_exit - the exit function, called when the module is removed. 
+*/
+static void thread_exit(void){
+    for(j=0; j<CPUS; j++){
+       kthread_stop(cpus[j]);
+    }
+}
+
+module_init(thread_init);
+module_exit(thread_exit);
+
+3}
+
+
 4} 
 [ 4579.869889] Thraed canceling! Shared data: 2131299 
 [ 4602.875483] Thread started!
@@ -17,3 +73,14 @@
 [130052.199688] Shared data atomic 4000000
 
 7}
+[Mar20 21:09] Shared data atomic 4000000
+[  +2.147131] Before loop!
+[  +0.000103] Before loop!
+[  +0.001593] Before loop!
+[  +0.009368] Before loop!
+[  +0.122446] After loop!
+[  +0.000323] After loop!
+[  +0.002333] After loop!
+[  +0.008592] After loop!
+
+It took a little over 12 microseconds for the loop to finish running for each thread. 
