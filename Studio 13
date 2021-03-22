@@ -52,3 +52,20 @@ dr-xr-xr-x  12 root root     0 Dec 31  1969 sys
 drwxrwxrwt  15 root root  4096 Mar 22 10:48 tmp
 drwxr-xr-x  11 root root  4096 Aug 20  2020 usr
 drwxr-xr-x  11 root root  4096 Aug 20  2020 var
+
+
+5} 
+[270894.447769] Thread unloading
+[270953.904159] fs: 60bafcc6 files: 60bafcc6 nsproxy: 60bafcc6
+[270953.904172] PWD dentry: 8b18dde9 ROOT dentry: 8b18dde9 
+[270953.904177] Name for PWD AND ROOT: / 
+[270953.904184] Nonempty Directory: opt
+[270953.904190] Nonempty Directory: root
+[270953.904195] Nonempty Directory: tmp
+[270953.904200] Nonempty Directory: home
+[270953.904206] Nonempty Directory: var
+[270953.904211] Nonempty Directory: bin
+[270953.904217] Nonempty Directory: usr
+[270953.904223] Nonempty Directory: etc
+[270953.904228] Nonempty Directory: lib
+[270953.904233] Nonempty Directory: sbin
