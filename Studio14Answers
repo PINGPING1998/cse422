@@ -13,3 +13,16 @@ test
 Unsuccessful Run:
 [trenduchintala@shell studio14]$ ./bufferio test
 Usage: ./bufferio <filename>
+
+3} SHOW CODE FOR BUFFERIO2
+
+4} SHOW CODE FOR BUFFERIO3
+
+5}
+[trenduchintala@shell studio14]$ ./bufferio4 test4 this is a test
+[trenduchintala@shell studio14]$ cat test4
+this is a test 
+[trenduchintala@shell studio14]$ ./bufferio4 test4 this is a second test
+[trenduchintala@shell studio14]$ cat test4
+this is a test 
+this is a second test
