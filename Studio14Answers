@@ -26,3 +26,17 @@ this is a test
 [trenduchintala@shell studio14]$ cat test4
 this is a test 
 this is a second test
+
+6}
+[trenduchintala@shell studio14]$ ./bufferio5 this is a bigger test
+[trenduchintala@shell studio14]$ cat this
+Length: 4196458 Content: is a bigger test 
+[trenduchintala@shell studio14]$ ./bufferio5 this is a bigger test bigger bigger
+[trenduchintala@shell studio14]$ cat this
+Length: 4196458 Content: is a bigger test 
+Length: 4196470 Content: is a bigger test bigger bigger 
+[trenduchintala@shell studio14]$ ./bufferio5 this is a bigger test bigger bigger even bigger
+[trenduchintala@shell studio14]$ cat this
+Length: 4196458 Content: is a bigger test 
+Length: 4196470 Content: is a bigger test bigger bigger 
+Length: 4196480 Content: is a bigger test bigger bigger even bigger 
