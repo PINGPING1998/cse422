@@ -1,0 +1,15 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+Successful Run:
+[trenduchintala@shell studio14]$ ./bufferio test this is a test
+[trenduchintala@shell studio14]$ cat test
+this
+is
+a
+test
+
+
+Unsuccessful Run:
+[trenduchintala@shell studio14]$ ./bufferio test
+Usage: ./bufferio <filename>
