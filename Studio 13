@@ -69,3 +69,9 @@ drwxr-xr-x  11 root root  4096 Aug 20  2020 var
 [270953.904223] Nonempty Directory: etc
 [270953.904228] Nonempty Directory: lib
 [270953.904233] Nonempty Directory: sbin
+
+
+6}
+pi@taraspberrypi:~/studio13 $ ./loop
+The process id is: 1214
+This is for number 6
