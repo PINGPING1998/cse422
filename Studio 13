@@ -6,6 +6,9 @@
 [268758.971680] PWD dentry: 8b18dde9 ROOT dentry: 8b18dde9 
 [268758.971688] Name for PWD AND ROOT: / 
 
+Because I was operating in the root directory, I beleive the path to the working directory and the root directory were the same. 
+
+
 4}
 Module:
 
@@ -54,6 +57,10 @@ drwxr-xr-x  11 root root  4096 Aug 20  2020 usr
 drwxr-xr-x  11 root root  4096 Aug 20  2020 var
 
 
+They varied as I believe the virtual memory files that were being accessed are a subset of the files that
+are actually located in memory of the pi. 
+
+
 5} 
 [270894.447769] Thread unloading
 [270953.904159] fs: 60bafcc6 files: 60bafcc6 nsproxy: 60bafcc6
@@ -70,6 +77,8 @@ drwxr-xr-x  11 root root  4096 Aug 20  2020 var
 [270953.904228] Nonempty Directory: lib
 [270953.904233] Nonempty Directory: sbin
 
+Again, they varied as I believe the pi lists out all files that are in the directory whereas the module is listing out only
+the non empty ones in the virtual memory.
 
 6}
 pi@taraspberrypi:~/studio13 $ ./loop
