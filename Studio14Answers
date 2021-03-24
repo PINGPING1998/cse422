@@ -40,3 +40,11 @@ Length: 4196470 Content: is a bigger test bigger bigger
 Length: 4196458 Content: is a bigger test 
 Length: 4196470 Content: is a bigger test bigger bigger 
 Length: 4196480 Content: is a bigger test bigger bigger even bigger 
+
+7}
+[trenduchintala@shell studio14]$ ./bufferio6 this is a bigger test
+Content: is a bigger test 
+[trenduchintala@shell studio14]$ ./bufferio6 this is a bigger test bigger bigger
+Content: is a bigger test bigger bigger 
+[trenduchintala@shell studio14]$ ./bufferio6 this smol
+Content: is a bigger test bigger bigger 
