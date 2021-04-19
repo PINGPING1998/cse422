@@ -14,4 +14,30 @@ i: 30714
 [trenduchintala@linuxlab007 studio18]$
 ********************
 
-3}
+3} The purpose of the called array is to indicate at what point the interrupt was called. It changes the value at that position to 1 so we know when it was called.
+
+4} ****OUTPUT*******
+
+i: 499996
+i: 499997
+i: 499998
+i: 499999
+72838 was possibly interrupted
+172105 was possibly interrupted
+284480 was possibly interrupted
+382818 was possibly interrupted
+464970 was possibly interrupted
+
+********************
+
+5} As soon as CTRL+\ was hit, the program immediately stopped and output the exact number that the signal was called at. 
+
+i: 72221
+i: 72222
+i: 72223
+i: 72224
+i: 72225
+i: 72226
+72226 was possibly interrupted
+
+6}
