@@ -7,3 +7,30 @@ hello, world!
 goodbye, world!
 
 3}
+pi@taraspberrypi:~/studio15 $ ./fifo
+integer: 1, double: 2
+integer: 3, double: 6
+integer: 5, double: 10
+integer: 7, double: 14
+integer: 9, double: 18
+integer: 11, double: 22
+integer: 13, double: 26
+integer: 15, double: 30
+integer: 17, double: 34
+integer: 19, double: 38
+integer: 0, double: 0
+integer: 2, double: 4
+integer: 4, double: 8
+integer: 6, double: 12
+integer: 8, double: 16
+integer: 10, double: 20
+integer: 12, double: 24
+integer: 14, double: 28
+integer: 16, double: 32
+integer: 18, double: 36
+
+
+The pipe is open and is never closed, yet both programs run at the same time are able to simultaneously
+write to the same fifo, thereby indicating that they are able to concurrently access the same fifo.
+
+
