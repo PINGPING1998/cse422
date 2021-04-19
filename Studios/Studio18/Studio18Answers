@@ -1,0 +1,17 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} When CTRL+C was pressed, the program immediately stopped it's execution, had a new line and then return back to the shell.
+There was no delay from pressing CTRL+C to the program exiting. 
+
+******OUTPUT********
+i: 30709
+i: 30710
+i: 30711
+i: 30712
+i: 30713
+i: 30714
+
+[trenduchintala@linuxlab007 studio18]$
+********************
+
+3}
