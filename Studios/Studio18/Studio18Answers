@@ -41,3 +41,19 @@ i: 72226
 72226 was possibly interrupted
 
 6}
+i: 433812
+i: 433813
+i: 433814
+i: 433815
+i: 433816
+i: 433817
+i: Caught SIGINT
+i: 433410
+i: 433411
+i: 433412
+
+I think this was happening because by the time the sigint was registered the program had moved on. However, once the 
+handler printed out a value, the array went back to the value it was called at and started outputting values from there. 
+
+
+
