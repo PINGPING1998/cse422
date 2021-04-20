@@ -64,5 +64,7 @@ the function prints otu the amoutn of times the first signal was recieved.
 9} The program always returned 2. This must be because the signals were sent so fast that the variable didn't have time to update before the second
 signal was sent. 
 
-10} 
+10} The current limit is 6894 signals and the program always sent exactly how many signals were specified as the second argument parameter.
+
+
 
