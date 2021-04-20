@@ -58,5 +58,11 @@ handler printed out a value, the array went back to the value it was called at a
 7} When using write instead of printf, the numbers continued even though the SIGINT was caught. They still displayed in order
 and nothing was out of place. With printf, the order of the nubmers was interrupted.
 
-8} 
+8} If the user invokes the first signal, the count increases. If the user invokes the second signal, the program terminates. At the end of the program,
+the function prints otu the amoutn of times the first signal was recieved. 
+
+9} The program always returned 2. This must be because the signals were sent so fast that the variable didn't have time to update before the second
+signal was sent. 
+
+10} 
 
