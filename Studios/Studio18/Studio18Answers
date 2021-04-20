@@ -66,5 +66,7 @@ signal was sent.
 
 10} The current limit is 6894 signals and the program always sent exactly how many signals were specified as the second argument parameter.
 
+11} The signal was recieved the exact number of times it was specified because the value that was being read was 0 for the same number of iterations as 
+specified by the command line argument. 
 
 
