@@ -1,0 +1,40 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+pi@taraspberrypi:~/studio16 $ ./server
+integer: 0
+integer: 1
+integer: 2
+integer: 3
+integer: 4
+
+pi@taraspberrypi:~/studio16 $ ./client
+connection made
+0
+1
+2
+3
+4
+
+3}
+pi@taraspberrypi:~/studio16 $ ./server
+New connection made: 4
+integer: 0
+integer: 1
+integer: 2
+integer: 3
+integer: 4
+New connection made: 5
+integer: 0
+integer: 1
+integer: 2
+integer: 3
+integer: 4
+New connection made: 6
+integer: 0
+integer: 1
+integer: 2
+integer: 3
+integer: 4
+
+4}
