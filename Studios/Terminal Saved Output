@@ -1,0 +1,91 @@
+Last login: Wed Feb  3 09:39:52 on ttys000
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) Taras-MacBook-Pro-3:~ tararenduchintala$ ssh trenduchintala@shell.cec.wustl.edu
+trenduchintala@shell.cec.wustl.edu's password: 
+Last login: Thu Feb  4 12:30:42 2021 from c-76-21-85-41.hsd1.ca.comcast.net
+ ########################
+ shell is not suited for CPU, RAM, or Disk heavy tasks!
+ Please use:  qlogin -h
+   to enter a linuxlab node for these workloads.
+ for more information.
+ Email  support@seas.wustl.edu .
+ ########################
+
+
+[trenduchintala@shell ~]$ ls
+alu.vhd      cse422          ir.vhd        Pictures          testbench.xdc
+a.vhd        cse511a_fl20    ma.vhd        PSpice            test.txt
+buttons.vhd  c.vhd           md.vhd        Public            vga.vhd
+conbit.vhd   Desktop         Music         regfile.vhd       Videos
+control.vhd  Documents       My            rsrc.vhd          WINDOWS
+cse332       Downloads       My Documents  shiftcounter.vhd
+CSE332       eprom.vhd       ondemand      sram.vhd
+cse361       ESE232          pc.vhd        Templates
+CSE362       framestore.vhd  perl5         testbench.vhd
+[trenduchintala@shell ~]$ cd cse422/
+[trenduchintala@shell cse422]$ ls
+test_programs
+[trenduchintala@shell cse422]$ cd test_programs/
+[trenduchintala@shell test_programs]$ ls
+arr_search.c          arr_search_dynamic       dense_mm.c           sing.c
+arr_search_copy.c     arr_search_dynamic_copy  Makefile             sort.c
+arr_search_debugging  arr_search_static        parallel_dense_mm.c
+[trenduchintala@shell test_programs]$ vim arr_search_copy.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+    //Free array memory
+    free(values);
+
+    return 0;
+
+}
+
+int main (int argc, char * argv[]) {
+
+    int i, iterations;
+    int n;
+    //Make sure iterations are specified
+    if (argc < NUM_ARGS) {
+        printf("Usage: %s <iterations>\n", argv[0]);
+        return -1;
+    }
+
+    iterations = atoi(argv[ARG_ITERATIONS]);
+
+    //Specified iterations must be positive
+    if (iterations <= 0) {
+        printf("ERROR: Iteration count must be greater than 0!\n");
+        return -1;
+    }
+
+    //Execute workload for specified iterations
+    for (int i = 0; i < iterations; i++) {
+        //Break if allocation fails
+        if (library_calls()) return -1;
+    }
+
+    printf("%s completed %d iterations\n", argv[0], iterations);
+
+    scanf("%d", n);
+
+    return 0;
+
+}
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+~                                                                                                 
+                                                                                70,10         Bot

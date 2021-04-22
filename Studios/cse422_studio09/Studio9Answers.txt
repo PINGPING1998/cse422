@@ -52,6 +52,11 @@ module_init(thread_init);
 module_exit(thread_exit);
 *****************
 
+
+
+
+
+
 3} If there were no race conditions, that means that each thread is writing to the variable when no other thread is changing 
 it's value. Therefore, only one thread would be in the critical region at one time. A different value may be printed each time because
 each thread will have the same value of the value of the integer and will increment it and save the same result. This will not happen
@@ -68,6 +73,8 @@ on every access of the variable, therefore, the numbers will vary only when the 
 [ 4638.468931] Thraed canceling! Shared data: 1153694 
 [ 4640.968182] Thread started!
 [ 4659.604840] Thraed canceling! Shared data: 1481326 
+
+
 
 5} ***************
 /*atomic*/
@@ -110,11 +117,16 @@ static int thread_init(void){
 
 *************************
 
+
+
 6}
 [112592.058611] Thread unloading
 [130009.125009] Shared data atomic 4000000
 [130037.386431] Shared data atomic 4000000
 [130052.199688] Shared data atomic 4000000
+
+
+
 
 7}
 [Mar20 21:09] Shared data atomic 4000000

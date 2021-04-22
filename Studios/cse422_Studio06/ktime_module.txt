@@ -1,0 +1,46 @@
+/*ktime_module.c - a simple template for a loadable kernal module in 
+  Linux,
+  based on the hello world kernel module example on pages 338-339 of Robert
+  Love's "Linux Kernel Development, Third Edition."
+*/
+
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/timekeeping.h>
+
+ktime_t init_time;
+ktime_t exit_time;
+ktime_t diff;
+    /* init function - logs that initialization happened, returns success */
+    static int
+    simple_init(void)
+{
+        printk(KERN_ALERT "ktime module initialized\n");
+        init_time = ktime_get_real();
+            return 0;
+}
+
+/* exit function - logs that the module is being removed */
+static void
+simple_exit(void)
+{
+        long ns;
+        long sec;
+        printk(KERN_ALERT "ktime  module is being unloaded\n");
+        exit_time = ktime_get_real();
+        diff = ktime_sub(exit_time, init_time);
+        ns = ktime_to_ns(diff);
+        sec = (ns/1000000000);
+        printk("Number of seconds: %ld  and Number of Nanoseconds: %ld\n",
+                sec , ns);
+}
+
+module_init(simple_init);
+module_exit(simple_exit);
+
+MODULE_LICENSE ("GPL");
+MODULE_AUTHOR ("LKD Chapter 17");
+MODULE_DESCRIPTION ("Simple CSE 422 Module Template");
+~                                                                                                                                                 
+

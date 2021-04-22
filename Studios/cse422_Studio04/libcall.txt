@@ -1,0 +1,208 @@
+Last login: Thu Feb  4 22:04:01 on ttys000
+ 
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+(base) Taras-MacBook-Pro-3:~ tararenduchintala$ ssh trenduchintala@shell.cec.wustl.edu
+trenduchintala@shell.cec.wustl.edu's password: 
+Last login: Mon Feb  8 23:11:07 2021 from c-76-21-85-41.hsd1.ca.comcast.net
+ ########################
+ shell is not suited for CPU, RAM, or Disk heavy tasks!
+ Please use:  qlogin -h
+   to enter a linuxlab node for these workloads.
+ for more information.
+ Email  support@seas.wustl.edu .
+ ########################
+
+
+[trenduchintala@shell ~]$ ls
+alu.vhd      cse422          ir.vhd        Pictures          testbench.xdc
+a.vhd        cse511a_fl20    ma.vhd        PSpice            test.txt
+buttons.vhd  c.vhd           md.vhd        Public            vga.vhd
+conbit.vhd   Desktop         Music         regfile.vhd       Videos
+control.vhd  Documents       My            rsrc.vhd          WINDOWS
+cse332       Downloads       My Documents  shiftcounter.vhd
+CSE332       eprom.vhd       ondemand      sram.vhd
+cse361       ESE232          pc.vhd        Templates
+CSE362       framestore.vhd  perl5         testbench.vhd
+[trenduchintala@shell ~]$ cd /project/scratch01/compile/trenduchintala/
+[trenduchintala@shell trenduchintala]$ ls
+linux_source  userspace
+[trenduchintala@shell trenduchintala]$ cd userspace/
+[trenduchintala@shell userspace]$ ls
+lib_call  lib_call.c  native_call  native_call.c
+[trenduchintala@shell userspace]$ ./lib_call
+The current uid is: 1966052
+Trying to change the uid: -1
+Error: setuid failed! Reason: Operation not permitted
+[trenduchintala@shell userspace]$ cd ..
+[trenduchintala@shell trenduchintala]$ ls
+linux_source  userspace
+[trenduchintala@shell trenduchintala]$ cd ..
+[trenduchintala@shell compile]$ ls
+a.an                  frazierj         konturn           skliu
+aappel                gilhaus          larmryan          tjanoski
+alexbaker             guominzhe        levmorgan         tommykeating
+amandahua             guoyifeng        limjeongmin       trenduchintala
+anambakam             hangsu           limuyuan          trentandraka
+anderson.g            haodonghuang     linux_source      u.malla
+benjamin.hammer       ianthakur        linux-source      williamgozlan
+benjamin.silberstein  jackie.z         mindyliu          wuyuanpei
+bingxin.liu           james.orr        msudvarg          wwick
+boanderson            jdbrannon        nconrad           w.yaozu
+bober                 jerry.kong       opatae            xiaozhili
+bohlmanns             jiayiz           oren.bell         yangruoyao
+brian.tung            jmalbert         puguohao          yaoyiheng
+buramoto              jmelton          reidparisi        yichen.hao
+cdgill                jmillburg        rt_mod.ko         yorkliu
+ceneblock             josephli         ryanxu            yusufbekirov
+clairehyq             josh.shapiro     saumik            zack.kaplan
+czihao                julianmricci     scottsirri        zhengyishan
+darmbruster           jungwooseok      shannoncoupland   zichenwang
+diva.h                kernel_memory.c  shannon.coupland
+ebasler               kevinavila       shining.z
+[trenduchintala@shell compile]$ trenduchintala/
+-bash: trenduchintala/: Is a directory
+[trenduchintala@shell compile]$ ls
+a.an                  frazierj         konturn           skliu
+aappel                gilhaus          larmryan          tjanoski
+alexbaker             guominzhe        levmorgan         tommykeating
+amandahua             guoyifeng        limjeongmin       trenduchintala
+anambakam             hangsu           limuyuan          trentandraka
+anderson.g            haodonghuang     linux_source      u.malla
+benjamin.hammer       ianthakur        linux-source      williamgozlan
+benjamin.silberstein  jackie.z         mindyliu          wuyuanpei
+bingxin.liu           james.orr        msudvarg          wwick
+boanderson            jdbrannon        nconrad           w.yaozu
+bober                 jerry.kong       opatae            xiaozhili
+bohlmanns             jiayiz           oren.bell         yangruoyao
+brian.tung            jmalbert         puguohao          yaoyiheng
+buramoto              jmelton          reidparisi        yichen.hao
+cdgill                jmillburg        rt_mod.ko         yorkliu
+ceneblock             josephli         ryanxu            yusufbekirov
+clairehyq             josh.shapiro     saumik            zack.kaplan
+czihao                julianmricci     scottsirri        zhengyishan
+darmbruster           jungwooseok      shannoncoupland   zichenwang
+diva.h                kernel_memory.c  shannon.coupland
+ebasler               kevinavila       shining.z
+[trenduchintala@shell compile]$ cd trenduchintala/
+[trenduchintala@shell trenduchintala]$ ls
+linux_source  userspace
+[trenduchintala@shell trenduchintala]$ cd linux_source/
+[trenduchintala@shell linux_source]$ ls
+boot.tgz  linux  modules  modules.tgz  time.txt
+[trenduchintala@shell linux_source]$ cat time.txt 
+Mon Feb  8 23:59:37 CST 2021
+Mon Feb  8 23:59:37 CST 2021
+[trenduchintala@shell linux_source]$ cd linux/
+[trenduchintala@shell linux]$ ls
+arch           fs       LICENSES                 net         tools
+block          include  MAINTAINERS              README      usr
+certs          init     Makefile                 samples     virt
+COPYING        ipc      mm                       scripts     vmlinux
+CREDITS        Kbuild   modules.builtin          security    vmlinux.o
+crypto         Kconfig  modules.builtin.modinfo  sound
+Documentation  kernel   modules.order            System.map
+drivers        lib      Module.symvers           time.txt
+[trenduchintala@shell linux]$ cat time.txt
+Sun Jan 31 17:28:54 CST 2021
+Sun Jan 31 17:40:23 CST 2021
+Mon Feb  8 23:59:57 CST 2021
+Tue Feb  9 00:00:44 CST 2021
+Tue Feb  9 00:02:15 CST 2021
+Tue Feb  9 00:02:55 CST 2021
+Tue Feb  9 00:04:00 CST 2021
+Tue Feb  9 00:05:16 CST 2021
+Tue Feb  9 00:13:38 CST 2021
+Tue Feb  9 00:20:11 CST 2021
+Tue Feb  9 00:20:41 CST 2021
+Tue Feb  9 00:22:17 CST 2021
+Tue Feb  9 00:25:46 CST 2021
+Tue Feb  9 00:26:14 CST 2021
+Tue Feb  9 00:31:06 CST 2021
+Tue Feb  9 00:43:29 CST 2021
+[trenduchintala@shell linux]$ ls
+arch           fs       LICENSES                 net         tools
+block          include  MAINTAINERS              README      usr
+certs          init     Makefile                 samples     virt
+COPYING        ipc      mm                       scripts     vmlinux
+CREDITS        Kbuild   modules.builtin          security    vmlinux.o
+crypto         Kconfig  modules.builtin.modinfo  sound
+Documentation  kernel   modules.order            System.map
+drivers        lib      Module.symvers           time.txt
+[trenduchintala@shell linux]$ cd ..
+[trenduchintala@shell linux_source]$ echo $PATH
+/project/linuxlab/raspberry-pi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin:/project/compute/compilers/gcc-8.3.0/bin:/usr/lib64/qt-3.3/bin:/home/warehouse/trenduchintala/perl5/bin:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin:/usr/lib64/ccache:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/project/linuxlab/bin:/home/warehouse/trenduchintala/.local/bin:/home/warehouse/trenduchintala/bin
+[trenduchintala@shell linux_source]$ module add raspberry
+[trenduchintala@shell linux_source]$ echo $PATH
+/project/linuxlab/raspberry-pi/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian-x64/bin:/project/compute/compilers/gcc-8.3.0/bin:/usr/lib64/qt-3.3/bin:/home/warehouse/trenduchintala/perl5/bin:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/etc:/opt/ibm/lsfsuite/lsf/10.1/linux2.6-glibc2.3-x86_64/bin:/usr/lib64/ccache:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/project/linuxlab/bin:/home/warehouse/trenduchintala/.local/bin:/home/warehouse/trenduchintala/bin
+[trenduchintala@shell linux_source]$ client_loop: send disconnect: Broken pipe
+(base) Taras-MacBook-Pro-3:~ tararenduchintala$ ssh trenduchintala@shell.cec.wustl.edu
+trenduchintala@shell.cec.wustl.edu's password: 
+Permission denied, please try again.
+trenduchintala@shell.cec.wustl.edu's password: 
+Last failed login: Tue Feb  9 11:03:02 CST 2021 from c-76-21-85-41.hsd1.ca.comcast.net on ssh:notty
+There was 1 failed login attempt since the last successful login.
+Last login: Tue Feb  9 10:37:25 2021 from c-76-21-85-41.hsd1.ca.comcast.net
+ ########################
+ shell is not suited for CPU, RAM, or Disk heavy tasks!
+ Please use:  qlogin -h
+   to enter a linuxlab node for these workloads.
+ for more information.
+ Email  support@seas.wustl.edu .
+ ########################
+
+
+[trenduchintala@shell ~]$ cd /project/scratch01/compile/trenduchintala/
+[trenduchintala@shell trenduchintala]$ ls
+linux_source  userspace
+[trenduchintala@shell trenduchintala]$ cd userspace/
+[trenduchintala@shell userspace]$ ls
+lib_call  lib_call.c  native_call  native_call.c
+[trenduchintala@shell userspace]$ vim lib_call.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@shell userspace]$ vim lib_call.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+#include <unistd.h> 
+#include <sys/types.h> 
+#include <stdio.h> 
+#include <errno.h> 
+#include <string.h> 
+uid_t print_uid(void) 
+{ 
+    return getuid(); 
+} 
+ 
+int change_uid(uid_t uid){ 
+    setuid(uid); 
+} 
+ 
+int main() 
+{ 
+    int status = 0; 
+    uid_t newuid = 0; 
+    printf("The current uid is: "); 
+    printf("%d\n", print_uid()); 
+    status = change_uid(newuid); 
+    printf("Trying to change the uid: "); 
+    printf("%d\n", status); 
+    if(status != 0){ 
+        printf("Error: setuid failed! Reason: %s\n", strerror(errno)); 
+    }; 
+     
+    return status; 
+} 
+
+~                                                                                               
+~                                                                                               
+-- VISUAL --                                                                  30,0-1        All

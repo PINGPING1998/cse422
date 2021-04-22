@@ -1,0 +1,244 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+[ 2144.525700] Hello from thread k_memory. nr_structs=2000
+[ 2144.525710] Kernel Page Size:  4096
+[ 2144.525715] Datatype struct size: 32
+[ 2144.525723] Number of datatypes that fit in one page: 128
+[ 2194.538509] Unloaded kernel_memory module
+[ 2529.424923] Loaded kernel_memory module
+[ 2529.426078] Hello from thread k_memory. nr_structs=100
+[ 2529.426094] Kernel Page Size:  4096
+[ 2529.426098] Datatype struct size: 32
+[ 2529.426112] Number of datatypes that fit in one page: 128
+[ 2555.103902] Unloaded kernel_memory module
+
+3} Order shifts the value (binary value) to the right by 1, and increments the number of times it has
+been shifted. This way, the number can be represented as an order of 2. If the number is odd, the value is decremented
+by 1, allowing a shift to occur evenly to get a order of 2. 
+
+[ 3830.664734] Loaded kernel_memory module
+[ 3830.665556] Hello from thread k_memory. nr_structs=1000
+[ 3830.665569] Kernel Page Size:  4096
+[ 3830.665573] Datatype struct size: 32
+[ 3830.665581] Number of structs that fit in one page: 128
+[ 3830.665589] Number of pages: 8
+[ 3830.665596] The order: 3
+[ 3834.967215] Unloaded kernel_memory module
+[ 3848.494982] Loaded kernel_memory module
+[ 3848.495220] Hello from thread k_memory. nr_structs=2000
+[ 3848.495231] Kernel Page Size:  4096
+[ 3848.495235] Datatype struct size: 32
+[ 3848.495242] Number of structs that fit in one page: 128
+[ 3848.495250] Number of pages: 16
+[ 3848.495258] The order: 4
+[ 3852.740394] Unloaded kernel_memory module
+[ 3871.619538] Loaded kernel_memory module
+[ 3871.619778] Hello from thread k_memory. nr_structs=4000
+[ 3871.619788] Kernel Page Size:  4096
+[ 3871.619792] Datatype struct size: 32
+[ 3871.619800] Number of structs that fit in one page: 128
+[ 3871.619807] Number of pages: 32
+[ 3871.619814] The order: 5
+[ 3873.917090] Unloaded kernel_memory module
+
+4}
+[ 8018.000984] Loaded kernel_memory module
+[ 8018.002068] value: 0
+[ 8018.002086] value: 1024
+[ 8018.002114] Hello from thread k_memory. nr_structs=200
+[ 8018.002122] Kernel Page Size:  4096
+[ 8018.002125] Datatype struct size: 32
+[ 8018.002134] Number of structs that fit in one page: 128
+[ 8018.002141] Number of pages: 2
+[ 8018.002149] The order: 1
+[ 8033.562973] Unloaded kernel_memory module
+
+5}
+[137336.741337] Loaded kernel_memory module
+[137336.742022] Hello from thread k_memory. nr_structs=1000
+[137336.742035] Kernel Page Size:  4096
+[137336.742039] Datatype struct size: 32
+[137336.742047] Number of structs that fit in one page: 128
+[137336.742054] Number of pages: 8
+[137336.742062] The order: 3
+[137340.829232] Unloaded kernel_memory module
+[137340.829304] Successful!!
+[137347.887638] Loaded kernel_memory module
+[137347.889469] Hello from thread k_memory. nr_structs=10000
+[137347.889486] Kernel Page Size:  4096
+[137347.889491] Datatype struct size: 32
+[137347.889502] Number of structs that fit in one page: 128
+[137347.889513] Number of pages: 79
+[137347.889569] The order: 7
+[137350.793674] Unloaded kernel_memory module
+[137350.794240] Successful!!
+[137356.424500] Loaded kernel_memory module
+[137356.451602] Hello from thread k_memory. nr_structs=50000
+[137356.451617] Kernel Page Size:  4096
+[137356.451620] Datatype struct size: 32
+[137356.451629] Number of structs that fit in one page: 128
+[137356.451637] Number of pages: 391
+[137356.451644] The order: 9
+[137359.104806] Unloaded kernel_memory module
+[137359.107543] Successful!!
+
+
+****************************kernel_module.c*************************************
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/fs.h>
+#include <linux/miscdevice.h>
+#include <linux/sched.h>
+#include <linux/gfp.h>
+#include <linux/slab.h>
+#include <linux/list.h>
+#include <linux/time.h>
+#include <linux/kthread.h>
+#include <linux/mm.h>
+
+#include <asm/uaccess.h>
+
+#define ARR_SIZE 8
+typedef struct datatype_t {
+    unsigned int array[ARR_SIZE];
+} datatype;
+
+static uint nr_structs = 2000;
+module_param(nr_structs, uint, 0644); 
+
+static struct task_struct * kthread = NULL;
+
+static unsigned int nr_pages;
+static unsigned int order;
+static unsigned int nr_structs_per_page;
+static struct page * pages;
+static struct datatype_t * dt;
+static unsigned long pageFrameNumber=0;
+static unsigned long physicalMemoryAddress=0;
+
+static unsigned int
+my_get_order(unsigned int value)
+{
+        unsigned int shifts = 0;
+
+            if (!value)
+                        return 0;
+
+                if (!(value & (value - 1)))
+                            value--;
+
+                    while (value > 0) {
+                                value >>= 1;
+                                        shifts++;
+                                            }
+
+                        return shifts;
+}
+
+static int
+thread_fn(void * data)
+{
+        int dataTypeSize = sizeof(datatype);
+        long pageSize = PAGE_SIZE;
+
+        int i, j, k;
+        //void * virtualMemoryAddress;
+
+        nr_structs_per_page = pageSize/dataTypeSize; //number of data types per page
+        nr_pages  = nr_structs/nr_structs_per_page;
+        if(nr_structs%nr_structs_per_page > 0){
+            nr_pages+=1;
+        }
+        order=my_get_order(nr_pages);
+        pages = alloc_pages(GFP_KERNEL, order);
+        if(pages == NULL){
+            printk("There was an error in alloc_pages");
+            return -1;
+        }
+   
+        pageFrameNumber = page_to_pfn(pages);
+        physicalMemoryAddress = PFN_PHYS(pageFrameNumber);
+        //virtualMemoryAddress = __va(physicalMemoryAddress);
+
+
+        for (i = 0; i < nr_pages; i++){
+            unsigned long cur_page = physicalMemoryAddress + i*pageSize;
+            for(j=0 ; j < nr_structs_per_page; j++){
+                unsigned long cur_struct = cur_page + j*dataTypeSize;
+                dt = (struct datatype_t *)__va(cur_struct);
+
+                
+                for(k = 0; k < ARR_SIZE; k++){
+                    dt -> array[k] = i*nr_structs_per_page*ARR_SIZE + j*ARR_SIZE + k;
+                    if(k == 0 && j== 0){
+                       // printk("value: %d", this_struct->array[k]);
+                    }
+                }
+            }
+        }
+        printk("Hello from thread %s. nr_structs=%u\n", current->comm, nr_structs);
+        printk("Kernel Page Size:  %ld", PAGE_SIZE);
+        printk("Datatype struct size: %d", sizeof(datatype)); 
+        printk("Number of structs that fit in one page: %d", nr_structs_per_page);
+        printk("Number of pages: %d", nr_pages);
+        printk("The order: %d", order);
+            while (!kthread_should_stop()) {
+                        schedule();
+                            }
+
+                return 0;
+}
+
+static int kernel_memory_init(void)
+{
+        printk(KERN_INFO "Loaded kernel_memory module\n");
+
+            kthread = kthread_create(thread_fn, NULL, "k_memory");
+                if (IS_ERR(kthread)) {
+                            printk(KERN_ERR "Failed to create kernel thread\n");
+                                    return PTR_ERR(kthread);
+                                        }
+                    
+                    wake_up_process(kthread);
+
+                        return 0;
+}
+
+static void kernel_memory_exit(void)
+{
+        int i, j, k;
+        int success = 0;
+        int dataTypeSize = sizeof(datatype);
+        long pageSize = PAGE_SIZE;
+        kthread_stop(kthread);
+            printk(KERN_INFO "Unloaded kernel_memory module\n");
+
+        for (i = 0; i < nr_pages; i++){
+            unsigned long cur_page = physicalMemoryAddress + i*pageSize;
+            for(j=0 ; j < nr_structs_per_page; j++){
+                unsigned long cur_struct = cur_page + j*dataTypeSize;
+                dt = (struct datatype_t *)__va(cur_struct);
+
+ 
+                for(k = 0; k < ARR_SIZE; k++){
+                    if(dt->array[k]  != i*nr_structs_per_page*ARR_SIZE + j*ARR_SIZE + k){
+                        printk("Value does not match\n");
+                         success = 1;
+                    }
+                }
+            }
+        }
+
+        __free_pages(pages, order);
+        if(success != 1){
+            printk("Successful!!");
+        }
+        
+}
+
+module_init(kernel_memory_init);
+module_exit(kernel_memory_exit);
+
+MODULE_LICENSE ("GPL");

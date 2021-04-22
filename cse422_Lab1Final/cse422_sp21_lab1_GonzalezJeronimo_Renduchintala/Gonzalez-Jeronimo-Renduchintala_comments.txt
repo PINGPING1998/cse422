@@ -1,0 +1,41 @@
+Assignment: CSE 422 Spring 2021 Lab 1
+Author: Tara Renduchintala (trenduchintala@wustl.edu) and Anderson Gonzalez (anderson.g@wustl.edu)
+Graded by: Tommy Keating (tommykeating@wustl.edu)
+Score: 92 / 100
+Comments: [also show deductions if any, with the comments]
+
+*** Writeup ***
+
+Module Design: [-0]
+Timer Design and Evaluation: [-0]
+Thread Design and Evaluation: [-0]
+Multi-threading Design and Evaluation: [-0]
+System Performance: [-0]
+Development Effort: [-0]
+All .pngs included [-0]
+
+*** Code Quality ***
+
+(Multi-Thread): Hard coded to have 4 threads instead of array of threads and used duplicate code instead of loops to handle multiple threads [-1]
+(Multi-Thread): No error checking when using setting up threads in init function [-3]
+(Single-Thread): No error checking when calling kthread_run in init function [-1]
+Race condition with timer created before threads so if timer expires before threads are created than wake_up_process could try to wake up null pointers and cause a crash: [-3]
+
+*** Compilation and Execution ***
+
+Compiled with no issues [-0]
+Single Thread Tests
+  Default Run Worked: [-0]
+  1 second Run Worked:[-0]
+  1 msec Run Worked (after multiple runs):[-0]
+  10 msec Run Worked:[-0]
+  100 msec Run Worked:[-0]
+Multi Thread Tests
+  Default Run Worked: [-0]
+  1 second Run Worked:[-0]
+  1 msec Run Worked:[-0]
+  10 msec Run Worked:[-0]
+  100 msec Run Worked:[-0]
+
+  Crashed while loading module for the 1 msec test (see comment about race condition above)
+

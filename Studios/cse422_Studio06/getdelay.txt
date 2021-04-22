@@ -1,0 +1,32 @@
+
+#include <time.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+#define BILLION 1E9
+
+int main(int argc, char *argv[]){
+    bool showRes = argc > 1;
+    struct timespec tstart;
+    struct timespec tend;
+    struct timespec dummyts;
+
+    clock_gettime(CLOCK_REALTIME, &tstart);
+    clock_gettime(CLOCK_REALTIME, &dummyts);
+    clock_gettime(CLOCK_REALTIME, &tend);
+
+    //double tottime = (tend.tv_sec - tstart.tv_sec) + 
+    //    + (tend.tv_nsec - tstart.tv_nsec) / BILLION;
+
+    printf( "%10jd.%09ld\n", tstart.tv_sec, tstart.tv_nsec/1000000 );
+    printf( "%10jd.%09ld\n", tend.tv_sec, tend.tv_nsec/1000000 );
+
+    long diff = tend.tv_nsec - tstart.tv_nsec;
+
+    printf( "Total Difference: %09ld\n", diff);
+}
+                                                                                                                             
+

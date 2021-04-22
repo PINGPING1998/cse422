@@ -1,0 +1,45 @@
+
+
+#define iters 1000000
+#define CPUS 4
+
+/*static thread variables*/
+struct task_struct * cpus[4];
+
+/*variables*/
+int j;
+
+/*volatile*/
+volatile int shared_data = 0;
+
+
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+    int i;
+    for(i=0; i < iters; i++){
+	shared_data++
+    }
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+static int thread_init(void){
+
+    for(j=0; j<CPUS; j++){
+       cpus[j] = kthread_create(thread_start, NULL, "cpu_thread");
+       kthread_bind(cpus[j], j);
+       wake_up_process(cpus[j]);
+    }
+
+    return 0;
+"threadmodatom.c" 83L, 1809C                                                                                                               60,5          34%

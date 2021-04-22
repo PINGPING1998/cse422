@@ -1,0 +1,131 @@
+:qline    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ make -C $LINUX_SOURCE ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- M=$PWD modules
+make: Entering directory `/project/scratch01/compiling/trenduchintala/linux_source/linux'
+  CC [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.mod.o
+  LD [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.ko
+make: Leaving directory `/project/scratch01/compiling/trenduchintala/linux_source/linux'
+[trenduchintala@linuxlab003 studio9]$ vim threadmodatom.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ make -C $LINUX_SOURCE ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- M=$PWD modules
+make: Entering directory `/project/scratch01/compiling/trenduchintala/linux_source/linux'
+  CC [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.o
+  Building modules, stage 2.
+  MODPOST 1 modules
+  CC [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.mod.o
+  LD [M]  /project/scratch01/compile/trenduchintala/modules/studio9/threadmodatom.ko
+make: Leaving directory `/project/scratch01/compiling/trenduchintala/linux_source/linux'
+[trenduchintala@linuxlab003 studio9]$ ls
+Makefile        threadmodatom.c    threadmodatom.mod.c  threadmod.c    threadmod.mod.c  thread_module.c    thread_module.mod.c
+modules.order   threadmodatom.ko   threadmodatom.mod.o  threadmod.ko   threadmod.mod.o  thread_module.ko   thread_module.mod.o
+Module.symvers  threadmodatom.mod  threadmodatom.o      threadmod.mod  threadmod.o      thread_module.mod  thread_module.o
+[trenduchintala@linuxlab003 studio9]$ vim threadmod.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ clear
+
+[trenduchintala@linuxlab003 studio9]$ vim threadmodatom.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ vim threadmodatom.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ ls
+Makefile        threadmodatom.c    threadmodatom.mod.c  threadmod.c    threadmod.mod.c  thread_module.c    thread_module.mod.c
+modules.order   threadmodatom.ko   threadmodatom.mod.o  threadmod.ko   threadmod.mod.o  thread_module.ko   thread_module.mod.o
+Module.symvers  threadmodatom.mod  threadmodatom.o      threadmod.mod  threadmod.o      thread_module.mod  thread_module.o
+[trenduchintala@linuxlab003 studio9]$ vim threadmod.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@linuxlab003 studio9]$ vim threadmodatom.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+
+
+
+
+
+
+
+
+
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+static int thread_init(void){
+    //set atomic variable
+    atomic_set(&shared_data_atomic, 0);
+
+    //intialize thread
+    for(j=0; j<CPUS; j++){
+       cpus[j] = kthread_create(thread_start, NULL, "cpu_thread");
+       kthread_bind(cpus[j], j);
+       wake_up_process(cpus[j]);
+    }
+
+    return 0;
+}
+
+/*
+* thread_exit - the exit function, called when the module is removed. 
+*/
+static void thread_exit(void){
+    for(j=0; j<CPUS; j++){
+       kthread_stop(cpus[j]);
+    }
+    printk("Shared data atomic %d", (atomic_read(&shared_data_atomic)));
+}
+
+module_init(thread_init);
+module_exit(thread_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Tara Renduchintala and Anderson Gonzalez");
+MODULE_DESCRIPTION("Studio 9");
+
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+~                                                                                                                                                            
+                                                                                                                                           67,5          Bot

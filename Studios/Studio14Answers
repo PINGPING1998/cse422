@@ -1,0 +1,95 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+Successful Run:
+[trenduchintala@shell studio14]$ ./bufferio test this is a test
+[trenduchintala@shell studio14]$ cat test
+this
+is
+a
+test
+
+
+Unsuccessful Run:
+[trenduchintala@shell studio14]$ ./bufferio test
+Usage: ./bufferio <filename>
+
+3} 
+int main(int argc, char *argv[]){
+    int numargs = argc;
+    FILE * file_pointer;
+    int i = 2;
+    if(numargs > 2){
+        file_pointer = fopen(argv[1], "w");
+        for(i=2; i < argc; i++){
+            fputs(argv[i], file_pointer);
+            fputs("\n", file_pointer);
+        }
+
+        fclose(file_pointer);
+        return 0;
+    }
+    else{
+        printf("Usage: %s <filename>\n", argv[0]);
+        return -1;
+    }
+
+}
+
+
+4} 
+int main(int argc, char *argv[]){
+    int numargs = argc;
+    int  file_pointer;
+    int i = 2;
+    if(numargs > 2){
+        file_pointer = open(argv[1], O_RDWR | O_CREAT);
+        for(i=2; i < argc; i++){
+            
+           write(file_pointer, argv[i], strlen(argv[i]));
+           write(file_pointer, "\n", strlen("\n"));
+            
+        }
+
+        close(file_pointer);
+        return 0;
+    }
+    else{
+        printf("Usage: %s <filename>\n", argv[0]);
+        return -1;
+    }
+
+}
+
+5}
+[trenduchintala@shell studio14]$ ./bufferio4 test4 this is a test
+[trenduchintala@shell studio14]$ cat test4
+this is a test 
+[trenduchintala@shell studio14]$ ./bufferio4 test4 this is a second test
+[trenduchintala@shell studio14]$ cat test4
+this is a test 
+this is a second test
+
+6}
+[trenduchintala@linuxlab005 studio14]$ ./bufferio5 test6 this is a file
+[trenduchintala@linuxlab005 studio14]$ cat test6
+11 Content: this is a file 
+[trenduchintala@linuxlab005 studio14]$ ./bufferio5 test6 this is a bigger file
+[trenduchintala@linuxlab005 studio14]$ cat test6
+11 Content: this is a file 
+17 Content: this is a bigger file 
+[trenduchintala@linuxlab005 studio14]$ ./bufferio5 test6 this is an even bigger file
+[trenduchintala@linuxlab005 studio14]$ cat test6
+11 Content: this is a file 
+17 Content: this is a bigger file 
+22 Content: this is an even bigger file 
+
+7}
+[trenduchintala@linuxlab005 studio14]$ ./bufferio6 test6 
+Content: this is an even bigger file 
+[trenduchintala@linuxlab005 studio14]$ ./bufferio5 test6 this is an even bigger bigger file
+[trenduchintala@linuxlab005 studio14]$ ./bufferio6 test6 
+Content: this is an even bigger bigger file 
+[trenduchintala@linuxlab005 studio14]$ ./bufferio5 test6 this is a smol
+[trenduchintala@linuxlab005 studio14]$ ./bufferio6 test6 
+Content: this is an even bigger bigger file 

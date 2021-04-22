@@ -1,0 +1,130 @@
+[trenduchintala@shell cse422]$ ls
+studio6  test_programs
+[trenduchintala@shell cse422]$ cd studio6/
+[trenduchintala@shell studio6]$ ls
+test_programs
+[trenduchintala@shell studio6]$ cd test_programs/
+[trenduchintala@shell test_programs]$ ls
+arr_search.c    ktime_module.mod     sing
+dense_mm        ktime_module.mod.c   sing.c
+dense_mm.c      ktime_module.o       sort
+getdelay        Makefile             sort.c
+getdelay.c      modules.order        timed_parallel_dense_mm
+getres          Module.symvers       timed_parallel_dense_mm.c
+getres.c        parallel_dense_mm
+ktime_module.c  parallel_dense_mm.c
+[trenduchintala@shell test_programs]$ clear
+
+[trenduchintala@shell test_programs]$ vim getres.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@shell test_programs]$ vim delay.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@shell test_programs]$ clear
+
+
+
+
+
+
+
+
+
+[trenduchintala@shell test_programs]$ vim getdelay.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+[trenduchintala@shell test_programs]$ vim timed_parallel_dense_mm.c
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        }
+    }
+
+    for( index = 0; index < squared_size; index++ )
+        assert( C[index] == D[index] );
+    #endif //ifdef VERIFY_PARALLEL
+
+    printf("Multiplication done!\n");
+    //printf("Time Parallel Process Started: %03ld\n", (intmax_t) 
+    //    tstart.tv_nsec);
+    //printf("Time Parallel Process Ended: %03ld\n", 
+    //    tend.tv_nsec);
+    printf("Average Time for Parallel Process: %03ld\n", (intmax_t)
+            tottime/ntimes);
+    printf("Minimum Time: %03ld\n", (intmax_t) mintime);
+    printf("Maximum Time: %03ld\n", (intmax_t) maxtime);
+
+    return 0;
+}
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+~                                                                                                                                                 
+                                                                                                                                125,5         Bot

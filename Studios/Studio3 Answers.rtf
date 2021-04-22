@@ -1,0 +1,236 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica-Bold;\f1\fswiss\fcharset0 Helvetica;\f2\fswiss\fcharset0 ArialMT;
+\f3\fnil\fcharset0 Monaco;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;\red0\green0\blue0;
+\red255\green255\blue51;\red255\green249\blue89;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0\c84706;\cssrgb\c100000\c100000\c100000;\cssrgb\c0\c0\c0;
+\cssrgb\c99946\c98636\c25320;\cssrgb\c100000\c96976\c42052;}
+\margl1440\margr1440\vieww18040\viewh11700\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf0 1] 
+\f1\b0 Tara Renduchintala and Anderson Gonzalez\
+\
+
+\f0\b 2] 
+\f1\b0 The arr_search.c program allocates an array of floats using malloc which is filled with the square root of the index. There is a search method that is used to find the value of the array at an index and then the array is cleared and the memory is freed. The program takes a number that indicates how many times this process should be run.\
+\
+
+\f0\b 3]
+\f1\b0  arr_search_dynamic: 8.4K\
+    arr_search_static: 1020K\
+\
+The static is bigger because it copies all of the libraries during the compilation while the dynamic uses the libraries at runtime so they are not included after compilation.\
+\
+
+\f0\b 4] 
+\f1\b0 Using 100,000 iterations\
+\
+Dynamic \'93real\'94 execution time: 0m0.669s\
+Static \'93real\'94 execution time: 0m0.621s\
+\
+The execution times are different because at runtime the dynamic binary had to find and link the libraries but in the static binary it had already been done so it didn\'92t need to find them.\
+\
+
+\f0\b 5] 
+\f1\b0 \
+\
+First command: not a dynamic executable\
+Second Command: \
+linux-vdso.so.1 => (0x00007ffd3f3f5000)\
+Libm.so.6 => /lib64/libm.so.6 (0x000002b718a455000)\
+Libm.so.6 => /lib64/libc.so.6 (0x00002b718a757000)\
+/lib64/ld-linux-x86-64.so.2 (0x00002b718a231000)\
+\
+
+\f0\b 6]
+\f1\b0 \
+\
+The static file has a far greater amount of symbols because everything is copied into the static binary. However, the dynamic file does not have all those symbols copied into it. \
+\
+The dynamic file: \
+- lines: 39\
+- words: 107\
+- characters: 1371\
+\
+The static file:\
+- lines: 1883\
+- words: 5649\
+- 64841\
+\
+
+\f0\b 7\} 
+\f1\b0 readelf gives you the value and the type in a table format while nm gives you just the values. \
+Nm is easer to read because there is less information but readelf is more cohesive. \
+\
+
+\f0\b 8]
+\f1\b0 \
+\
+\pard\pardeftab720\sl340\partightenfactor0
+
+\fs22 \AppleTypeServices\AppleTypeServicesF65539 \cf2 \cb3 \expnd0\expndtw0\kerning0
+pmap\'a07546\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 7546:\'a0\'a0 ./arr_search_dynamic_copy\'a01\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 0000000000400000\'a0\'a0\'a0\'a0\'a0 4K r-x--\'a0arr_search_dynamic_copy\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 0000000000600000\'a0\'a0\'a0\'a0\'a0 4K r----\'a0arr_search_dynamic_copy\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 0000000000601000\'a0\'a0\'a0\'a0\'a0 4K\'a0rw---\'a0arr_search_dynamic_copy\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 0000000001a56000\'a0\'a0\'a0 132K\'a0rw---\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe6429000\'a0\'a0\'a0 136K r-x-- ld-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe644b000\'a0\'a0\'a0\'a0 12K\'a0rw---\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe647d000\'a0\'a0\'a0\'a0 12K\'a0rw---\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe664a000\'a0\'a0\'a0\'a0\'a0 4K r---- ld-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe664b000\'a0\'a0\'a0\'a0\'a0 4K\'a0rw--- ld-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe664c000\'a0\'a0\'a0\'a0\'a0 4K\'a0rw---\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe664d000\'a0\'a0 1028K r-x-- libm-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe674e000\'a0\'a0 2044K ----- libm-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe694d000\'a0\'a0\'a0\'a0\'a0 4K r---- libm-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe694e000\'a0\'a0\'a0\'a0\'a0 4K\'a0rw--- libm-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe694f000\'a0\'a0 1804K r-x-- libc-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe6b12000\'a0\'a0 2048K ----- libc-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe6d12000\'a0\'a0\'a0\'a0 16K r---- libc-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe6d16000\'a0\'a0\'a0\'a0\'a0 8K\'a0rw--- libc-2.17.so\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00002acfe6d18000\'a0\'a0\'a0\'a0 20K\'a0rw---\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00007fff09722000\'a0\'a0\'a0 136K\'a0rw---\'a0\'a0 [ stack ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 00007fff0979d000\'a0\'a0\'a0\'a0\'a0 8K r-x--\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 ffffffffff600000\'a0\'a0\'a0\'a0\'a0 4K r-x--\'a0\'a0 [ anon ]\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 total\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0 7440K\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 \'a0\AppleTypeServices \'a0
+\f2 \cb1 \
+
+\f1 \AppleTypeServices\AppleTypeServicesF65539 \cb3 [1]+\'a0 Stopped\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0\'a0 ./arr_search_dynamic_copy\'a01\AppleTypeServices \'a0
+\f2\fs24 \cb1 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1 \cf0 \kerning1\expnd0\expndtw0 \
+
+\f0\b 9] 
+\f1\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs22 \cf4 \cb3 \CocoaLigature0 GNU gdb (GDB) Red Hat Enterprise Linux 7.6.1-119.el7\
+Copyright (C) 2013 Free Software Foundation, Inc.\
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>\
+This is free software: you are free to change and redistribute it.\
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"\
+and "show warranty" for details.\
+This GDB was configured as "x86_64-redhat-linux-gnu".\
+For bug reporting instructions, please see:\
+<http://www.gnu.org/software/gdb/bugs/>...\
+Reading symbols from /home/warehouse/trenduchintala/cse422/test_programs/arr_search_debugging...done.\
+(gdb)\
+\
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\b\fs24 \cf4 10\}
+\f1\b0 \
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\fs26 \cf4 Starting program: /home/warehouse/trenduchintala/cse422/test_programs/./arr_search_debugging 2\
+\
+Breakpoint 1, library_calls () at arr_search.c:45\
+45	    values = (float *) malloc(ARR_SIZE * sizeof(float));\
+\
+
+\f0\b 11\}
+\f1\b0  It continued and then once again stopped at the libaray_calls() function.\
+\
+
+\f0\b 12\}
+\f1\b0  $4 = (float *) 0x602010\
+\
+
+\f0\b 13\} 
+\f1\b0 \
+At first the watchpoint said:\
+Old value = 1.41421354\
+New value = 0\
+\
+After the second continuing: the watchpoint was deleted because the program left the block in which it was valid.
+\f3 \
+\
+
+\f0\b MODIFIED CODE:\
+
+\f1\b0 int main (int argc, char * argv[]) \{\
+\
+    int i, iterations;\
+    \cb5 int n;\cb3 \
+    //Make sure iterations are specified\
+    if (argc < NUM_ARGS) \{\
+        printf("Usage: %s <iterations>\\n", argv[0]);\
+        return -1;\
+    \}\
+\
+    iterations = atoi(argv[ARG_ITERATIONS]);\
+\
+    //Specified iterations must be positive\
+    if (iterations <= 0) \{\
+        printf("ERROR: Iteration count must be greater than 0!\\n");\
+        return -1;\
+    \}\
+\
+    //Execute workload for specified iterations\
+    for (int i = 0; i < iterations; i++) \{\
+        //Break if allocation fails\
+        if (library_calls()) return -1;\
+    \}\
+\
+    printf("%s completed %d iterations\\n", argv[0], iterations);\
+\
+   \cb6  scanf("%d", n)\cb3 ;\
+\
+    return 0;\
+\
+\}\
+}

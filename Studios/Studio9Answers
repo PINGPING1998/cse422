@@ -1,0 +1,270 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2}******************
+/* Module Parameters */
+#define CPUS 4
+
+/*static thread variables*/
+struct task_struct * cpus[4];
+
+/*variables*/
+int j;
+
+
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+                                                                 
+
+    for(j=0; j<CPUS; j++){
+	    cpus[j] = kthread_create(thread_start, NULL, "cpu_thread);
+	    kthread_bind(cpus[j], j);
+	    wake_up_process(cpus[j]);
+    }
+
+    return 0;
+}
+
+/*
+* thread_exit - the exit function, called when the module is removed. 
+*/
+static void thread_exit(void){
+    for(j=0; j<CPUS; j++){
+       kthread_stop(cpus[j]);
+    }
+}
+
+module_init(thread_init);
+module_exit(thread_exit);
+*****************
+
+3} If there were no race conditions, that means that each thread is writing to the variable when no other thread is changing 
+it's value. Therefore, only one thread would be in the critical region at one time. A different value may be printed each time because
+each thread will have the same value of the value of the integer and will increment it and save the same result. This will not happen
+on every access of the variable, therefore, the numbers will vary only when the threads are modifying the integer at the exact same time.
+	
+	
+
+
+4} 
+[ 4579.869889] Thraed canceling! Shared data: 2131299 
+[ 4602.875483] Thread started!
+[ 4617.952162] Thraed canceling! Shared data: 1624008 
+[ 4628.651701] Thread started!
+[ 4638.468931] Thraed canceling! Shared data: 1153694 
+[ 4640.968182] Thread started!
+[ 4659.604840] Thraed canceling! Shared data: 1481326 
+
+5} ***************
+/*atomic*/
+atomic_t shared_data_atomic;
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+    int i;
+    printk("Before loop!\n");
+    for(i=0; i < iters; i++){
+        *********atomic_add(1, &shared_data_atomic);
+    }
+    printk("After loop!\n");
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+static int thread_init(void){
+    //set atomic variable
+    **********atomic_set(&shared_data_atomic, 0);
+
+    //intialize thread
+    for(j=0; j<CPUS; j++){
+       cpus[j] = kthread_create(thread_start, NULL, "cpu_thread");
+       kthread_bind(cpus[j], j);
+       wake_up_process(cpus[j]);
+    }
+
+    return 0;
+}
+
+*************************
+
+6}
+[112592.058611] Thread unloading
+[130009.125009] Shared data atomic 4000000
+[130037.386431] Shared data atomic 4000000
+[130052.199688] Shared data atomic 4000000
+
+7}
+[Mar20 21:09] Shared data atomic 4000000
+[  +2.147131] Before loop!
+[  +0.000103] Before loop!
+[  +0.001593] Before loop!
+[  +0.009368] Before loop!
+[  +0.122446] After loop!
+[  +0.000323] After loop!
+[  +0.002333] After loop!
+[  +0.008592] After loop!
+
+It took a little over 12 microseconds for the loop to finish running for each thread. 
+
+
+*************************threadmod.c (RACE CONDITION)*****************************
+
+/*
+* threadmodatom.c - studio 9 module with atomic variable
+*/
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/ktime.h>
+#include <linux/kthread.h>
+#include <linux/sched.h>
+#include <linux/smp.h>
+
+/* Module Parameters */
+#define iters 1000000
+#define CPUS 4
+
+/*static thread variables*/
+struct task_struct * cpus[4];
+
+/*variables*/
+int j;
+
+/*volatile*/
+volatile int shared_data = 0;
+
+/*atomic*/
+atomic_t shared_data_atomic;
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+    int i;
+    printk("Before loop!\n");
+    for(i=0; i < iters; i++){
+        atomic_add(1, &shared_data_atomic);
+    }
+    printk("After loop!\n");
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+                                                                                                                                           48,2          Top
+
+
+***************************threadmodatom.c (ATOMIC NO RACE)******************************
+/*
+* threadmodatom.c - studio 9 module with atomic variable
+*/
+#include <linux/init.h>
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/ktime.h>
+#include <linux/kthread.h>
+#include <linux/sched.h>
+#include <linux/smp.h>
+
+/* Module Parameters */
+#define iters 1000000
+#define CPUS 4
+
+/*static thread variables*/
+struct task_struct * cpus[4];
+
+/*variables*/
+int j;
+
+/*volatile*/
+volatile int shared_data = 0;
+
+/*atomic*/
+atomic_t shared_data_atomic;
+
+/*thread_start - run one or more kernel threads when they are spawned
+                by the module.
+  inputs: void *
+  returns: integer indicating success/failure value
+*/
+static int thread_start(void * unused){
+    int i;
+    printk("Before loop!\n");
+    for(i=0; i < iters; i++){
+        atomic_add(1, &shared_data_atomic);
+    }
+    printk("After loop!\n");
+    while(!kthread_should_stop()){
+        schedule();
+    }
+
+    return 0;
+}
+/*
+* thread_init - the init function, called when the module is loaded.
+*/
+static int thread_init(void){
+    //set atomic variable
+    atomic_set(&shared_data_atomic, 0);
+
+    //intialize thread
+    for(j=0; j<CPUS; j++){
+       cpus[j] = kthread_create(thread_start, NULL, "cpu_thread");
+       kthread_bind(cpus[j], j);
+       wake_up_process(cpus[j]);
+    }
+
+    return 0;
+}
+
+/*
+* thread_exit - the exit function, called when the module is removed. 
+*/
+static void thread_exit(void){
+    //kthread_stop(cpu1);  
+    //kthread_stop(cpu2);
+    //kthread_stop(cpu3);
+    //kthread_stop(cpu4);
+    for(j=0; j<CPUS; j++){
+       kthread_stop(cpus[j]);
+    }
+    printk("Shared data atomic %d", (atomic_read(&shared_data_atomic)));
+}
+
+module_init(thread_init);
+module_exit(thread_exit);
+
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Tara Renduchintala and Anderson Gonzalez");
+MODULE_DESCRIPTION("Studio 9");
+
+

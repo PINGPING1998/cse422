@@ -1,0 +1,246 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} In Kernelshark, when we filtered the trace.dat file by "workload" we saw
+that processes were running on all four of the cores. Therefore, this task
+was being used on all of the cores for certain.
+
+3} 
+#define UNLOCKED 0
+#define LOCKED 1
+
+int lock_state=UNLOCKED;
+
+4}
+//Lock function
+void lock(volatile int * x){
+	int expected = UNLOCKED;
+	int desired = LOCKED;
+	bool status = false;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	if(!status){
+		printf("Error occured in Lock\n");
+	}
+	while(!status){
+		expected = UNLOCKED;
+		status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	}
+}
+
+//Unlock function
+void unlock(volatile int * y){
+	int expected = LOCKED;
+	int desired = UNLOCKED;
+	bool status = true;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);
+	if(!status){
+		printf("Error occured in Unlock");
+	}
+}
+
+5} The "CPU Finished!" print statement in the original version all appeared
+at the same time as they were all sharing the critical section. When the locking
+mechanism was in place, each print statement printed out one after the other, indicating
+only one CPU was running the critical_section() function at a time.
+
+6} I initially had my LOCKED value as 1 and my UNLOCKED value as 0. 
+I needed to switch them because futex defines them in a reverse way. 
+This way, when it tries to increment or decrement, the values are consistent
+with what they mean to futex.
+
+7}
+//Lock function
+int lock(volatile int * x){
+	int ret_val;
+	ret_val = __atomic_sub_fetch(&lock_state, 1, __ATOMIC_ACQ_REL);
+	if(ret_val >= 0){
+		return 0;
+	}
+	else{
+		syscall(SYS_futex, &lock_state, FUTEX_WAIT, ret_val, NULL);
+		lock(&lock_state);
+	}
+
+
+}
+
+//Unlock function
+int unlock(volatile int * y){
+	int ret_val;
+	
+	ret_val = __atomic_add_fetch(&lock_state, 1, __ATOMIC_ACQ_REL);
+	if(ret_val == 1){
+		return 0;
+	}
+	else{
+		__atomic_store_n(&lock_state, 1, __ATOMIC_RELEASE);
+		syscall(SYS_futex, &lock_state, FUTEX_WAKE, INT_MAX);
+	}
+}
+
+
+
+8} Similar to the earlier program, this new implentation resulted in all
+the print statements printing out one by one. Therefore it is evident taht only
+one process was accessing the critical_section() at a time.
+
+9} It is not possible to do the sleep lock entirely in userspace as there will be a point at which the kernel
+will need to wake up a process (make a system call) as if the process never wakes up, there will be a deadlock
+risk.
+
+
+************************SPIN LOCK*****************************
+/*    Simulated workload using OpenMP
+ *
+ * This program will create some number of seconds of work on each processor
+ * on the system.
+ *
+ * This program requires the use of the OpenMP compiler flag, and that 
+ * optimizations are turned off, to build correctly. E.g.: 
+ * gcc -fopenmp workload.c -o workload
+ */
+
+#define _GNU_SOURCE
+
+#include <stdio.h> // for printf()
+#include <sched.h> // for sched_getcpu()
+#include <stdbool.h> //for booleans
+
+// 500 million iterations should take several seconds to run
+#define ITERS 500000000
+#define UNLOCKED 0
+#define LOCKED 1
+
+int lock_state = UNLOCKED;
+
+void critical_section( void ){
+	int index = 0;
+	while(index < ITERS){ index++; }
+}
+
+//Lock function
+void lock(volatile int * x){
+	int expected = UNLOCKED;
+	int desired = LOCKED;
+	bool status = false;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	if(!status){
+		printf("Error occured in Lock\n");
+	}
+	while(!status){
+		expected = UNLOCKED;
+		status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);	
+	}
+}
+
+//Unlock function
+void unlock(volatile int * y){
+	int expected = LOCKED;
+	int desired = UNLOCKED;
+	bool status = true;
+	status = __atomic_compare_exchange( &lock_state, &expected, &desired, 0, __ATOMIC_ACQ_REL, __ATOMIC_ACQUIRE);
+	if(!status){
+		printf("Error occured in Unlock");
+	}
+}
+
+
+int main (int argc, char* argv[]){
+
+	// Create a team of threads on each processor
+	#pragma omp parallel
+	{
+		// Each thread executes this code block independently
+		//call to lock
+		int status;
+		lock(&lock_state);
+		critical_section();
+		unlock(&lock_state);
+
+		printf("CPU %d finished!\n", sched_getcpu());
+	}
+
+	return 0;
+}
+
+************************SLEEP LOCK***************************
+/*    Simulated workload using OpenMP
+ *
+ * This program will create some number of seconds of work on each processor
+ * on the system.
+ *
+ * This program requires the use of the OpenMP compiler flag, and that 
+ * optimizations are turned off, to build correctly. E.g.: 
+ * gcc -fopenmp workload.c -o workload
+ */
+
+#define _GNU_SOURCE
+
+#include <stdio.h> // for printf()
+#include <sched.h> // for sched_getcpu()
+#include <stdbool.h> //for booleans
+#include <sys/syscall.h>
+#include <unistd.h>
+#include <linux/futex.h>
+#include <sys/time.h>
+#include <limits.h>
+
+// 500 million iterations should take several seconds to run
+#define ITERS 500000000
+#define UNLOCKED 1
+#define LOCKED 0
+
+int lock_state = UNLOCKED;
+
+void critical_section( void ){
+	int index = 0;
+	while(index < ITERS){ index++; }
+}
+
+//Lock function
+int lock(volatile int * x){
+	int ret_val;
+	ret_val = __atomic_sub_fetch(&lock_state, 1, __ATOMIC_ACQ_REL);
+	if(ret_val >= 0){
+		return 0;
+	}
+	else{
+		syscall(SYS_futex, &lock_state, FUTEX_WAIT, ret_val, NULL);
+		lock(&lock_state);
+	}
+
+
+}
+
+//Unlock function
+int unlock(volatile int * y){
+	int ret_val;
+	
+	ret_val = __atomic_add_fetch(&lock_state, 1, __ATOMIC_ACQ_REL);
+	if(ret_val == 1){
+		return 0;
+	}
+	else{
+		__atomic_store_n(&lock_state, 1, __ATOMIC_RELEASE);
+		syscall(SYS_futex, &lock_state, FUTEX_WAKE, INT_MAX);
+	}
+}
+
+
+int main (int argc, char* argv[]){
+
+	// Create a team of threads on each processor
+	#pragma omp parallel
+	{
+		// Each thread executes this code block independently
+		//call to lock
+		int status;
+		lock(&lock_state);
+		critical_section();
+		unlock(&lock_state);
+
+		printf("CPU %d finished!\n", sched_getcpu());
+	}
+
+	return 0;
+}
+

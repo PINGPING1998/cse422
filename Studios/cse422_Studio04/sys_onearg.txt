@@ -1,0 +1,99 @@
+[trenduchintala@shell linux]$ cd arch/arm/kernel/
+[trenduchintala@shell kernel]$ ls
+arch_timer.c    entry-ftrace.o       jump_label.o         process.c          suspend.c
+arch_timer.o    entry-ftrace.S       kgdb.c               process.o          swp_emulate.c
+armksyms.c      entry-header.S       kgdb.o               psci_smp.c         swp_emulate.o
+armksyms.o      entry-v7m.S          machine_kexec.c      ptrace.c           sys_arm.c
+asm-offsets.c   fiqasm.o             Makefile             ptrace.o           sys_arm.o
+asm-offsets.s   fiqasm.S             Makefile.020821      reboot.c           sys_noargs.c
+atags_compat.c  fiq.c                module.c             reboot.h           sys_noargs.o
+atags.h         fiq.o                module.lds           reboot.o           sys_oabi-compat.c
+atags_parse.c   ftrace.c             module.o             relocate_kernel.S  sys_onearg.c
+atags_proc.c    ftrace.o             module-plts.c        return_address.c   sys_onearg.o
+bios32.c        head-common.S        module-plts.o        return_address.o   tcm.c
+bugs.c          head-inflate-data.c  modules.builtin      setup.c            thumbee.c
+bugs.o          head-nommu.S         modules.order        setup.o            time.c
+built-in.a      head.o               opcodes.c            signal.c           time.o
+cpuidle.c       head.S               opcodes.o            signal.h           topology.c
+crash_dump.c    hibernate.c          paravirt.c           signal.o           topology.o
+debug.S         hw_breakpoint.c      patch.c              sigreturn_codes.o  traps.c
+devtree.c       hw_breakpoint.o      patch.o              sigreturn_codes.S  traps.o
+devtree.o       hyp-stub.o           perf_callchain.c     sleep.S            unwind.c
+dma.c           hyp-stub.S           perf_callchain.o     smccc-call.o       v7m.c
+dma-isa.c       insn.c               perf_event_v6.c      smccc-call.S       vdso.c
+early_printk.c  insn.o               perf_event_v6.o      smp.c              vdso.o
+efi.c           io.c                 perf_event_v7.c      smp.o              vmlinux.lds
+elf.c           io.o                 perf_event_v7.o      smp_scu.c          vmlinux.lds.h
+elf.o           irq.c                perf_event_xscale.c  smp_tlb.c          vmlinux.lds.S
+entry-armv.o    irq.o                perf_event_xscale.o  smp_tlb.o          vmlinux-xip.lds.S
+entry-armv.S    isa.c                perf_regs.c          smp_twd.c          xscale-cp0.c
+entry-common.o  iwmmxt.S             perf_regs.o          stacktrace.c
+entry-common.S  jump_label.c         pj4-cp0.c            stacktrace.o
+[trenduchintala@shell kernel]$ clear
+
+[trenduchintala@shell kernel]$ vim sys_onearg.c 
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* This file implements a demonstration syscall for an OS course. It
+   *  takes one  argument and prints out a simple message to the kernel
+   *  log, indicating that it was called.
+   */
+
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/sched.h>
+#include <linux/syscalls.h>
+
+//Define a system call implementation that takes no arguments
+SYSCALL_DEFINE1( onearg, int, x ){
+
+      // print out a simple message indicating the function was called, and return SUCCESS
+      printk("Someone invoked the sys_onearg system call");
+      printk("The number passed was: %d\n", x);
+        return 0;
+}
+
+//End of file
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+"sys_onearg.c" 20L, 628C                                                      14,7          All

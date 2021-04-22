@@ -1,3 +1,6 @@
+LAB 1 WRITEUP
+
+
 1} Tara Renduchintala: trenduchintala@wustl.edu
    Anderson Gonzalez: anderson.g@wustl.edu
    

@@ -1,0 +1,99 @@
+hil_mlc.h                   pe.h                     w1-gpio.h
+hippidevice.h               percpu_counter.h         w1.h
+hmm.h                       percpu-defs.h            wait_bit.h
+host1x.h                    percpu.h                 wait.h
+hpet.h                      percpu-refcount.h        watchdog.h
+hp_sdc.h                    percpu-rwsem.h           wimax
+hrtimer_defs.h              perf                     win_minmax.h
+hrtimer.h                   perf_event.h             wireless.h
+hsi                         perf_regs.h              wkup_m3_ipc.h
+htcpld.h                    personality.h            wl12xx.h
+huge_mm.h                   pfn.h                    wm97xx.h
+hugetlb_cgroup.h            pfn_t.h                  wmi.h
+hugetlb.h                   phonet.h                 workqueue.h
+hugetlb_inline.h            phy                      writeback.h
+hw_breakpoint.h             phy_fixed.h              ww_mutex.h
+hwmon.h                     phy.h                    xarray.h
+hwmon-sysfs.h               phy_led_triggers.h       xattr.h
+hwmon-vid.h                 phylink.h                xxhash.h
+hw_random.h                 pid.h                    xz.h
+hwspinlock.h                pid_namespace.h          yam.h
+hyperv.h                    pim.h                    z2_battery.h
+hypervisor.h                pinctrl                  zbud.h
+i2c-algo-bit.h              pipe_fs_i.h              zconf.h
+i2c-algo-pca.h              pkeys.h                  zlib.h
+i2c-algo-pcf.h              pktcdvd.h                zorro.h
+i2c-dev.h                   pl320-ipc.h              zpool.h
+i2c.h                       pl353-smc.h              zsmalloc.h
+i2c-mux.h                   platform_data            zstd.h
+i2c-pxa.h                   platform_device.h        zutil.h
+i2c-smbus.h                 plist.h
+[trenduchintala@shell linux]$ diff -up syscalls.h syscalls.h.020821 > syscalls.h.diff
+[trenduchintala@shell linux]$ clear
+
+[trenduchintala@shell linux]$ vim syscalls.h.diff
+Error detected while processing /home/warehouse/trenduchintala/.vimrc:
+line    1:
+E492: Not an editor command: et nocompatible
+line   49:
+E185: Cannot find color scheme 'gruvbox'
+Press ENTER or type command to continue
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--- syscalls.h  2021-02-08 23:26:40.491109078 -0600
++++ syscalls.h.020821   2021-02-08 23:14:15.616778683 -0600
+@@ -1420,6 +1420,5 @@ long ksys_old_shmctl(int shmid, int cmd,
+ long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
+                unsigned int nsops,
+                const struct old_timespec32 __user *timeout);
+-asmlinkage long sys_noargs(void);
+-asmlinkage long sys_onearg(int x);
++
+ #endif
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+~                                                                                               
+"syscalls.h.diff" 10L, 404C                                                   1,1           All
