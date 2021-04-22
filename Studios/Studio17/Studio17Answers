@@ -13,3 +13,18 @@ test was read from stdin
 quit
 
 3}
+pi@taraspberrypi:~/studio17 $ ./server 30009
+client message: hi
+client message: what
+
+pi@taraspberrypi:~/studio17 $ ./select_client 30009
+connection made
+hi
+server reply: hostname: server
+
+pi@taraspberrypi:~/studio17 $ ./select_client 30009
+connection made
+what
+server reply: hostname: server
+
+4}
