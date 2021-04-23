@@ -28,3 +28,18 @@ what
 server reply: hostname: server
 
 4}
+
+pi@taraspberrypi:~/studio17 $ ./poll_server 30009
+This is message 0
+This is message 1
+This is message 2
+This is message 3
+This is message 4
+
+this is from stdin
+this is from stdin was read from stdin
+
+pi@taraspberrypi:~/studio17 $ ./poll_client 30009
+connection made
+
+5}
