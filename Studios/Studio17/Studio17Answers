@@ -43,3 +43,31 @@ pi@taraspberrypi:~/studio17 $ ./poll_client 30009
 connection made
 
 5}
+pi@taraspberrypi:~/studio17 $ ./epoll_server 30009
+This is message 0
+
+This is message 1
+This is message 2
+This is message 3
+This is message 4
+
+hi
+hi was read from stdin
+cool
+cool was read from stdin
+
+NEXT WITH EPOLLET:
+pi@taraspberrypi:~/studio17 $ ./epoll_server 30009
+This is message 0
+This is message 1
+This is message 2
+This is message 3
+This is message 4
+
+what
+what was read from stdin
+This is message 0
+This is message 1
+This is message 2
+This is message 3
+This is message 4
