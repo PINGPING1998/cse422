@@ -1,0 +1,69 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2}
+pi@taraspberrypi:~/studio19 $ cat /proc/sys/kernel/sched_autogroup_enabled 
+1
+
+pi@taraspberrypi:~/studio19 $ cat /proc/sys/kernel/sched_autogroup_enabled 
+0
+
+3} I ran it with the target being cpu 3.
+
+4} The computer was definitely slower. Once I canceled the background tasks, my pages on my browser started loading faster.
+
+5} Without background tasks:
+pi@taraspberrypi:~/studio19 $ time ./dense_mm 300
+Generating matrices...
+Multiplying matrices...
+Multiplication done!
+
+real	0m2.694s
+user	0m2.457s
+sys	0m0.022s
+
+
+With background tasks:
+pi@taraspberrypi:~/studio19 $ time ./dense_mm 300
+Generating matrices...
+Multiplying matrices...
+Multiplication done!
+
+real	0m6.296s
+user	0m2.591s
+sys	0m0.028s
+
+6} The real time was a lot larger when the background tasks were running. However, the two programs spent about the same amount of time in user space. This means that the Linux scheduler switches context quite a bit but the time spent in userspace for the program stays the same. If I were tor un more background tasks, then I think the real time would increase but the user time would stay relatively the same.
+
+7} pi@taraspberrypi:~/studio19 $ time sudo nice -n -20 ./dense_mm 300
+Generating matrices...
+Multiplying matrices...
+Multiplication done!
+
+real	0m3.067s
+user	0m2.541s
+sys	0m0.088s
+
+Proportion: .828
+
+8} 
+
+-10: .947
+-5: .885
+0: .832
+5: .821
+10: .812
+19: .789
+
+9} 
+pi@taraspberrypi:~/studio19 $ time ./dense_mm 300
+Generating matrices...
+Multiplying matrices...
+Multiplication done!
+
+real	0m8.404s
+user	0m2.092s
+sys	0m0.000s
+
+
+It supports my prediction as I said the user time would stay realtively the same and the real time would increase. This is because the work is getting rescheduled on different cores, and therefore, it takes time for the scheduler to start teh task again as the cores are all full and don't have the capacity for another job. 
+
