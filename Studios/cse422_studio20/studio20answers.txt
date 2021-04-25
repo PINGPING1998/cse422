@@ -1,0 +1,37 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} pi@taraspberrypi:~/studio20 $ time ./big_loop 1
+cpu: 1
+real	0m5.447s
+user	0m5.432s
+sys	0m0.010s
+
+3}
+
+1. lxpanel
+2. rngd
+3. brcmf_wdog/mmc1
+
+I know that they interfered because there were rcu preempts as well as schedule switches. That indicates that the big loop was interrupted, something else was wscheduled, and then the big loop was rescheduled.
+
+4}
+
+Not root: the highest value was 95
+
+Root: the highest value was 99
+
+5} The process was not interuppted by anything. There was no kworkers or schedule switches on cpu 0. After the big loop stopped running, the cpu switched to idle. 
+
+6} There was one sched_switch event. One for the big loop. There were no other sched switches on any of the cpus. There were no other events that occured. The only things that happened were a trace-cmd and idle sched_swithc.
+
+7} 
+
+irq/166-usb-001: 50
+watchdogd: 99
+migrations: 99
+
+They might have priorities because they may be very important to the functionality and scheduling of things on the core. The range was between 50 and 99. They might need to be schedule ahead of other thingst to ensure proper functionality of the system.
+
+8} There were 486 sched_switch events on the processor. The program itself was never prempted.
+
+9} The length of the round robin was about 0.1 seconds. The pattern I saw that after every .1 seconds the order continued. For example it went  white, light blue, green, yellow, grey, pink, lime, dark blue. It then started again.
