@@ -1,0 +1,162 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+pi@taraspberrypi:~/studio15 $ ./pipe
+This is a test message 
+hello, world!
+goodbye, world!
+
+3}
+pi@taraspberrypi:~/studio15 $ ./fifo
+integer: 1, double: 2
+integer: 3, double: 6
+integer: 5, double: 10
+integer: 7, double: 14
+integer: 9, double: 18
+integer: 11, double: 22
+integer: 13, double: 26
+integer: 15, double: 30
+integer: 17, double: 34
+integer: 19, double: 38
+integer: 0, double: 0
+integer: 2, double: 4
+integer: 4, double: 8
+integer: 6, double: 12
+integer: 8, double: 16
+integer: 10, double: 20
+integer: 12, double: 24
+integer: 14, double: 28
+integer: 16, double: 32
+integer: 18, double: 36
+
+
+The pipe is open and is never closed, yet both programs run at the same time are able to simultaneously
+write to the same fifo, thereby indicating that they are able to concurrently access the same fifo.
+
+
+******************PIPES PROGRAM***************************
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <sys/types.h>
+
+int main(){	
+			int pipefd[2];
+			pid_t cpid;
+			FILE * readfs;
+			FILE * writefs;
+
+			if(pipe(pipefd) == -1){
+						perror("pipe");
+						return -1;
+			}
+
+			cpid = fork();
+			if(cpid == -1){
+						perror("fork");
+						return -1;
+			}
+
+			if (cpid == 0) { //Child process
+						close(pipefd[0]); //close the read end
+						writefs = fdopen(pipefd[1], "w");
+						fprintf(writefs, "This is a test message \n");
+						fprintf(writefs, "hello, world!\n");
+						fprintf(writefs, "goodbye, world!\n");
+						fclose(writefs);
+						return 0;
+			}
+
+			else { //Parent process
+						close(pipefd[1]); //close read end
+						int c;
+						readfs = fdopen(pipefd[0], "r");
+						while((c = fgetc(readfs)) != EOF){
+										putchar(c);
+						}
+						fclose(readfs);
+						return 0;
+			}
+
+}
+
+**********************WRITER PROGRAMS***********************
+
+////////EVEN////////
+
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(){
+	int limit = 20;
+	char fifo_name[] = "/tmp/myfifo";
+	FILE * f;
+	int i;
+	f = fopen(fifo_name, "w");
+	for(i=0; i < limit; i+=2){
+		fprintf(f, "%d\n", i);
+	}
+
+}
+
+
+////////ODD/////////
+#include <stdio.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(){
+	int limit = 20;
+	char fifo_name[] = "/tmp/myfifo";
+	FILE * f;
+	int i;
+	f = fopen(fifo_name, "w");
+	
+	
+	for(i=1; i < limit; i+=2){
+		fprintf(f, "%d\n", i);
+	}
+
+}
+
+///////WRITER////////
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+int main(){
+	int status = 1;
+	char * myfifo = "/tmp/myfifo";
+//	status = mkfifo(myfifo, S_IRUSR | S_IWUSR);
+	if(status == -1){
+		printf("Error with making fifo");
+		return -1;
+	}
+	FILE * fp;
+	FILE * fpw;
+	if((fp = fopen(myfifo, "r")) == NULL){
+		printf("Error in opening fifo");
+		return -1;
+	}
+	if((fpw = fopen(myfifo, "w")) == NULL){
+		printf("Error in opening write fifo");
+	}
+	//fprintf(fp, "%s", "This is a test message\n");
+	int c;
+	//int doublec;
+	while(fscanf(fp, "%d", &c)){
+		//doublec = 2*c;
+		printf("integer: %d, double: %d\n", c, 2*c);
+	}
+
+	return 0;
+	//fclose(fp);
+	//printf("Ended");
+	//fclose(fpw);
+	//unlink(myfifo);
+}

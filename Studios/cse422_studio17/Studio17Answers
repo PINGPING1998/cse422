@@ -1,0 +1,15 @@
+1} Tara Renduchintala and Anderson Gonzalez
+
+2} 
+pi@taraspberrypi:~/studio17 $ ./select
+this
+this was read from stdin
+is
+is was read from stdin
+a
+a was read from stdin
+test
+test was read from stdin
+quit
+
+3}
