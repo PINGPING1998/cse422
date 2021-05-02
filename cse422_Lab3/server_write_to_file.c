@@ -30,9 +30,7 @@
 #define FAIL_POLLING -10
 #define FAIL_ACCEPT_SOCKET -11
 #define FAIL_READING_CLIENT -12
-#define FAIL_SOCKET -13
-#define FAIL_BIND -14
-#define FAIL_LISTEN -15
+
 // Global Variables
 
 
@@ -45,15 +43,6 @@
 #define READ 1
 #define NOT_READ 0
 
-void UsageMethod(){
-    printf("Server program for lab 3\n");
-    printf("Usage: server_write file_name port\n");
-    printf("\n");
-    printf("Postional arguments: \n");
-    printf("   file_name    name of file resinding in server working directory\n");
-    printf("   port         port number at which serve will listen and accept connections\n");
-    fflush(stdout);
-}
 
 
 
@@ -68,7 +57,6 @@ int main(int argc, char *argv[]){
 	//check arguments
 	if(argc != MAXNUM_ARGS){
 		//usage message
-        UsageMethod();
 		return WRONG_NUMBER_OF_ARGS;
 	}
 	
@@ -89,7 +77,7 @@ int main(int argc, char *argv[]){
 
 	//check if input file could be opened
 	if(!input_file){
-		perror("Error opening input file\n");
+		perror("Error opening file\n");
 		return FAIL_OPEN_INPUT_FILE;
 	}
 
@@ -178,13 +166,11 @@ int main(int argc, char *argv[]){
 	int cfd = 0;
 	struct sockaddr_in my_addr, peer_addr;
 	FILE * read_fd;
-    char server_address[2*MAXLINE];
 
 	sfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sfd == 1){
 		printf("Error in socket: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_SOCKET;
 	
 	}
 	memset(&my_addr, 0, sizeof(struct sockaddr_in));
@@ -196,19 +182,11 @@ int main(int argc, char *argv[]){
 		printf("Error with bind \n");
 		printf("Error: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_BIND;
 	}
-    //convert server address to printable string
-    if(inet_ntop(AF_INET, &my_addr,server_address,sizeof(server_address))){
-        printf("Connect to port:%d server address: %s\n",port,server_address);
-        fflush(stdout);
-    }
-    
 	if(listen(sfd, 50) == -1){
 		printf("Error with Listen\n");
 		printf("Error: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_LISTEN;
 	}
 	socklen_t peer_addr_size = sizeof(peer_addr);
 	int option = 1;
@@ -237,7 +215,7 @@ int main(int argc, char *argv[]){
 	nfds++;	
 	int num_sockets_open = 0;
 	int num_sockets_return = 0;
-     
+
 	while(1){
 		pollstatus = poll(pollfds, nfds, -1);
 	
