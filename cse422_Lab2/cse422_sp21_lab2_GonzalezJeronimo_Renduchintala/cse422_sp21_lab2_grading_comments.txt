@@ -1,0 +1,30 @@
+Assignment: CSE 422 Spring 2021 Lab 2
+Authors: Tara Renduchintala (trenduchintala@wustl.edu) and Anderson Gonzalez (agonzalez@wustl.edu) 
+Graded by: Chris Gill (cdgill@wustl.edu)
+Score:  85 / 100
+Comments:
+
+*** Writeup ***
+
+Good writeup!
+
+*** Code Quality ***
+
+-3 Please don't leave commented-out fragments in the code.  Instead,
+ please remove those before submitting.
+
+-5 Unless there is a failure of a later allocation, neither module
+ frees the dynamically allocated memory that the threads variable
+ points to.
+
+-2 Please avoid using hard coded numbers like 0644 and 2, and instead please always
+use descriptively named const variables, enum lables, or #define symbols.
+
+*** Compilation and Execution ***
+
+The code compiled with no errors or warnings, and ran correctly in my tests except for:
+
+-5 when run with 2 threads and an upper bound of 2, the Pi froze when
+ the atomic module was loaded, and when the locking module was
+ unloaded.
+
