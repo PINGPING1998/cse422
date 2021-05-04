@@ -29,14 +29,14 @@
 #define PORT_NUMBER 2
 #define SERVER_ADRS 1
 
-void UsageMethod(){
+int UsageMethod(){
     printf("Client program for lab 3\n");
     printf("Usage: client_write internet_addres port\n");
     printf("\n");
     printf("Postional arguments: \n");
     printf(" internet_address  address to make connection to server program\n");
     printf("    port           port number at which client can establish a connection\n");
-    fflush(stdout);
+    return WRONG_NUMBER_OF_ARGS;
 }
 
 
@@ -44,15 +44,15 @@ int main(int argc, char *argv[]){
 	int port;
 	char * ipadd;
     
-    //check arguments
     
+    //check for correct number of arguments
     if(argc != MAXNUM_ARGS){
         //usage message
-        UsageMethod();
-        return WRONG_NUMBER_OF_ARGS;
+        return UsageMethod();
+       
     }
     else{
-	    	ipadd = argv[SERVER_ADRS];
+        ipadd = argv[SERVER_ADRS];
 		port = atoi(argv[PORT_NUMBER]);
     }		
 	
@@ -79,8 +79,7 @@ int main(int argc, char *argv[]){
 	if (sfd == -1){
 			printf("Error with socket\n");
 			printf("Error: %s\n", strerror(errno));
-
-	
+        //return FAIL_SOCKET;
 	}
 	memset(&peer_addr, 0, sizeof(peer_addr));
 	peer_addr.sin_family = AF_INET;
@@ -88,7 +87,7 @@ int main(int argc, char *argv[]){
 	inet_aton(ipadd, &peer_addr.sin_addr);
 	
 
-	//connect socket
+	//connect to server using addres and port recieved
 	con = connect(sfd, (struct sockaddr *) &peer_addr, sizeof(peer_addr));
 	if (con == -1){
 		printf("Error with connecting to server at address:%s.\n",argv[SERVER_ADRS]);
