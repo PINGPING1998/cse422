@@ -41,4 +41,26 @@ Even though we closed the port, it seemd as though the program still owned it. T
 -----Closing port on error----
 Initially, when the program returned an error, we did not close the ports properly which led to binding the address to produce an error. Therefore, we properly closed to socket such that when an error occured, the server socket was properly closed. 
 
+----Hanging Program----
+The program somtimes would hang after the connection was made. After investigation, we found out it was because we didn't FD_ZERO our read_fds in the client. Once we zero'd that out, it stopped hanging.
+
+----Invalid server address---
+If the server address is not valid, then the client returns an error indicating that the
+server address was not valid.
+
+
+******COMMAND LINE TESTING*******
+
+---Invalid input file---
+When the program encounters an invalid input file, it prints out an error message indicating that there was an error opening the file.
+
+---Invalid framgent file---
+when the program encounters an invalid fragment file it prints out an error message indicating that there was an error opening the fragment file.
+
+---Invalid Port Number---
+When the program encounters an invalid prot number, it prints out an error message indicating an invalid port number and then outputs the usage message.
+
+---Wrong number of paramters---
+When the program encounters a wrong number of parameters, it prints out the usage message.
+
 

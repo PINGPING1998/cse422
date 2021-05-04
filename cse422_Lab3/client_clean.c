@@ -59,8 +59,14 @@ int main(int argc, char *argv[]){
        
     }
     else{
-        ipadd = argv[SERVER_ADRS];
-		port = atoi(argv[PORT_NUMBER]);
+	ipadd = argv[SERVER_ADRS];
+	
+	if(atoi(argv[PORT_NUMBER]) == 0){
+		printf("Invalid Port Number\n");
+		return UsageMethod();
+	}	
+	port = atoi(argv[PORT_NUMBER]);
+	
     }		
 	
 	//ordering Node
@@ -97,10 +103,11 @@ int main(int argc, char *argv[]){
 	//connect to server using addres and port recieved
 	con = connect(sfd, (struct sockaddr *) &peer_addr, sizeof(peer_addr));
 	if (con == -1){
-		printf("Error with connecting to server at address:%s.\n",argv[SERVER_ADRS]);
-        printf("and port:%s\n",argv[PORT_NUMBER]);
+		printf("Error with connecting to server at address: %s.\n",argv[SERVER_ADRS]);
+        	printf("and port: %s\n",argv[PORT_NUMBER]);
 		fflush(stdout);
-        return FAIL_CONNECT;
+		UsageMethod();
+        	return FAIL_CONNECT;
 	}
 	else{
 		printf("connection made\n");
@@ -142,13 +149,14 @@ int main(int argc, char *argv[]){
 		
 		//Nothing is being written but don't want to break
 		if(selectstatus == 0){
-			continue;
+			printf("client is hanging\n");
+			break;
 		}
 		
 		
 		//Something is being written -- process the lines
 		if(FD_ISSET(sfd, &readfds)){
-			
+			printf("here\n");	
 			readstatus = read(sfd, reply, BUFFER_SIZE);
 
 			//Error on read
@@ -167,8 +175,6 @@ int main(int argc, char *argv[]){
 				
 				if(strncmp(reply, SENT, strlen(SENT)) == 0){
 					rcomplete = RCOMPLETED;
-					printf("complete: %d\n", rcomplete);
-					//Order(rootNode);
 					fflush(stdout);
 				}
 				
@@ -250,8 +256,6 @@ int main(int argc, char *argv[]){
 						//isDigit = 1;
 
 				} //WhILE LOOP END (token != NULL)	
-					printf("nulling reply\n");
-					fflush(stdout);
 					memset(reply, 0, BUFFER_SIZE);
 					
 				
@@ -285,15 +289,14 @@ int main(int argc, char *argv[]){
 			
 	
 		
-		printf("Out of while loop\n");
-		fflush(stdout);
 		if(rcomplete == RCOMPLETED){
-			break;
+			break;;
 		}
 
+		
+
 	}
-	printf("after close\n");
-	fflush(stdout);
+FD_ZERO(&readfds);	
 	return 0;
 	
 }

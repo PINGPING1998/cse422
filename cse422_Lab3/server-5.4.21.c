@@ -90,6 +90,7 @@ int main(int argc, char *argv[]){
 	
     //save port number
     	if(atoi(argv[PORT]) == 0){
+			printf("Invalid Port Number\n");
 			return UsageMethod();
 	}
 	int port = atoi(argv[PORT]);
