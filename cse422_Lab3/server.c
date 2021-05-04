@@ -1,4 +1,5 @@
 #define _GNU_SOURCE
+#define _DEFAULT_SOURCE
 #include <sys/select.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +13,9 @@
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 #include <sys/poll.h>
+#include <netdb.h>
+#include <net/if.h>
+#include <sys/ioctl.h>
 
 //For ordering
 #include "avl_tree.h"
@@ -34,6 +38,7 @@
 #define FAIL_BIND -14
 #define FAIL_LISTEN -15
 #define FAIL_CLOSING_SOCKET -16
+#define FAIL_HOSTNAME -17
 // Global Variables
 
 
@@ -60,7 +65,31 @@ int UsageMethod(){
     return WRONG_NUMBER_OF_ARGS;
 }
 
+char* getIP(){
+	int fd;
+	int status;
+	struct ifreq ifr;
+	char * address;
 
+	fd = socket(AF_INET, SOCK_DGRAM, 0);
+	if(fd < 0){
+		printf("Error in getting IP Address\n");
+		exit(FAIL_HOSTNAME);
+	}
+
+	strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ-1);
+
+	status = ioctl(fd, SIOCGIFADDR, &ifr);
+
+	if(status < 0){
+		printf("Error in getting IP Address\n");
+		exit(FAIL_HOSTNAME);
+	}
+
+	close(fd);
+	address = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
+	return address;
+}
 
 struct block{
 	FILE * file;
@@ -81,7 +110,8 @@ void freeBlocks(struct block* head){
 
 
 int main(int argc, char *argv[]){
-	
+	struct hostent *h;
+	char * serverip;
 	//check arguments
 	if(argc != MAXNUM_ARGS){
 		//usage message
@@ -94,6 +124,23 @@ int main(int argc, char *argv[]){
 			return UsageMethod();
 	}
 	int port = atoi(argv[PORT]);
+	char hostname[MAXBUFF];
+	serverip = getIP();
+	//printf("%s\n", serverip);
+
+	if(gethostname(hostname, MAXBUFF) < 0){
+		perror("Error getting hostname\n");
+		return FAIL_HOSTNAME;
+	}
+
+	h = gethostbyname(hostname);
+	if(h == NULL){
+		perror("Error with getting host by name\n");
+		return FAIL_HOSTNAME;
+	}
+
+	printf("Canonical name: %s\n", h->h_name);
+
 
 	struct Node * root = NULL;
 	
@@ -191,7 +238,7 @@ int main(int argc, char *argv[]){
 	int sfd = 0;
 	int cfd = 0;
 	struct sockaddr_in my_addr, peer_addr;
-    	char * server_address_string; //for address string
+    	//char * server_address_string; //for address string
     
     
     	//create new socket
@@ -224,13 +271,13 @@ int main(int argc, char *argv[]){
 	}
     
     	//convert server address to printable string
-    	server_address_string = inet_ntoa(my_addr.sin_addr);
-    	if(!server_address_string){
+    	//server_address_string = inet_ntoa(my_addr.sin_addr);
+    	if(!serverip){
         	printf("Did not convert IP to string format");
         	fflush(stdout);
     	}
    	 else{
-        	printf("Connect to port:%d server address: %s\n",port,server_address_string);
+        	printf("Connect to port:%d server address: %s\n",port,serverip);
          	fflush(stdout);
     	}
     
