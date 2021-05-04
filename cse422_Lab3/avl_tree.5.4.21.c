@@ -201,14 +201,18 @@ void Order(struct Node * root){
 				if((root->content)[z] == '\n'){
 					(root->content)[z] = '\0';
 				}
+
 			}
+		}
 
 			printf("%d: %s", root->key, root->content);
 			fflush(stdout);
 			Order(root->right);
-		}
 	}
 }
+
+
+
 
 void WriteOrSend(struct Node * root, int isSend, int sock, FILE * fd){
 	//status variables
@@ -229,18 +233,19 @@ void WriteOrSend(struct Node * root, int isSend, int sock, FILE * fd){
 						break;
 					}
 				}
-				if((root->content)[z-1] == '\n'){
-					if((root->content)[z] == '\n'){
-						(root->content)[z] = '\0';
-					}
-				}
-
-
-			printf("%d: %s", root->key, root->content);
-			fflush(stdout);
-			Order(root->right);
-
 			}
+
+
+			if((root->content)[z-1] == '\n'){
+				if((root->content)[z] == '\n'){
+					(root->content)[z] = '\0';
+				}
+			}
+			
+		}
+
+
+
 
 		if(isSend == 1){
 			status = write(sock, root->content, lengthContent);
@@ -252,7 +257,8 @@ void WriteOrSend(struct Node * root, int isSend, int sock, FILE * fd){
 			WriteOrSend(root->right, isSend, sock, fd);
 		}
 		else{
-
+			printf("%d: %s", root->key, root->content);
+			fflush(stdout);
 			status = fprintf(fd, "%s", root->content);
 			if(status < 0){
 				perror("error wrtting data\n");
@@ -262,9 +268,14 @@ void WriteOrSend(struct Node * root, int isSend, int sock, FILE * fd){
 			
 		}
 			
-		}
 	}
 }
 
-
+void freeTree(struct Node * root){
+	if(root != NULL) {
+		freeTree(root->left);
+		freeTree(root->right);
+		free(root);
+	}
+}
 					

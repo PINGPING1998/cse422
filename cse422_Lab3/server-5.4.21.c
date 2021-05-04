@@ -33,6 +33,7 @@
 #define FAIL_SOCKET -13
 #define FAIL_BIND -14
 #define FAIL_LISTEN -15
+#define FAIL_CLOSING_SOCKET -16
 // Global Variables
 
 
@@ -44,14 +45,18 @@
 #define PORT 2
 #define READ 1
 #define NOT_READ 0
+#define MAXBUFF 1024
+#define MAXCON 50
+#define SENT "sent"
+#define RECEIVED "done"
 
 int UsageMethod(){
     printf("Server program for lab 3\n");
-    printf("Usage: server_write file_name port\n");
+    printf("Usage: ./server <file name> <port number>\n");
     printf("\n");
     printf("Postional arguments: \n");
-    printf("   file_name    name of file resinding in server working directory\n");
-    printf("   port         port number at which serve will listen and accept connections\n");
+    printf("   file name    name of file resinding in server working directory\n");
+    printf("   port number        port number at which serve will listen and accept connections\n");
     return WRONG_NUMBER_OF_ARGS;
 }
 
@@ -63,22 +68,35 @@ struct block{
 	struct block *next;
 };
 
+void freeBlocks(struct block* head){
+	struct block * tmp;
+
+	while(head != NULL){
+		tmp = head;
+		head = head->next;
+		free(tmp);
+	}
+}
+
 int main(int argc, char *argv[]){
 	
 	//check arguments
 	if(argc != MAXNUM_ARGS){
 		//usage message
-        return UsageMethod
+        	return UsageMethod();
 	}
 	
     //save port number
+    	if(atoi(argv[PORT]) == 0){
+			return UsageMethod();
+	}
 	int port = atoi(argv[PORT]);
 
 	struct Node * root = NULL;
 	
 	//For File reading
 	FILE * input_file;
-    FILE * output_file;
+    	FILE * output_file;
 	int  num_fragment_files = 0;
 	char file_name[MAXLINE];
 	int line_numbers = 0;
@@ -117,22 +135,28 @@ int main(int argc, char *argv[]){
 		//open file provided by input line if not root block
 		FILE * frag_file;
 		
-        //fflush(stdout);   I COMMNENTED THIS OUT UNCOMENT IF IT SERVES A PURPOSE
         
-        //check if output file can be opened for reading/writing
+        	//check if output file can be opened for reading/writing
 		if(current_block == root_block){
 			output_file = fopen(file_name, "a");
-            if(!output_file){
-                perror("Failed to open output file provide in first line of inputfile\n");
-                return FAIL_OPEN_OUTPUT_FILE;
-            }
+		}
+
+		if(!output_file){
+                	perror("Failed to open output file provide in first line of inputfile\n");
+                	return FAIL_OPEN_OUTPUT_FILE;
+            	}
+		else{
 			root_block->file = output_file;
 		}
-        //check if fragment file can be opend for reading
+
+        	//check if fragment file can be opend for reading
 		if(current_block != root_block){
 			frag_file = fopen(file_name, "r");
 			if(!frag_file){
 				perror("Error opening fragment file\n");
+
+				//free alraedy allocated blocks
+				freeBlocks(root_block);
 				return FAIL_OPEN_FRAGMENT_FILE;
 			}
 			num_fragment_files++;
@@ -151,48 +175,29 @@ int main(int argc, char *argv[]){
 
 	}
 
-	//after all fragment files are assigned to a node
+	//after all fragment files are assigned to a node point current block to input file
 	current_block = root_block->next;
 	char line[MAXLINE];
 	input_read_check = 0;
-	/*
-	while(current_block->next != NULL){
-		input_read_check =0;
-		current_block = current_block->next;
-		while(input_read_check != EOF){
-			input_read_check = fscanf(current_block->file, "%[^\n]\n", &line);
-			if(input_read_check == EOF){
-				break;
-			}
-			if(input_read_check == -1){
-				perror("Fail reading fragment file\n");
-				return FAIL_READ_INPUTFILE;
-			}
-
-			printf("fragment line: %s\n", line);
-			fflush(stdout);
-		}
-		
-	}
-	*/
 
 
 
-		
-	//For socket connectons
+/*********************SOCKET PROGRAMMING*************************/
+
+	//variables for socket connectons
 	int sfd = 0;
 	int cfd = 0;
 	struct sockaddr_in my_addr, peer_addr;
 	FILE * read_fd;
-    char * server_address_string; //for address string
+    	char * server_address_string; //for address string
     
     
-    //create new socket
+    	//create new socket
 	sfd = socket(AF_INET, SOCK_STREAM, 0);
-	if(sfd == 1){
+	if(sfd == -1){
 		printf("Error in socket: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_SOCKET;
+        	return FAIL_SOCKET;
 	
 	}
 	memset(&my_addr, 0, sizeof(struct sockaddr_in));
@@ -200,41 +205,51 @@ int main(int argc, char *argv[]){
 	my_addr.sin_port = htons(port);
 	my_addr.sin_addr.s_addr = INADDR_ANY;
 
-    //bind internet domain socket at specified port
+    	//bind internet domain socket at specified port
 	if(bind(sfd, (struct sockaddr *) &my_addr, sizeof(my_addr)) == -1){
 		printf("Error with bind \n");
 		printf("Error: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_BIND;
+
+		//free structs
+		freeBlocks(root_block);
+
+        	return FAIL_BIND;
 	}
     
-    //convert server address to printable string
-    server_address_string = inet_ntoa(my_addr.sin_addr);
-    if(!server_address_string){
-        printf("Did not convert IP to string format");
-        fflush(stdout);
-    }
-    else{
-        printf("Connect to port:%d server address: %s\n",port,server_address);
-         fflush(stdout);
-    }
+    	//convert server address to printable string
+    	server_address_string = inet_ntoa(my_addr.sin_addr);
+    	if(!server_address_string){
+        	printf("Did not convert IP to string format");
+        	fflush(stdout);
+    	}
+   	 else{
+        	printf("Connect to port:%d server address: %s\n",port,server_address_string);
+         	fflush(stdout);
+    	}
     
     //listen for incoming connections
-	if(listen(sfd, 50) == -1){
+	if(listen(sfd, MAXCON) == -1){
 		printf("Error with Listen\n");
 		printf("Error: %s\n", strerror(errno));
 		fflush(stdout);
-        //return FAIL_LISTEN;
+        	
+		//free structs
+		freeBlocks(root_block);
+
+		return FAIL_LISTEN;
 	}
 	socklen_t peer_addr_size = sizeof(peer_addr);
 	int option = 1;
-	//setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &option, sizeof(int));
+	
+/*********************POLLING PROGRAMMING*********************************/	
+	
 	//Variables for Polling
 	int nfds = 0; 
 	int fdindex;
 	struct timeval timeout;
-	char buff[1024] = {0}; //leave space for input buffer
-	struct pollfd pollfds[50];
+	char buff[MAXBUFF] = {0}; //leave space for input buffer
+	struct pollfd pollfds[MAXCON];
 
 
 	//For line manipulation
@@ -246,7 +261,8 @@ int main(int argc, char *argv[]){
 
 	//Status variables
 	int pollstatus;
-	int readstatus;	
+	int readstatus;
+
 	//Add listening socket 
 	pollfds[nfds].fd = sfd;
 	pollfds[nfds].events = POLLIN;
@@ -267,9 +283,6 @@ int main(int argc, char *argv[]){
 		if(pollstatus == 0){
 			continue;
 		}
-
-		//printf("num fragment files: %d\n", num_fragment_files);
-		//fflush(stdout);
 
 		if(pollstatus > 0){
 			for(fdindex = 0; fdindex < nfds; fdindex++){
@@ -325,30 +338,40 @@ int main(int argc, char *argv[]){
 							
 							}
 
-							printf("%s\n", &line);
-							fflush(stdout);
 							memset(line, 0, MAXLINE);
 							
 						}
 
 					
 
-						if(write(pollfds[fdindex].fd, "complete", strlen("complete")) == -1){
+						if(write(pollfds[fdindex].fd, SENT, strlen(SENT)) == -1){
 								perror("sending new line");
 								return FAIL_SENDING_DATA;
 						}
 						
-						printf("All sent\n");
+						printf("All Data Sent\n");
 						fflush(stdout);
-						//stop writing to the client
+
+						//only set server to listen
 						pollfds[fdindex].events = POLLIN;
+
+						//close input file
+						
+						if(fclose(current_block->file) < 0){
+							perror("Error in closing file");
+							return FAIL_CLOSE_FILE;
+						}
+						
 						break;
 						
 					}
 
 				if((pollfds[fdindex].revents & POLLIN) && fdindex > 0){
 					int i = 0;
-					readstatus = read(pollfds[fdindex].fd, buff, 1024);
+					
+				
+					
+					readstatus = read(pollfds[fdindex].fd, buff, MAXBUFF);
 					if(readstatus < 0){
 						perror("Error in read from client\n");
 						return FAIL_READING_CLIENT;
@@ -357,43 +380,48 @@ int main(int argc, char *argv[]){
 						continue;
 					}
 					
-					//printf("Here in POLLIN\n");
-					token = strtok(buff, "\n");
+					//Parse input from client
+					token = strtok(buff, "\n"); //find the new line
 					while(token != NULL){
-						content = strchr(token, ' ');
+						content = strchr(token, ' '); //Find the space
 
 
 						
 						if(content == NULL){
 							
-							if(strncmp(token, "complete", strlen("complete")) == 0){
-								printf("in complete\n");
-								Order(root);
+							if(strncmp(token, RECEIVED, strlen(RECEIVED)) == 0){
+								Order(root); //order the nodes
 								num_sockets_return++;
 
-								//if(num_sockets_return == num_fragment_files){
-									break;
-								//}
-								//pollfds[fdindex].events = 0;
-								//break;
+								//close the socket
+								if(close(pollfds[fdindex].fd) < 0){
+									perror("Error closing client socket\n");
+									return FAIL_CLOSING_SOCKET;
+								}
+
+								pollfds[fdindex].events = 0;
 							}
 						}
 
 						if(content != NULL){
-							int difference = strlen(token) - strlen(content);
-							linenum = (char *)malloc(sizeof(char) * (difference + 1));
+							int difference = strlen(token) - strlen(content); //find the start of content
+							linenum = (char *)malloc(sizeof(char) * (difference + 1)); //get line number
 							for(i=0; i < difference; i++){
 								linenum[i] = token[i];
 							}
 
-							linenum[difference] = '\0';
-							linenumint = atoi(linenum);
-							int lengthLine = strlen(content);
+							linenum[difference] = '\0'; //null terminator to end linenum string
+							linenumint = atoi(linenum); //convert line num to integer
+							int lengthLine = strlen(content); //create a line the length of content
+
+							//If content is empty line
 							if(lengthLine == 1){
-								newline = (char *)malloc(sizeof(char) * 2);
+								newline = (char *)malloc(sizeof(char) * 2); 
 								newline[1] = '\0';
 								newline[0] = '\n';
 							}
+
+							//If content is not empty
 							if(lengthLine > 1){
 								
 								newline = (char *)malloc(sizeof(char) * (lengthLine + 1));
@@ -404,46 +432,52 @@ int main(int argc, char *argv[]){
 								newline[lengthLine-1] = '\n';
 								newline[lengthLine] = '\0';
 							}
-							printf("%d: %s\n",linenumint, newline);
-							fflush(stdout);	
-							root = insert(root, linenumint, newline);
-							memset(newline, 0, strlen(newline));
-						}
+
+
+							root = insert(root, linenumint, newline); //order the root
+							memset(newline, 0, strlen(newline)); //reset the contents of line
+						} //END OF (CONTENT != NULL)
 
 					
-						token = strtok(NULL, "\n");
-					}
-					memset(buff, 0, 1024);
+						token = strtok(NULL, "\n"); //reset the token to null to end while loop
+					} //END OF (TOKEN != NULL
+
+					memset(buff, 0, MAXBUFF); //reset the buffer
 					
-				}
-					if(num_sockets_return == num_fragment_files){
-						break;
-					}						
-				}
+				} //END OF CLIENT POLL
 				if(num_sockets_return == num_fragment_files){
-					break;
-				}
+						break;
+				}						
+			}
+			if(num_sockets_return == num_fragment_files){
+				break;
 			}
 		}
-	printf("Write or Send\n");
+	}
+	printf("Writing to File\n");
 	fflush(stdout);
+
+	//Call to AVL_tree.h to write to output file
 	WriteOrSend(root, 0, 0, output_file);
 	
-	
-	
-	//clean up at the end
-	close(sfd);
-	close(cfd);
-	current_block = root_block;
-	/*
-	while(current_block->next != NULL){
+/**********************CLEAN UP****************************/
 
-		struct block * prev_block = current_block;
-		current_block = current_block->next;
-		fclose(prev_block->file);
-		free(prev_block);
+	//Close Output File
+	if(fclose(output_file) < 0){
+		perror("Error closing output file\n");
+		return FAIL_CLOSE_FILE;
 	}
-	*/
+
+	//Free blocks
+	freeBlocks(root_block);
+	freeTree(root);
+
+	//Fail closing socket
+	if(close(sfd) < 0){
+		perror("Error closing Server socket\n");
+		return FAIL_CLOSING_SOCKET;
+	}
+
 	return 0;
 
 

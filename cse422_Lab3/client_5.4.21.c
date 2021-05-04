@@ -28,6 +28,8 @@
 #define MAXNUM_ARGS 3
 #define PORT_NUMBER 2
 #define SERVER_ADRS 1
+#define SENT "sent"
+#define RECEIVED "done"
 
 int UsageMethod(){
     printf("Client program for lab 3\n");
@@ -157,12 +159,15 @@ int main(int argc, char *argv[]){
 
 			//Read returns line to be processed
 			if(readstatus > 0){
-
-				if(strncmp(reply, "complete", strlen("complete")) == 0){
+				
+				if(strncmp(reply, SENT, strlen(SENT)) == 0){
 					rcomplete = 1;
+					printf("HERE\n");
 					printf("complete: %d\n", rcomplete);
+					//Order(rootNode);
 					fflush(stdout);
 				}
+				
 				else{
 					token = strtok(reply, "\n");
 					while(token != NULL){
@@ -215,9 +220,9 @@ int main(int argc, char *argv[]){
 
 						} //LINE != NULL END
 						if(line == NULL){
-							if(strncmp(token, "complete", strlen("complete")) == 0){
-									printf("complete: %d\n", rcomplete);
+							if(strncmp(token, SENT, strlen(SENT)) == 0){
 									rcomplete = 1;
+									printf("complete: %d\n", rcomplete);
 							}
 							Order(rootNode);
 							
@@ -253,7 +258,7 @@ int main(int argc, char *argv[]){
 				if(rcomplete == 1){
 					if(wcomplete == 0){
 						WriteOrSend(rootNode, 1, sfd, NULL);
-						sendstatus = write(sfd, "complete", strlen("complete"));
+						sendstatus = write(sfd, RECEIVED, strlen(RECEIVED));
 						if(sendstatus < 0){
 							perror("error sending\n");
 							exit(-2);
