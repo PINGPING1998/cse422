@@ -31,6 +31,10 @@
 #define SERVER_ADRS 1
 #define SENT "sent"
 #define RECEIVED "done"
+#define RCOMPLETED 1
+#define RINCOMPLETE 0
+#define WCOMPLETED 1
+#define WINCOMPLETE 0
 
 int UsageMethod(){
     printf("Client program for lab 3\n");
@@ -162,7 +166,7 @@ int main(int argc, char *argv[]){
 			if(readstatus > 0){
 				
 				if(strncmp(reply, SENT, strlen(SENT)) == 0){
-					rcomplete = 1;
+					rcomplete = RCOMPLETED;
 					printf("complete: %d\n", rcomplete);
 					//Order(rootNode);
 					fflush(stdout);
@@ -234,7 +238,7 @@ int main(int argc, char *argv[]){
 						} //LINE != NULL END
 						if(line == NULL){
 							if(strncmp(token, SENT, strlen(SENT)) == 0){
-									rcomplete = 1;
+									rcomplete = RCOMPLETED;
 									printf("complete: %d\n", rcomplete);
 							}
 							Order(rootNode);
@@ -255,22 +259,18 @@ int main(int argc, char *argv[]){
 		
 		} //if read status > 0 end
 	}
-			if(rcomplete == 1){
+			if(rcomplete == RCOMPLETED){
 				FD_ZERO(&writefds);
 				FD_SET(sfd, &writefds);
 			}
 	
 			if(FD_ISSET(sfd, &writefds)){
-				printf("here in write");
-				fflush(stdout);
 				int sendstatus;
-				if(rcomplete != 1){
-					printf("waiting\n");
-					fflush(stdout);
+				if(rcomplete != RCOMPLETED){
 					continue;
 				}
-				if(rcomplete == 1){
-					if(wcomplete == 0){
+				if(rcomplete == RCOMPLETED){
+					if(wcomplete == WINCOMPLETE){
 						WriteOrSend(rootNode, 1, sfd, NULL);
 						sendstatus = write(sfd, RECEIVED, strlen(RECEIVED));
 						if(sendstatus < 0){
@@ -278,7 +278,7 @@ int main(int argc, char *argv[]){
 							exit(-2);
 						}
 					}
-					wcomplete = 1;
+					wcomplete = WCOMPLETED;
 					break;
 				}
 			}
@@ -287,7 +287,7 @@ int main(int argc, char *argv[]){
 		
 		printf("Out of while loop\n");
 		fflush(stdout);
-		if(rcomplete == 1){
+		if(rcomplete == RCOMPLETED){
 			break;
 		}
 

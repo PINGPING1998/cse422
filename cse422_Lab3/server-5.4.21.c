@@ -78,6 +78,8 @@ void freeBlocks(struct block* head){
 	}
 }
 
+
+
 int main(int argc, char *argv[]){
 	
 	//check arguments
@@ -126,6 +128,7 @@ int main(int argc, char *argv[]){
 		
 		if(input_read_check == -1){
 			perror("Failed reading input file\n");
+
 			return FAIL_READ_INPUTFILE;
 		}
 		
@@ -138,7 +141,7 @@ int main(int argc, char *argv[]){
         
         	//check if output file can be opened for reading/writing
 		if(current_block == root_block){
-			output_file = fopen(file_name, "a");
+			output_file = fopen(file_name, "w+");
 		}
 
 		if(!output_file){
@@ -205,7 +208,11 @@ int main(int argc, char *argv[]){
 	my_addr.sin_port = htons(port);
 	my_addr.sin_addr.s_addr = INADDR_ANY;
 
-    	//bind internet domain socket at specified port
+    	//So port can be reused after a run
+	int var = 1;
+	setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &var, sizeof(var));
+	
+	//bind internet domain socket at specified port
 	if(bind(sfd, (struct sockaddr *) &my_addr, sizeof(my_addr)) == -1){
 		printf("Error with bind \n");
 		printf("Error: %s\n", strerror(errno));
@@ -301,6 +308,7 @@ int main(int argc, char *argv[]){
 					cfd = accept(sfd, (struct sockaddr *) &peer_addr, &peer_addr_size);
 					if(cfd  < 0){
 						perror("Error making socket");
+						close(sfd);
 						return FAIL_ACCEPT_SOCKET;
 					}
 
@@ -330,6 +338,8 @@ int main(int argc, char *argv[]){
 							}
 							if(input_read_check == -1){
 								perror("Fail reading fragment file\n");
+								close(sfd);
+								close(pollfds[fdindex].fd);
 								return FAIL_READ_INPUTFILE;
 							}
 							if(write(pollfds[fdindex].fd, &line, strlen(line)) == -1){
@@ -346,6 +356,8 @@ int main(int argc, char *argv[]){
 
 						if(write(pollfds[fdindex].fd, SENT, strlen(SENT)) == -1){
 								perror("sending new line");
+								close(pollfds[fdindex].fd);
+								close(sfd);
 								return FAIL_SENDING_DATA;
 						}
 						
@@ -359,6 +371,7 @@ int main(int argc, char *argv[]){
 						
 						if(fclose(current_block->file) < 0){
 							perror("Error in closing file");
+							close(pollfds[fdindex].fd);
 							return FAIL_CLOSE_FILE;
 						}
 						
@@ -374,6 +387,8 @@ int main(int argc, char *argv[]){
 					readstatus = read(pollfds[fdindex].fd, buff, MAXBUFF);
 					if(readstatus < 0){
 						perror("Error in read from client\n");
+						close(pollfds[fdindex].fd);
+						close(sfd);
 						return FAIL_READING_CLIENT;
 					}
 					else if(readstatus == 0){
@@ -396,6 +411,7 @@ int main(int argc, char *argv[]){
 								//close the socket
 								if(close(pollfds[fdindex].fd) < 0){
 									perror("Error closing client socket\n");
+									close(sfd);
 									return FAIL_CLOSING_SOCKET;
 								}
 
