@@ -48,6 +48,9 @@ The program somtimes would hang after the connection was made. After investigati
 If the server address is not valid, then the client returns an error indicating that the
 server address was not valid.
 
+---Checking Remote Connection---
+Initially when we were running remotely, there was an error on select. It turns out we needed to initlaize our timeout to 2 seconds, which we had set to 0 in the beginning. Once that was set, we were able to communicate with the socket. Furthermore, we had to get the "wlan0" IP address to be able to get the external IP. 
+
 
 ******COMMAND LINE TESTING*******
 
