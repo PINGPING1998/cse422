@@ -284,6 +284,8 @@ int main(int argc, char *argv[]){
 		//Polling Error Check
 		if(pollstatus < 0){
 			perror("error in polling\n");
+
+			freeBlocks(root_block);
 			return FAIL_POLLING;
 		}
 		
@@ -310,6 +312,7 @@ int main(int argc, char *argv[]){
 					if(cfd  < 0){
 						perror("Error making socket");
 						close(sfd);
+						freeBlocks(root_block);
 						return FAIL_ACCEPT_SOCKET;
 					}
 
@@ -341,10 +344,12 @@ int main(int argc, char *argv[]){
 								perror("Fail reading fragment file\n");
 								close(sfd);
 								close(pollfds[fdindex].fd);
+								freeBlocks(root_block);
 								return FAIL_READ_INPUTFILE;
 							}
 							if(write(pollfds[fdindex].fd, &line, strlen(line)) == -1){
 								perror("sending data");
+								freeBlocks(root_block);
 								return FAIL_SENDING_DATA;
 							
 							}
@@ -359,6 +364,7 @@ int main(int argc, char *argv[]){
 								perror("sending new line");
 								close(pollfds[fdindex].fd);
 								close(sfd);
+								freeBlocks(root_block);
 								return FAIL_SENDING_DATA;
 						}
 						
@@ -373,6 +379,7 @@ int main(int argc, char *argv[]){
 						if(fclose(current_block->file) < 0){
 							perror("Error in closing file");
 							close(pollfds[fdindex].fd);
+							freeBlocks(root_block);
 							return FAIL_CLOSE_FILE;
 						}
 						
@@ -390,6 +397,7 @@ int main(int argc, char *argv[]){
 						perror("Error in read from client\n");
 						close(pollfds[fdindex].fd);
 						close(sfd);
+						freeBlocks(root_block);
 						return FAIL_READING_CLIENT;
 					}
 					else if(readstatus == 0){
@@ -413,6 +421,7 @@ int main(int argc, char *argv[]){
 								if(close(pollfds[fdindex].fd) < 0){
 									perror("Error closing client socket\n");
 									close(sfd);
+									freeBlocks(root_block);
 									return FAIL_CLOSING_SOCKET;
 								}
 
