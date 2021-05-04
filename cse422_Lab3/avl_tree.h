@@ -189,7 +189,7 @@ void Order(struct Node * root){
 		if(lengthContent > 1){
 			if((root->content)[z] != '\n'){
 				//If the last character is not newline then null term after middle \n
-				for(z; z > 0; z--){
+				for(z = lengthContent-1; z > 0; z--){
 					if((root->content)[z] == '\n'){
 						(root->content)[z+1] = '\0';
 						break;
@@ -227,7 +227,7 @@ void WriteOrSend(struct Node * root, int isSend, int sock, FILE * fd){
 		if(lengthContent > 1){
 			if((root->content)[z] != '\n'){
 				//If the last character is not newline then null term after middle \n
-				for(z; z > 0; z--){
+				for(z=lengthContent -1; z > 0; z--){
 					if((root->content)[z] == '\n'){
 						(root->content)[z+1] = '\0';
 						break;
