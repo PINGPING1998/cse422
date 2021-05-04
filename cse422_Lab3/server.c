@@ -54,6 +54,7 @@
 #define MAXCON 50
 #define SENT "sent"
 #define RECEIVED "done"
+#define EXTERNAL "wlan0"
 
 int UsageMethod(){
     printf("Server program for lab 3\n");
@@ -77,7 +78,7 @@ char* getIP(){
 		exit(FAIL_HOSTNAME);
 	}
 
-	strncpy(ifr.ifr_name, "wlan0", IFNAMSIZ-1);
+	strncpy(ifr.ifr_name, EXTERNAL, IFNAMSIZ-1);
 
 	status = ioctl(fd, SIOCGIFADDR, &ifr);
 
@@ -110,7 +111,6 @@ void freeBlocks(struct block* head){
 
 
 int main(int argc, char *argv[]){
-	struct hostent *h;
 	char * serverip;
 	//check arguments
 	if(argc != MAXNUM_ARGS){
@@ -118,28 +118,18 @@ int main(int argc, char *argv[]){
         	return UsageMethod();
 	}
 	
-    //save port number
+    	//save port number
     	if(atoi(argv[PORT]) == 0){
 			printf("Invalid Port Number\n");
 			return UsageMethod();
 	}
 	int port = atoi(argv[PORT]);
-	char hostname[MAXBUFF];
+	
+	
+	//get IP Address (EXTERNAL WLAN0)
 	serverip = getIP();
-	//printf("%s\n", serverip);
 
-	if(gethostname(hostname, MAXBUFF) < 0){
-		perror("Error getting hostname\n");
-		return FAIL_HOSTNAME;
-	}
 
-	h = gethostbyname(hostname);
-	if(h == NULL){
-		perror("Error with getting host by name\n");
-		return FAIL_HOSTNAME;
-	}
-
-	printf("Canonical name: %s\n", h->h_name);
 
 
 	struct Node * root = NULL;
