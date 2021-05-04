@@ -45,14 +45,14 @@
 #define READ 1
 #define NOT_READ 0
 
-void UsageMethod(){
+int UsageMethod(){
     printf("Server program for lab 3\n");
     printf("Usage: server_write file_name port\n");
     printf("\n");
     printf("Postional arguments: \n");
     printf("   file_name    name of file resinding in server working directory\n");
     printf("   port         port number at which serve will listen and accept connections\n");
-    fflush(stdout);
+    return WRONG_NUMBER_OF_ARGS;
 }
 
 
@@ -68,26 +68,25 @@ int main(int argc, char *argv[]){
 	//check arguments
 	if(argc != MAXNUM_ARGS){
 		//usage message
-        UsageMethod();
-		return WRONG_NUMBER_OF_ARGS;
+        return UsageMethod
 	}
 	
+    //save port number
 	int port = atoi(argv[PORT]);
 
 	struct Node * root = NULL;
 	
 	//For File reading
 	FILE * input_file;
-       	FILE * output_file;
+    FILE * output_file;
 	int  num_fragment_files = 0;
 	char file_name[MAXLINE];
 	int line_numbers = 0;
 	int fragment_failed = 0;
 	int input_read_check = 0;
 
+    //check if input file can be opened
 	input_file = fopen(argv[FILENAME], "r");
-
-	//check if input file could be opened
 	if(!input_file){
 		perror("Error opening input file\n");
 		return FAIL_OPEN_INPUT_FILE;
@@ -108,21 +107,28 @@ int main(int argc, char *argv[]){
 		}
 		
 		if(input_read_check == -1){
-			perror("Fail reading input file\n");
+			perror("Failed reading input file\n");
 			return FAIL_READ_INPUTFILE;
 		}
 		
 		printf("line %d: %s\n", line_numbers, &file_name);
 		fflush(stdout);
 
-		//open file provided by input line if not root bloack
+		//open file provided by input line if not root block
 		FILE * frag_file;
 		
-		fflush(stdout);	
+        //fflush(stdout);   I COMMNENTED THIS OUT UNCOMENT IF IT SERVES A PURPOSE
+        
+        //check if output file can be opened for reading/writing
 		if(current_block == root_block){
 			output_file = fopen(file_name, "a");
+            if(!output_file){
+                perror("Failed to open output file provide in first line of inputfile\n");
+                return FAIL_OPEN_OUTPUT_FILE;
+            }
 			root_block->file = output_file;
 		}
+        //check if fragment file can be opend for reading
 		if(current_block != root_block){
 			frag_file = fopen(file_name, "r");
 			if(!frag_file){
@@ -178,8 +184,10 @@ int main(int argc, char *argv[]){
 	int cfd = 0;
 	struct sockaddr_in my_addr, peer_addr;
 	FILE * read_fd;
-    char server_address[2*MAXLINE];
-
+    char * server_address_string; //for address string
+    
+    
+    //create new socket
 	sfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sfd == 1){
 		printf("Error in socket: %s\n", strerror(errno));
@@ -192,18 +200,26 @@ int main(int argc, char *argv[]){
 	my_addr.sin_port = htons(port);
 	my_addr.sin_addr.s_addr = INADDR_ANY;
 
+    //bind internet domain socket at specified port
 	if(bind(sfd, (struct sockaddr *) &my_addr, sizeof(my_addr)) == -1){
 		printf("Error with bind \n");
 		printf("Error: %s\n", strerror(errno));
 		fflush(stdout);
         //return FAIL_BIND;
 	}
+    
     //convert server address to printable string
-    if(inet_ntop(AF_INET, &my_addr.sin_addr,server_address,sizeof(server_address))){
-      	printf("Connect to port:%d server address: %s\n",port,server_address);
+    server_address_string = inet_ntoa(my_addr.sin_addr);
+    if(!server_address_string){
+        printf("Did not convert IP to string format");
         fflush(stdout);
     }
+    else{
+        printf("Connect to port:%d server address: %s\n",port,server_address);
+         fflush(stdout);
+    }
     
+    //listen for incoming connections
 	if(listen(sfd, 50) == -1){
 		printf("Error with Listen\n");
 		printf("Error: %s\n", strerror(errno));
