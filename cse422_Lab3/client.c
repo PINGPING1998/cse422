@@ -81,8 +81,8 @@ int main(int argc, char *argv[]){
 	fd_set readfds;
 	fd_set writefds;
 	struct timeval timeout;
-	timeout.tv_sec = 0;
-	timeout.tv_sec = 0;
+	timeout.tv_sec = 2;
+	timeout.tv_usec = 0;
 
 
 
@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 	if (sfd == -1){
 			printf("Error with socket\n");
 			printf("Error: %s\n", strerror(errno));
-        //return FAIL_SOCKET;
+        		return FAIL_SOCKET;
 	}
 	memset(&peer_addr, 0, sizeof(peer_addr));
 	peer_addr.sin_family = AF_INET;

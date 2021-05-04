@@ -1,9 +1,34 @@
 Lab 3: Multiplexed Interprocess Communication
 
+***********************SERVER IMPLEMENTATION**************************
+---Data structures within the Server-----
+
+1) Linked List to hold pointer to each file
+	-- We created a linked list to hold a pointer to each file so that we could iterate through the linked list and ensure that each fragment file got opened and read. This allowed us to make sure that all of the fragment files were passed to the clients. 
+
+	-- The linked list also helped us keep track of what files were opened and what files failed as well as closing files when they were done being used.
+
+2) AVL Tree Linked List to hold the sorted lines when recieved
+	-- After the lines from the client were read from the socket, they were then placed into an AVL tree according to its line number. Once the message "done" was recieved, the empty the events portion of that socket so that it would stop monitoring. Then, when the number of receptions (which is incremented on reciept of "done") is the same as the number of fragment files, the server uses the AVL Tree and writes the ordered nodes to the file. 
+
+	-- The AVL tree does dynamic storing, therefore the tree is always balanced at time of writing. 
 
 
+--- Use of Polling -----
+In order to monitor the sockets and events, we initially tried to use epoll(). However, after much struggle, we decided to sacrifice the efficiency and use poll() instead. Poll allowed us to monitor all of the sockets as well as pay attention to any events that occured.
+
+To correctly use poll we had to cretae a server socket that would listen to connections. Once the number of connections was the same as the number of fragment files, the server would stop listening for connections and only focus on recieving. The server socket was created at the port number provided as an input argument. 
+
+----Getting the IP Address---
+Since we wanted to be able to use the connection remotely as well as locally, we ensured the IP address that would be printed out was always the external IP address. That way, we were never displaying the local loopback address (which would be of no use to a remote client).
 
 
+***************************CLIENT IMPLEMENTATION*********************************
+---Data Structures Used---
+1) Again, we used an AVL tree to store the sorted nodes and send them back in a sorted order. This implementation required the same logic as what was used in the server function. The client would recieve the line, parse it, store the line number as the key and the content within the node and then order the tree such that it is balanced. That way, when sending back the lines, they were in a ordered fashion.
+
+---Checking Arguments---
+The client would check for a valid port address and a valid IP address. It would return an error if the IP address was not valid as well as the port. It would also print out a usage method if the port was not a number. 
 
 
 
