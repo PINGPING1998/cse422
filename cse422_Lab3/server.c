@@ -66,6 +66,10 @@ int UsageMethod(){
     return WRONG_NUMBER_OF_ARGS;
 }
 
+
+/***Influenced by the implementation from:
+ * https://stackoverflow.com/questions/2283494/get-ip-address-of-an-interface-on-linux
+***/
 char* getIP(){
 	int fd;
 	int status;
@@ -154,6 +158,11 @@ int main(int argc, char *argv[]){
 	root_block = (struct block *)malloc(sizeof(struct block));
 	struct block * current_block = root_block;
 
+
+	printf("/******STARTING TO OPEN FILES*********/\n");
+	printf("\n");
+	fflush(stdout);
+
 	//get number of fragment files
 	while(input_read_check != EOF){
 		//scan line till null terminator
@@ -205,7 +214,7 @@ int main(int argc, char *argv[]){
 		}
 
 
-
+		
 		struct block *new_block = (struct block *)malloc(sizeof(struct block));
 		new_block->file = frag_file;
 		new_block->next = NULL;
@@ -215,6 +224,10 @@ int main(int argc, char *argv[]){
 
 	}
 
+	printf("\n");
+	printf("/**********ALL FRAGMENT FILES OPEN AND VALID*******/\n");
+	printf("\n");
+	fflush(stdout);
 	//after all fragment files are assigned to a node point current block to input file
 	current_block = root_block->next;
 	char line[MAXLINE];
@@ -223,12 +236,10 @@ int main(int argc, char *argv[]){
 
 
 /*********************SOCKET PROGRAMMING*************************/
-
 	//variables for socket connectons
 	int sfd = 0;
 	int cfd = 0;
 	struct sockaddr_in my_addr, peer_addr;
-    	//char * server_address_string; //for address string
     
     
     	//create new socket
@@ -332,7 +343,6 @@ int main(int argc, char *argv[]){
 
 				//listening socket
 				if((pollfds[fdindex].revents & POLLIN) && (fdindex == 0)) {
-					printf("num_sockets_open: %d\n", num_sockets_open);
 					fflush(stdout);
 					if(num_sockets_open == num_fragment_files){
 						close(pollfds[0].fd);
@@ -340,6 +350,10 @@ int main(int argc, char *argv[]){
 						break;
 						
 					}
+					
+					printf("/**********ATTEMPTING TO CONNECT TO SOCKET*******/\n");
+					printf("\n");
+					fflush(stdout);
 
 					cfd = accept(sfd, (struct sockaddr *) &peer_addr, &peer_addr_size);
 					if(cfd  < 0){
@@ -349,7 +363,7 @@ int main(int argc, char *argv[]){
 						return FAIL_ACCEPT_SOCKET;
 					}
 
-					printf("connection made\n");
+					printf("Connection Made\n");
 					fflush(stdout);
 
 					//add new socket to list
@@ -390,6 +404,8 @@ int main(int argc, char *argv[]){
 							memset(line, 0, MAXLINE);
 							
 						}
+						memset(line, 0, MAXLINE);
+
 
 					
 
@@ -402,6 +418,7 @@ int main(int argc, char *argv[]){
 						}
 						
 						printf("All Data Sent\n");
+						printf("\n");
 						fflush(stdout);
 
 						//only set server to listen
@@ -513,6 +530,8 @@ int main(int argc, char *argv[]){
 			}
 		}
 	}
+	printf("\n");
+	printf("/******ATTEMPTING TO WRITE TO FILE*****/\n");
 	printf("Writing to File\n");
 	fflush(stdout);
 

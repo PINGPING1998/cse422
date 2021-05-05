@@ -155,7 +155,6 @@ int main(int argc, char *argv[]){
 		
 		//Something is being written -- process the lines
 		if(FD_ISSET(sfd, &readfds)){
-			printf("here\n");	
 			readstatus = read(sfd, reply, BUFFER_SIZE);
 
 			//Error on read
@@ -174,7 +173,6 @@ int main(int argc, char *argv[]){
 				
 				if(strncmp(reply, SENT, strlen(SENT)) == 0){
 					rcomplete = RCOMPLETED;
-					fflush(stdout);
 				}
 				
 				else{
@@ -183,7 +181,6 @@ int main(int argc, char *argv[]){
 					while(token != NULL){
 
 						line = strchr(token, ' ');
-						printf("line: %s\n", line);
 						int isDigit = 1;
 						if(line != NULL){
 							int difference = strlen(token) - strlen(line);
@@ -193,7 +190,6 @@ int main(int argc, char *argv[]){
 							}
 
 							for(i = 0; i < difference; i++){
-								printf("token: %s\n", token);
 								if(isdigit(token[i]) == 0){
 									isDigit = 0;
 									printf("not a digit\n");
@@ -206,8 +202,6 @@ int main(int argc, char *argv[]){
 							linenum[difference] = '\0';
 							linenumint = atoi(linenum);
 
-							printf("linenum: %d\n", linenumint);
-							fflush(stdout);
 
 							if(strlen(line) > 1){
 								newline = (char *)malloc(sizeof(char) * strlen(token) + 2);
@@ -232,27 +226,21 @@ int main(int argc, char *argv[]){
 
 
 							
-							printf("newline: %s\n", newline);
-							fflush(stdout);
-							if(isDigit == 1){
-							rootNode = insert(rootNode, linenumint, newline);
+							if(isDigit == 1){ //only insert if it is a valid line
+								rootNode = insert(rootNode, linenumint, newline);
 
-							memset(newline, 0, strlen(newline));
+								memset(newline, 0, strlen(newline));
 							}
 
 						} //LINE != NULL END
 						if(line == NULL){
 							if(strncmp(token, SENT, strlen(SENT)) == 0){
 									rcomplete = RCOMPLETED;
-									printf("complete: %d\n", rcomplete);
 							}
 							Order(rootNode);
 							
 						} //LINE == NULL END
-						printf("nulling token\n");
-						fflush(stdout);
 						token = strtok(NULL, "\n");
-						//isDigit = 1;
 
 				} //WhILE LOOP END (token != NULL)	
 					memset(reply, 0, BUFFER_SIZE);

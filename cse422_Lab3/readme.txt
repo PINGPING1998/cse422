@@ -1,5 +1,8 @@
 Lab 3: Multiplexed Interprocess Communication
 
+Tara Renduchintala: trenduchitnala@wustl.edu
+Anderson Gonzalez: anderson.g@wustl.edu
+
 ***********************SERVER IMPLEMENTATION**************************
 ---Data structures within the Server-----
 
@@ -30,7 +33,22 @@ Since we wanted to be able to use the connection remotely as well as locally, we
 ---Checking Arguments---
 The client would check for a valid port address and a valid IP address. It would return an error if the IP address was not valid as well as the port. It would also print out a usage method if the port was not a number. 
 
+---Use of Select---
+We used the Select() IO because it was easier to manage what event should be triggered as we could trigger it ourselves. When the reading was complete, we were able to trigger the write functionality. It worked well with the poll as each client was supposed to do one thing.
 
+---Remote Client---
+We wrote the client in such a way that it could be executed remotely using the IP Address of the server that was provided. It could also be ran locally.
+
+
+***********************BUILD INSTRUCTIONS*************************
+Run the compileFiles.sh file. It should compile the programs such that they can be run by the computer. When we ran the compileFiles.sh file with Wall, we recieved no warnings. 
+
+
+Enable the sh file to be executable: 
+chmod +x compileFiles.sh
+
+Run the compilation:
+./compileFiles.sh
 
 
 *******************************TESTING********************************************
@@ -91,4 +109,12 @@ When the program encounters an invalid prot number, it prints out an error messa
 ---Wrong number of paramters---
 When the program encounters a wrong number of parameters, it prints out the usage message.
 
+***************************KNOWN LIMITATIONS********************************
+Sometimes, there are additional characters being printed out and we are unsure why that was happening. It was only for certain lines and we couldn't
+find a general solution as to why it was happening.
 
+We also can't run the surver on something that does not have "wlan0" (the Pi does and we assumed we wouldn't be expected to run the Pi elsewhere). As noted above, when we tried to use the method the Professor described in class, it did not display an exterenal IP Address that could be used by client not on the same machine. i
+
+
+********************DEVELOPMENT EFFORT********************************
+We spent about 35-40 hours on this lab. Definitely the hardest one of the three. 

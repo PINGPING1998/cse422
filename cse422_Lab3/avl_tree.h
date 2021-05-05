@@ -1,3 +1,6 @@
+/*Based off the GeeksForGeeks Implementation: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/*/
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -205,8 +208,6 @@ void Order(struct Node * root){
 			}
 		}
 
-			printf("%d: %s", root->key, root->content);
-			fflush(stdout);
 			Order(root->right);
 	}
 }
