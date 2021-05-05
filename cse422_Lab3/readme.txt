@@ -50,7 +50,7 @@ chmod +x compileFiles.sh
 Run the compilation:
 ./compileFiles.sh
 
-
+When running, ensure that the avl_tree.h is in the same folder as the server and client files as they both need them. Therefore, if the client is being run on a machine that is not the same as the server, ensure the avl_tree.h file is also included there. 
 *******************************TESTING********************************************
 
 -----Edge Case: no line number at the start of line-----
