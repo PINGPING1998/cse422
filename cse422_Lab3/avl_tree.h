@@ -1,4 +1,9 @@
-/*Based off the GeeksForGeeks Implementation: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/*/
+/*Based off the GeeksForGeeks Implementation: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+ * We added a parameter to hold a char array that contained the content of the file
+ * The key was used to hold the line number in order to order the nodes
+ * We added a function to free the tree as well as to write and send to a socket or file
+ * this is toggles by an input parameter
+ * */
 
 
 #include <stdio.h>
